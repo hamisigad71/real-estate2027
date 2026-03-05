@@ -15,7 +15,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select"
 import { Button } from "@/components/ui/button"
 import {
-  Building2, Home, Ruler, DollarSign, Sparkles,
+  Building2, Home as HomeIcon, Ruler, DollarSign, Sparkles,
   MapPin, Wind, Hammer, Box, Info, Layout,
   ChevronLeft, ChevronRight, Wand2, Download, Save,
   Bell, User, Zap, Lightbulb, Droplet, Car, TreePine, 
@@ -23,6 +23,9 @@ import {
   LayoutList, Scale, TrendingUp, Calendar, Settings2,
   ArrowLeft, Shuffle, Bed
 } from "lucide-react"
+import { useAuth } from "./auth-provider"
+import { NotificationBell } from "./notification-bell"
+import { UserProfile } from "./user-profile"
 
 const HOME_STYLES = [
   {
@@ -146,6 +149,9 @@ export function HomeConfigurator() {
     createdAt: "",
     updatedAt: "",
   })
+
+  const { user } = useAuth()
+  const [showProfile, setShowProfile] = useState(false)
 
   // Mounting state to handle hydration properly
   const [mounted, setMounted] = useState(false)
@@ -273,46 +279,52 @@ export function HomeConfigurator() {
 
   return (
     <div className="min-h-screen bg-slate-50 overflow-x-hidden">
-      {/* Premium Cinematic Background */}
-      <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_top_right,rgba(186,230,253,0.3),transparent_50%)]"></div>
-        <div className="absolute bottom-0 right-0 w-full h-full bg-[radial-gradient(circle_at_bottom_left,rgba(224,231,255,0.3),transparent_50%)]"></div>
-        
-        <motion.div 
-          animate={{ 
-            scale: [1, 1.2, 1],
-            x: [0, 50, 0],
-            y: [0, 30, 0]
-          }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          className="absolute -top-20 -right-20 w-[500px] h-[500px] bg-blue-100/30 rounded-full blur-[100px]" 
-        />
-        <motion.div 
-          animate={{ 
-            scale: [1, 1.3, 1],
-            x: [0, -70, 0],
-            y: [0, 50, 0]
-          }}
-          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-          className="absolute -bottom-40 -left-20 w-[600px] h-[600px] bg-indigo-100/30 rounded-full blur-[120px]" 
-        />
-      </div>
 
-      <div className="relative z-10">
-      <div className="relative z-20">
+      <div>
+
         {/* Premium Sticky Navbar */}
         <nav className="sticky top-0 z-[60] w-full border-b border-white/20 bg-white/70 backdrop-blur-xl shadow-sm transition-all duration-300">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex h-16 items-center justify-between">
               <div className="flex items-center gap-8">
-                <div className="flex items-center gap-2.5 cursor-pointer" onClick={() => window.location.href = "/"}>
-                  <div className="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-lg shadow-blue-500/20">
+                <div 
+                  className="flex items-center gap-2.5 cursor-pointer group" 
+                  onClick={() => window.location.href = "/"}
+                  title="Return to Dashboard"
+                >
+                  <div className="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-lg shadow-blue-500/20 group-hover:scale-105 transition-transform">
                     <Building2 className="w-5 h-5" />
                   </div>
-                  <span className="text-xl font-bold text-slate-900 tracking-tight font-rethink">StudioConfig.</span>
+                  <div className="flex flex-col">
+                    <span className="text-xl font-bold text-slate-900 tracking-tight font-rethink leading-none">StudioConfig.</span>
+                    <span className="text-[8px] font-black text-blue-600 uppercase tracking-widest mt-0.5">Architectural Engine</span>
+                  </div>
+                </div>
+
+                <div className="h-8 w-px bg-slate-200 mx-2 hidden md:block" />
+
+                <div className="flex items-center gap-2">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => router.back()}
+                    className="h-9 px-3 rounded-full text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-all flex items-center gap-2 font-bold text-[10px] uppercase tracking-wider"
+                  >
+                    <ArrowLeft className="w-4 h-4" />
+                    Back
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => window.location.href = "/"}
+                    className="h-9 px-3 rounded-full text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-all flex items-center gap-2 font-bold text-[10px] uppercase tracking-wider"
+                  >
+                    <HomeIcon className="w-4 h-4" />
+                    Home
+                  </Button>
                 </div>
                 
-                <div className="hidden md:flex items-center gap-1 bg-slate-100/50 p-1 rounded-xl border border-slate-200">
+                <div className="hidden lg:flex items-center gap-1 bg-slate-100/50 p-1 rounded-xl border border-slate-200 ml-4">
                   {['design', 'blueprint', 'finance'].map((tab) => (
                     <button
                       key={tab}
@@ -329,29 +341,30 @@ export function HomeConfigurator() {
                 </div>
               </div>
 
-              <div className="flex items-center gap-3">
-                <div className="hidden sm:flex items-center gap-2 mr-4 px-3 py-1.5 bg-emerald-50 border border-emerald-100 rounded-full">
-                  <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                  <span className="text-[10px] font-bold text-emerald-700 uppercase tracking-widest">System Active</span>
-                </div>
-                
-                <button className="p-2 text-slate-400 hover:text-slate-900 transition-colors">
-                  <Bell className="w-5 h-5" />
-                </button>
-                <div className="h-8 w-px bg-slate-200 mx-1 hidden sm:block" />
-                <button className="flex items-center gap-2 p-1.5 pl-3 border border-slate-200 hover:border-slate-300 rounded-full bg-white transition-all">
-                  <span className="text-xs font-bold text-slate-700 hidden sm:inline">Architect</span>
-                  <div className="w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center text-slate-600">
-                    <User className="w-4 h-4" />
+                <div className="flex items-center gap-3">
+                  <div className="hidden sm:flex items-center gap-2 mr-4 px-3 py-1.5 bg-emerald-50 border border-emerald-100 rounded-full">
+                    <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                    <span className="text-[10px] font-bold text-emerald-700 uppercase tracking-widest">System Active</span>
                   </div>
-                </button>
-              </div>
+                  
+                  <NotificationBell />
+                  <div className="h-8 w-px bg-slate-200 mx-1 hidden sm:block" />
+                  <button 
+                    onClick={() => setShowProfile(true)}
+                    className="flex items-center gap-2 p-1.5 pl-3 border border-slate-200 hover:border-slate-300 rounded-full bg-white transition-all shadow-sm hover:shadow-md active:scale-95"
+                  >
+                    <span className="text-xs font-bold text-slate-700 hidden sm:inline">{user?.name || "Architect"}</span>
+                    <div className="w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center text-slate-600">
+                      <User className="w-4 h-4" />
+                    </div>
+                  </button>
+                </div>
             </div>
           </div>
         </nav>
         
         {/* Cinematic Hero Section */}
-        <section className={`relative pt-16 pb-20 overflow-hidden ${activeTab !== 'design' ? 'hidden lg:block' : ''}`}>
+        <section className={`relative pt-16 pb-20 overflow-hidden ${activeTab !== 'design' ? 'hidden' : ''}`}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
               <motion.div
@@ -369,10 +382,10 @@ export function HomeConfigurator() {
                   </span>
                 </div>
                 
-                <h1 className="text-5xl md:text-7xl font-bold text-slate-900 leading-[1.05] mb-8 font-rethink tracking-tight">
+                <h1 className="text-5xl md:text-7xl font-medium text-slate-900 leading-[1.05] mb-8 font-rethink tracking-tight">
                   Design the <br />
                   <span className="relative inline-block">
-                    <span className="relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Future</span>
+                    <span className="relative z-10 text-blue-600">Future</span>
                     <motion.div 
                       initial={{ width: 0 }}
                       animate={{ width: "100%" }}
@@ -383,27 +396,27 @@ export function HomeConfigurator() {
                   {" "}of Housing.
                 </h1>
                 
-                <p className="text-xl text-slate-500 leading-relaxed max-w-2xl mb-10 font-medium">
+                <p className="text-base text-slate-500 leading-relaxed max-w-2xl mb-10 font-medium whitespace-pre-wrap">
                   Harness advanced AI to synthesize complex architectural constraints into beautiful, functional living spaces. Real-time cost engineering meets high-fidelity design.
                 </p>
 
-                <div className="flex flex-wrap gap-4">
-                  <div className="flex items-center gap-3 px-6 py-4 bg-white border border-slate-200 rounded-2xl shadow-sm">
-                    <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600">
-                      <Zap className="w-5 h-5" />
+                <div className="grid grid-cols-2 gap-3 sm:gap-4">
+                  <div className="flex items-center gap-3 px-3 sm:px-6 py-4 bg-white border border-slate-200 rounded-2xl shadow-sm">
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 shrink-0 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600">
+                      <Zap className="w-4 h-4 sm:w-5 sm:h-5" />
                     </div>
                     <div>
                       <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Processing Speed</p>
-                      <p className="text-sm font-bold text-slate-900">Instant Synthesis</p>
+                      <p className="text-xs sm:text-sm font-bold text-slate-900">Instant Synthesis</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3 px-6 py-4 bg-white border border-slate-200 rounded-2xl shadow-sm">
-                    <div className="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600">
-                      <DollarSign className="w-5 h-5" />
+                  <div className="flex items-center gap-3 px-3 sm:px-6 py-4 bg-white border border-slate-200 rounded-2xl shadow-sm">
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 shrink-0 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600">
+                      <DollarSign className="w-4 h-4 sm:w-5 sm:h-5" />
                     </div>
                     <div>
                       <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Cost Accuracy</p>
-                      <p className="text-sm font-bold text-slate-900">±0.5% Variance</p>
+                      <p className="text-xs sm:text-sm font-bold text-slate-900">±0.5% Variance</p>
                     </div>
                   </div>
                 </div>
@@ -431,10 +444,6 @@ export function HomeConfigurator() {
                       </div>
                     </div>
                   </div>
-
-                  {/* Decorative Elements */}
-                  <div className="absolute -top-10 -right-10 w-32 h-32 bg-indigo-100 rounded-full -z-10 mix-blend-multiply opacity-70 animate-blob" />
-                  <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-blue-100 rounded-full -z-10 mix-blend-multiply opacity-70 animate-blob animation-delay-2000" />
                 </div>
               </motion.div>
             </div>
@@ -739,7 +748,7 @@ export function HomeConfigurator() {
             <div className="pt-4 flex flex-col gap-3">
               <Button 
                 onClick={handleCalculate} 
-                className="w-full bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white py-7 text-lg font-bold rounded-xl shadow-xl shadow-blue-200 transition-all active:scale-95"
+                className="w-full bg-blue-900 hover:bg-blue-800 text-white py-7 text-lg font-bold rounded-xl shadow-xl shadow-blue-900/20 transition-all active:scale-95"
               >
                 Assemble Architecture
                 <ArrowRight className="w-5 h-5 ml-2" />
@@ -1192,8 +1201,8 @@ export function HomeConfigurator() {
                         Financial Engineering & Timeline
                       </CardTitle>
                     </CardHeader>
-                    <CardContent className="p-8 space-y-10">
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    <CardContent className="p-4 sm:p-8 space-y-6 sm:space-y-10">
+                      <div className="grid grid-cols-2 gap-3 sm:gap-6">
                         {[
                           { label: "Total Capex", value: specification.totalCost, color: "text-blue-600" },
                           { label: "Cost/m²", value: specification.costPerSqm.toFixed(0), prefix: "$", color: "text-slate-900" },
@@ -1201,23 +1210,23 @@ export function HomeConfigurator() {
                           { label: "Delivery", value: specification.estimatedTimelineMonths, suffix: " Mo", color: "text-indigo-600" }
                         ].map((stat, i) => (
                           <div key={i} className="space-y-1">
-                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{stat.label}</p>
-                            <p className={`text-xl font-black font-rethink ${stat.color}`}>
+                            <p className="text-[8px] sm:text-[10px] font-semibold text-slate-400 uppercase tracking-widest">{stat.label}</p>
+                            <p className={`text-sm sm:text-xl font-medium font-rethink ${stat.color}`}>
                               {stat.prefix || "$"}{stat.value.toLocaleString()}{stat.suffix}
                             </p>
                           </div>
                         ))}
                       </div>
 
-                      <div className="bg-slate-50 border border-slate-200 rounded-2xl p-6 flex items-center justify-between">
+                      <div className="bg-slate-50 border border-slate-200 rounded-lg sm:rounded-2xl p-4 sm:p-6 space-y-4 sm:space-y-0 sm:flex sm:items-center sm:justify-between">
                         <div>
-                          <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Efficiency Phase</p>
-                          <h4 className="text-lg font-bold text-slate-900 font-rethink">Budget Utilization</h4>
+                          <p className="text-[8px] sm:text-[10px] font-semibold text-slate-400 uppercase tracking-widest mb-1">Efficiency Phase</p>
+                          <h4 className="text-base sm:text-lg font-medium text-slate-900 font-rethink">Budget Utilization</h4>
                         </div>
-                        <div className="flex items-center gap-4">
-                          <div className="text-right">
-                            <p className="text-[10px] font-bold text-slate-400 uppercase">Status</p>
-                            <Badge className={`px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest ${
+                        <div className="grid grid-cols-2 gap-3 sm:flex sm:gap-4">
+                          <div className="text-center sm:text-right">
+                            <p className="text-[8px] sm:text-[10px] font-medium text-slate-400 uppercase">Status</p>
+                            <Badge className={`px-2 sm:px-4 py-1 sm:py-1.5 rounded-full text-[9px] sm:text-xs font-medium uppercase tracking-widest ${
                               budgetStatus === 'over' 
                                 ? "bg-red-500 hover:bg-red-600 text-white" 
                                 : budgetStatus === 'under'
@@ -1227,25 +1236,25 @@ export function HomeConfigurator() {
                               {budgetStatus === 'over' ? 'Over Budget' : budgetStatus === 'under' ? 'Under Budget' : 'Within Budget'}
                             </Badge>
                           </div>
-                          <div className="w-px h-10 bg-slate-200" />
-                          <div className="text-right">
-                            <p className="text-[10px] font-bold text-slate-400 uppercase">Remaining</p>
-                            <p className={`text-sm font-black ${specification.remainingBudget >= 0 ? 'text-emerald-600' : 'text-red-500'}`}>
+                          <div className="w-px h-8 bg-slate-200 hidden sm:block" />
+                          <div className="text-center sm:text-right">
+                            <p className="text-[8px] sm:text-[10px] font-medium text-slate-400 uppercase">Remaining</p>
+                            <p className={`text-xs sm:text-sm font-medium ${specification.remainingBudget >= 0 ? 'text-emerald-600' : 'text-red-500'}`}>
                               {specification.remainingBudget >= 0 ? '+' : ''}${specification.remainingBudget.toLocaleString()}
                             </p>
                           </div>
                         </div>
                       </div>
 
-                      <div className="space-y-6">
-                         <div className="flex items-center justify-between">
-                            <h4 className="text-sm font-bold text-slate-900 uppercase tracking-widest flex items-center gap-2">
+                      <div className="space-y-4 sm:space-y-6">
+                         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                            <h4 className="text-xs sm:text-sm font-semibold text-slate-900 uppercase tracking-widest flex items-center gap-2">
                               <Calendar className="w-4 h-4 text-indigo-500" />
                               Construction Phases
                             </h4>
-                            <Badge variant="outline" className="text-[10px]">Estimated Efficiency: 94%</Badge>
+                            <Badge variant="outline" className="text-[8px] sm:text-[10px] w-fit">Estimated Efficiency: 94%</Badge>
                          </div>
-                         <div className="relative pl-8 space-y-8 before:absolute before:inset-y-0 before:left-3 before:w-px before:bg-slate-200">
+                         <div className="relative pl-6 sm:pl-8 space-y-6 sm:space-y-8 before:absolute before:inset-y-0 before:left-2 sm:before:left-3 before:w-px before:bg-slate-200">
                             {[
                               { phase: "Planning & Permits", duration: "1-2 Months", progress: 100 },
                               { phase: "Site Preparation", duration: "1 Month", progress: 0 },
@@ -1253,13 +1262,13 @@ export function HomeConfigurator() {
                               { phase: "Systems & Finishing", duration: "2 Months", progress: 0 }
                             ].map((p, i) => (
                               <div key={i} className="relative group">
-                                <div className={`absolute top-0 -left-8 w-6 h-6 rounded-full border-4 border-white shadow-sm flex items-center justify-center ${i === 0 ? "bg-emerald-500" : "bg-slate-200"}`} />
-                                <div className="flex justify-between items-start">
+                                <div className={`absolute top-0 -left-5 sm:-left-8 w-5 sm:w-6 h-5 sm:h-6 rounded-full border-3 sm:border-4 border-white shadow-sm flex items-center justify-center ${i === 0 ? "bg-emerald-500" : "bg-slate-200"}`} />
+                                <div className="flex justify-between items-start gap-2">
                                   <div>
-                                    <p className="text-xs font-bold text-slate-900">{p.phase}</p>
-                                    <p className="text-[10px] text-slate-400 font-medium">{p.duration}</p>
+                                    <p className="text-xs sm:text-sm font-medium text-slate-900">{p.phase}</p>
+                                    <p className="text-[10px] sm:text-[10px] text-slate-400 font-medium">{p.duration}</p>
                                   </div>
-                                  {i === 0 && <Badge className="bg-emerald-100 text-emerald-700 text-[8px] border-none shadow-none">COMPLETED</Badge>}
+                                  {i === 0 && <Badge className="bg-emerald-100 text-emerald-700 text-[8px] border-none shadow-none mt-0.5">COMPLETED</Badge>}
                                 </div>
                               </div>
                             ))}
@@ -1272,7 +1281,7 @@ export function HomeConfigurator() {
                   <div className="lg:col-span-4 space-y-6">
                     <Card className="border-emerald-200 bg-emerald-50/50 backdrop-blur-xl shadow-xl border">
                       <CardHeader className="py-5">
-                        <CardTitle className="text-sm font-bold flex items-center gap-2 text-emerald-900">
+                        <CardTitle className="text-sm font-medium flex items-center gap-2 text-emerald-900">
                           <TrendingUp className="w-4 h-4" />
                           Investment Advisor
                         </CardTitle>
@@ -1281,7 +1290,7 @@ export function HomeConfigurator() {
                         {getExpertAdvice().filter(a => a.type === 'financial').map((advice, i) => (
                           <div key={i} className="bg-white/80 p-4 rounded-xl border border-emerald-100 shadow-sm space-y-2">
                             <div className="flex justify-between items-center">
-                              <span className="text-[10px] font-black text-emerald-600 uppercase tracking-widest">{advice.title}</span>
+                              <span className="text-[10px] font-medium text-emerald-600 uppercase tracking-widest">{advice.title}</span>
                               <Badge className="bg-emerald-100 text-emerald-700 text-[8px] border-none">{advice.impact}</Badge>
                             </div>
                             <p className="text-[11px] text-slate-600 leading-relaxed font-medium">{advice.text}</p>
@@ -1291,11 +1300,11 @@ export function HomeConfigurator() {
                     </Card>
 
                     <div className="p-8 bg-gradient-to-br from-indigo-600 to-blue-700 rounded-[2.5rem] text-white shadow-2xl shadow-indigo-500/20">
-                      <h4 className="text-2xl font-black font-rethink mb-4 leading-tight">Secure Your<br />Asset's Value.</h4>
+                      <h4 className="text-2xl font-semibold font-rethink mb-4 leading-tight">Secure Your<br />Asset's Value.</h4>
                       <p className="text-xs text-indigo-100 mb-8 leading-relaxed font-medium opacity-80">
                         Resale projections for "{config.style}" archetypes in {config.country} show a 22% premium over standard builds due to integrated architectural efficiency.
                       </p>
-                      <Button className="w-full bg-white text-indigo-600 hover:bg-indigo-50 font-bold rounded-2xl py-6">
+                      <Button className="w-full bg-white text-indigo-600 hover:bg-indigo-50 font-medium rounded-2xl py-6">
                         Unlock Yield Report
                       </Button>
                     </div>
@@ -1308,67 +1317,81 @@ export function HomeConfigurator() {
       </div>
       
       {/* Mobile-First Navigation Bar */}
-      <div className="fixed bottom-6 left-4 right-4 z-50 lg:hidden">
-        <div className="bg-white/90 backdrop-blur-2xl border border-slate-200 rounded-3xl h-20 shadow-2xl flex items-center justify-around px-2 relative">
-          <button 
-            suppressHydrationWarning
-            onClick={() => setActiveTab('design')}
-            className={`flex flex-col items-center gap-1 transition-all px-4 relative z-10 ${activeTab === 'design' ? 'text-blue-400' : 'text-slate-400'}`}
-          >
-            <Settings2 className="w-5 h-5" />
-            <span className="text-[10px] font-semibold uppercase tracking-widest">Design</span>
-            {activeTab === 'design' && (
-              <motion.div layoutId="activeTab" className="absolute -inset-y-2 -inset-x-1 bg-white/5 rounded-2xl -z-10" />
-            )}
-          </button>
-          
-          <button 
-            suppressHydrationWarning
-            onClick={() => setActiveTab('blueprint')}
-            className={`flex flex-col items-center gap-1 transition-all px-4 relative z-10 ${activeTab === 'blueprint' ? 'text-blue-400' : 'text-slate-400'}`}
-          >
-            <Maximize2 className="w-5 h-5" />
-            <span className="text-[10px] font-semibold uppercase tracking-widest">Blueprint</span>
-            {activeTab === 'blueprint' && (
-              <motion.div layoutId="activeTab" className="absolute -inset-y-2 -inset-x-1 bg-white/5 rounded-2xl -z-10" />
-            )}
-          </button>
-
-          <div className="relative -top-8 -mx-2">
-            <motion.button 
+      <div className="fixed bottom-6 left-6 right-6 z-50 lg:hidden pointer-events-none">
+        <div className="mx-auto max-w-md pointer-events-auto">
+          <div className="bg-white/80 backdrop-blur-3xl border border-white/40 rounded-[2rem] h-20 shadow-[0_20px_50px_rgba(0,0,0,0.1)] flex items-center justify-between px-3 relative overflow-hidden">
+            
+            <button 
               suppressHydrationWarning
-              whileTap={{ scale: 0.9 }}
-              onClick={handleCalculate}
-              className="w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full shadow-xl shadow-blue-500/40 flex items-center justify-center text-white ring-4 ring-slate-900"
+              onClick={() => setActiveTab('design')}
+              className={`flex-1 flex flex-col items-center justify-center gap-1 transition-all relative z-10 ${activeTab === 'design' ? 'text-blue-600' : 'text-slate-400 hover:text-slate-600'}`}
             >
-              <Zap className="w-7 h-7" />
-            </motion.button>
+              <LayoutList className={`w-5 h-5 transition-transform duration-300 ${activeTab === 'design' ? 'scale-110' : ''}`} />
+              <span className="text-[10px] font-bold tracking-tight">Design</span>
+              {activeTab === 'design' && (
+                <motion.div layoutId="mobileActiveTab" className="absolute bottom-0 w-1 h-1 bg-blue-600 rounded-full" />
+              )}
+            </button>
+            
+            <button 
+              suppressHydrationWarning
+              onClick={() => setActiveTab('blueprint')}
+              className={`flex-1 flex flex-col items-center justify-center gap-1 transition-all relative z-10 ${activeTab === 'blueprint' ? 'text-blue-600' : 'text-slate-400 hover:text-slate-600'}`}
+            >
+              <Maximize2 className={`w-5 h-5 transition-transform duration-300 ${activeTab === 'blueprint' ? 'scale-110' : ''}`} />
+              <span className="text-[10px] font-bold tracking-tight">Blueprint</span>
+              {activeTab === 'blueprint' && (
+                <motion.div layoutId="mobileActiveTab" className="absolute bottom-0 w-1 h-1 bg-blue-600 rounded-full" />
+              )}
+            </button>
+
+            <div className="flex-1 flex justify-center -mt-12 relative z-20">
+              <motion.button 
+                suppressHydrationWarning
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => window.location.href = "/"}
+                className="w-16 h-16 bg-gradient-to-br from-blue-600 via-blue-500 to-indigo-600 rounded-full shadow-[0_12px_24px_rgba(37,99,235,0.4)] flex items-center justify-center text-white ring-8 ring-white/60 backdrop-blur-md relative group"
+              >
+                <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <HomeIcon className="w-7 h-7 relative z-10" />
+              </motion.button>
+            </div>
+
+            <button 
+              suppressHydrationWarning
+              onClick={() => setActiveTab('finance')}
+              className={`flex-1 flex flex-col items-center justify-center gap-1 transition-all relative z-10 ${activeTab === 'finance' ? 'text-blue-600' : 'text-slate-400 hover:text-slate-600'}`}
+            >
+              <DollarSign className={`w-5 h-5 transition-transform duration-300 ${activeTab === 'finance' ? 'scale-110' : ''}`} />
+              <span className="text-[10px] font-bold tracking-tight">Finance</span>
+              {activeTab === 'finance' && (
+                <motion.div layoutId="mobileActiveTab" className="absolute bottom-0 w-1 h-1 bg-blue-600 rounded-full" />
+              )}
+            </button>
+
+            <button 
+              suppressHydrationWarning
+              onClick={() => window.location.href = "/"}
+              className="flex-1 flex flex-col items-center justify-center gap-1 text-slate-400 hover:text-red-500 transition-all relative z-10"
+            >
+              <ArrowLeft className="w-5 h-5" />
+              <span className="text-[10px] font-bold tracking-tight">Exit</span>
+            </button>
           </div>
-
-          <button 
-            suppressHydrationWarning
-            onClick={() => setActiveTab('finance')}
-            className={`flex flex-col items-center gap-1 transition-all px-4 relative z-10 ${activeTab === 'finance' ? 'text-blue-400' : 'text-slate-400'}`}
-          >
-            <DollarSign className="w-5 h-5" />
-            <span className="text-[10px] font-semibold uppercase tracking-widest">Finance</span>
-            {activeTab === 'finance' && (
-              <motion.div layoutId="activeTab" className="absolute -inset-y-2 -inset-x-1 bg-white/5 rounded-2xl -z-10" />
-            )}
-          </button>
-
-          <button 
-            suppressHydrationWarning
-            onClick={() => window.location.href = "/"}
-            className="flex flex-col items-center gap-1 text-slate-400 px-4"
-          >
-            <ArrowLeft className="w-5 h-5" />
-            <span className="text-[10px] font-semibold uppercase tracking-widest">Exit</span>
-          </button>
         </div>
       </div>
+
+      {showProfile && (
+        <UserProfile 
+          onClose={() => setShowProfile(false)} 
+          projectCount={0} // These can be dynamic if needed
+          completedCount={0}
+          inProgressCount={0}
+        />
+      )}
     </div>
-  </div>
+
   )
 }
 

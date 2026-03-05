@@ -122,6 +122,9 @@
   body {
     @apply bg-background text-foreground;
   }
+  img {
+    content-visibility: auto;
+  }
 }
 
 /* Hide scrollbar for mobile tab scrolling */

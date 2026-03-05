@@ -94,17 +94,17 @@ export const STYLE_IMAGES: Record<string, string[][]> = {
   bathroom: [
     // Spa Sanctuary
     [
-      "https://i.pinimg.com/736x/00/61/11/00611107279ad7de9d543d2f35b06cde.jpg",
+           "https://i.pinimg.com/736x/00/61/11/00611107279ad7de9d543d2f35b06cde.jpg",
       "https://i.pinimg.com/1200x/c9/97/77/c997779dfe94e22a6dbe804c7fbdf441.jpg",
       "https://i.pinimg.com/1200x/ab/24/21/ab24212d535836594f4d5dfbc95c2dd4.jpg",
       "https://i.pinimg.com/1200x/01/5c/5c/015c5c88c16128b86cd819c4de4e8bd2.jpg"
     ],
     // Monochrome Edge
     [
-      "https://images.unsplash.com/photo-1604709867295-24c4d14739d2?w=800&q=80",
-      "https://images.unsplash.com/photo-1616627686502-315ec0904f8e?w=800&q=80",
-      "https://images.unsplash.com/photo-1586105251261-72a756654a11?w=800&q=80",
-      "https://images.unsplash.com/photo-1620626011761-996317702782?w=800&q=80"
+      "https://i.pinimg.com/736x/72/68/6b/72686b855aab00ff7f962954d7eb581b.jpg",
+      "https://i.pinimg.com/736x/2f/f7/25/2ff72583497c31aee761b94e67e6671b.jpg",
+      "https://i.pinimg.com/1200x/f4/50/87/f450876df427f6e12cdecfb3cc81cc51.jpg",
+      "https://i.pinimg.com/1200x/79/4d/f3/794df3a8f5c8e6b6f2e5a7c8b2d1e4f5.jpg"
     ],
     // Terrazzo Fresh
     [
@@ -175,7 +175,7 @@ export const INTERIOR_SUGGESTIONS: Record<string, {
   bathroom: {
     styles: [
       { name: "Spa Sanctuary",   emoji: "🛁", description: "Walk-in shower, floating vanity, warm tiles",     palette: ["#E8DDD0", "#2D2D2D", "#C4A882", "#7A9E9F"], images: ["https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=800&q=80", "https://images.unsplash.com/photo-1507089947368-19c1da9775ae?w=800&q=80", "https://images.unsplash.com/photo-1514897575457-c4db467cf4c7?w=800&q=80", "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800&q=80"] },
-      { name: "Monochrome Edge", emoji: "🖤", description: "Black fixtures, large-format white tiles",         palette: ["#FFFFFF", "#1A1A1A", "#888888", "#F0F0F0"], images: ["https://images.unsplash.com/photo-1604709867295-24c4d14739d2?w=800&q=80", "https://images.unsplash.com/photo-1616627686502-315ec0904f8e?w=800&q=80", "https://images.unsplash.com/photo-1586105251261-72a756654a11?w=800&q=80", "https://images.unsplash.com/photo-1620626011761-996317702782?w=800&q=80"] },
+      { name: "Monochrome Edge", emoji: "🖤", description: "Black fixtures, large-format white tiles",         palette: ["#FFFFFF", "#1A1A1A", "#888888", "#F0F0F0"], images: ["https://i.pinimg.com/1200x/f4/50/87/f450876df427f6e12cdecfb3cc81cc51.jpg", "https://i.pinimg.com/736x/5d/c3/7d/5dc37d70365b5dc10d0607ef73399e4c.jpg", "https://images.unsplash.com/photo-1586105251261-72a756654a11?w=800&q=80", "https://images.unsplash.com/photo-1620626011761-996317702782?w=800&q=80"] },
       { name: "Terrazzo Fresh",  emoji: "🟤", description: "Terrazzo tiles, brass accents, plants",            palette: ["#F5EEE8", "#C9956B", "#4A7B6F", "#2D2D2D"], images: ["https://images.unsplash.com/photo-1507089947368-19c1da9775ae?w=800&q=80", "https://images.unsplash.com/photo-1620626011761-996317702782?w=800&q=80", "https://images.unsplash.com/photo-1514897575457-c4db467cf4c7?w=800&q=80", "https://images.unsplash.com/photo-1490818387583-1baba5e638af?w=800&q=80"] },
     ],
     furniture: ["Floating vanity with under-sink storage", "Large-format floor tiles", "Walk-in shower or bath/shower combo", "Towel rail / heated rail", "Recessed shelving"],

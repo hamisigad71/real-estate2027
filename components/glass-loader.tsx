@@ -123,7 +123,7 @@ export function GlassLoader({
         {/* Main glass container - Perfectly centered */}
         <div className="relative flex items-center justify-center px-4 sm:px-6">
           <div
-            className="relative bg-white/8 backdrop-blur-2xl rounded-3xl p-8 sm:p-12 border border-white/20 shadow-2xl animate-in fade-in duration-500"
+            className="relative bg-white/8 backdrop-blur-sm rounded-3xl p-8 sm:p-12 border border-white/20 shadow-2xl animate-in fade-in duration-500"
             style={{
               boxShadow:
                 "0 8px 32px 0 rgba(31, 38, 135, 0.37), inset 0 0 32px rgba(255, 255, 255, 0.1)",

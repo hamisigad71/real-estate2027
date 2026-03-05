@@ -8,6 +8,8 @@ import { AuthProvider } from "@/components/auth-provider";
 import { Footer } from "@/components/footer";
 import { PageNavigator } from "@/components/page-navigator";
 import { ToastProvider } from "@/components/toast-provider";
+import { ScrollToTop } from "@/components/scroll-to-top";
+import { PageTransitionLoader } from "@/components/page-transition-loader";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -53,6 +55,8 @@ export default function RootLayout({
         className={`${inter.className} antialiased bg-background text-foreground min-h-screen flex flex-col`}
         suppressHydrationWarning
       >
+        <ScrollToTop />
+        <PageTransitionLoader />
         <ToastProvider>
           <AuthProvider>
               {/* Main Content Area */}

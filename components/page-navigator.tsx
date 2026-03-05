@@ -12,6 +12,7 @@ export function PageNavigator() {
 
   // Determine if we should show the nav
   const isAuthPage = pathname === "/" && !user;
+  const isConfiguratorPage = pathname === "/home-configurator";
 
   const handleBack = useCallback(() => {
     router.back();
@@ -21,7 +22,7 @@ export function PageNavigator() {
     router.forward();
   }, [router]);
 
-  return !isAuthPage ? (
+  return (!isAuthPage && !isConfiguratorPage) ? (
     <FloatingPageNav
       onPrevious={handleBack}
       onNext={handleForward}

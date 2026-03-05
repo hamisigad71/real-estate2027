@@ -17,6 +17,7 @@ export function GlobalFloatingNav() {
   const isAuthPage = pathname === "/" && !user
   const isProjectPage = pathname.startsWith("/project/")
   const isDashboardPage = pathname === "/" && user
+  const isConfiguratorPage = pathname === "/home-configurator"
 
   // Extract project ID from URL if on project page
   const projectIdMatch = pathname.match(/\/project\/([^/]+)/)
@@ -48,8 +49,8 @@ export function GlobalFloatingNav() {
     }
   }, [currentProjectIndex, allProjects])
 
-  // Don't show on auth pages or when not authenticated
-  if (isAuthPage || !user) {
+  // Don't show on auth pages, configurator, or when not authenticated
+  if (isAuthPage || isConfiguratorPage || !user) {
     return null
   }
 

@@ -59,20 +59,20 @@ export function FloatingPageNav({
 
   return (
     <div
-      className={`fixed bottom-8 left-1/2 -translate-x-1/2 transition-all duration-500 ease-out z-50 ${
+      className={`fixed bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 transition-all duration-500 ease-out z-50 w-full sm:w-auto px-4 sm:px-0 ${
         isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-20 pointer-events-none"
       }`}
     >
       <div className="relative">
         {/* Main container */}
-        <div className="relative flex items-center gap-1 bg-gradient-to-br from-white/95 to-slate-50/95 backdrop-blur-xl rounded-full shadow-2xl border border-white/50 px-2 py-2 ring-1 ring-white/20">
+        <div className="relative flex items-center gap-0.5 sm:gap-1 bg-gradient-to-br from-white/95 to-slate-50/95 backdrop-blur-xl rounded-full shadow-2xl border border-white/50 px-1.5 sm:px-2 py-1.5 sm:py-2 ring-1 ring-white/20">
           {/* Previous Button */}
           <button
             onClick={onPrevious}
             disabled={!canGoPrev}
             onMouseEnter={() => setHoveredButton("prev")}
             onMouseLeave={() => setHoveredButton(null)}
-            className={`relative p-3 rounded-full transition-all duration-200 flex items-center justify-center group overflow-hidden ${
+            className={`relative p-2 sm:p-3 rounded-full transition-all duration-200 flex items-center justify-center group overflow-hidden ${
               canGoPrev
                 ? "cursor-pointer hover:bg-gradient-to-br hover:from-blue-400/20 hover:to-blue-500/20"
                 : "opacity-30 cursor-not-allowed"
@@ -85,8 +85,8 @@ export function FloatingPageNav({
             )}
             <div className="relative">
               <ChevronLeft
-                size={24}
-                className={`transition-all duration-200 ${
+                size={20}
+                className={`sm:h-6 sm:w-6 transition-all duration-200 ${
                   hoveredButton === "prev" && canGoPrev
                     ? "text-blue-600 scale-110"
                     : "text-slate-600"
@@ -97,43 +97,43 @@ export function FloatingPageNav({
           </button>
 
           {/* Divider */}
-          <div className="w-px h-6 bg-gradient-to-b from-transparent via-slate-300 to-transparent opacity-40 mx-1"></div>
+          <div className="w-px h-5 sm:h-6 bg-gradient-to-b from-transparent via-slate-300 to-transparent opacity-40 mx-0.5 sm:mx-1"></div>
 
           {/* Home Button */}
           <a
             href="/"
-            className="relative p-3 rounded-full transition-all duration-200 flex items-center justify-center group overflow-hidden cursor-pointer hover:bg-gradient-to-br hover:from-blue-400/20 hover:to-indigo-500/20"
+            className="relative p-2 sm:p-3 rounded-full transition-all duration-200 flex items-center justify-center group overflow-hidden cursor-pointer hover:bg-gradient-to-br hover:from-blue-400/20 hover:to-indigo-500/20"
             aria-label="Go to home"
           >
             {/* Ripple effect */}
             <div className="absolute inset-0 bg-blue-400/10 rounded-full animate-pulse opacity-0 group-hover:opacity-100"></div>
             <div className="relative">
               <Home
-                size={24}
-                className="transition-all duration-200 text-slate-600 group-hover:text-blue-600 group-hover:scale-110"
+                size={20}
+                className="sm:h-6 sm:w-6 transition-all duration-200 text-slate-600 group-hover:text-blue-600 group-hover:scale-110"
                 strokeWidth={2.5}
               />
             </div>
           </a>
 
           {/* Divider */}
-          <div className="w-px h-6 bg-gradient-to-b from-transparent via-slate-300 to-transparent opacity-40 mx-1"></div>
+          <div className="w-px h-5 sm:h-6 bg-gradient-to-b from-transparent via-slate-300 to-transparent opacity-40 mx-0.5 sm:mx-1"></div>
 
           {/* Page Indicator - Enhanced */}
           {currentPage !== undefined && totalPages !== undefined && (
-            <div className="px-4 py-2 text-sm font-bold tracking-wider">
-              <div className="flex items-center gap-2">
+            <div className="px-2 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-bold tracking-wider">
+              <div className="flex items-center gap-1.5 sm:gap-2">
                 <div className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
                   {currentPage}
                 </div>
-                <span className="text-slate-400 text-xs font-normal">/</span>
-                <div className="text-slate-500">{totalPages}</div>
+                <span className="text-slate-400 text-[10px] sm:text-xs font-normal">/</span>
+                <div className="text-slate-500 text-xs sm:text-sm">{totalPages}</div>
               </div>
             </div>
           )}
 
           {/* Divider */}
-          <div className="w-px h-6 bg-gradient-to-b from-transparent via-slate-300 to-transparent opacity-40 mx-1"></div>
+          <div className="w-px h-5 sm:h-6 bg-gradient-to-b from-transparent via-slate-300 to-transparent opacity-40 mx-0.5 sm:mx-1"></div>
 
           {/* Next Button */}
           <button
@@ -141,7 +141,7 @@ export function FloatingPageNav({
             disabled={!canGoNext}
             onMouseEnter={() => setHoveredButton("next")}
             onMouseLeave={() => setHoveredButton(null)}
-            className={`relative p-3 rounded-full transition-all duration-200 flex items-center justify-center group overflow-hidden ${
+            className={`relative p-2 sm:p-3 rounded-full transition-all duration-200 flex items-center justify-center group overflow-hidden ${
               canGoNext
                 ? "cursor-pointer hover:bg-gradient-to-br hover:from-purple-400/20 hover:to-purple-500/20"
                 : "opacity-30 cursor-not-allowed"
@@ -154,8 +154,8 @@ export function FloatingPageNav({
             )}
             <div className="relative">
               <ChevronRight
-                size={24}
-                className={`transition-all duration-200 ${
+                size={20}
+                className={`sm:h-6 sm:w-6 transition-all duration-200 ${
                   hoveredButton === "next" && canGoNext
                     ? "text-purple-600 scale-110"
                     : "text-slate-600"
@@ -167,14 +167,14 @@ export function FloatingPageNav({
 
           {/* Status indicator dots */}
           {currentPage !== undefined && totalPages !== undefined && (
-            <div className="ml-2 pl-2 border-l  flex gap-1.5">
+            <div className="hidden sm:flex ml-1 sm:ml-2 pl-1 sm:pl-2 border-l border-slate-200 gap-1">
               {Array.from({ length: Math.min(totalPages, 5) }).map((_, i) => (
                 <div
                   key={i}
-                  className={`h-1.5 rounded-full transition-all duration-300 ${
+                  className={`h-1 sm:h-1.5 rounded-full transition-all duration-300 ${
                     i < currentPage
-                      ? "bg-gradient-to-r from-blue-500 to-purple-500 w-2"
-                      : "bg-slate-300 w-1.5"
+                      ? "bg-gradient-to-r from-blue-500 to-purple-500 w-1.5 sm:w-2"
+                      : "bg-slate-300 w-1 sm:w-1.5"
                   }`}
                 ></div>
               ))}
@@ -184,7 +184,7 @@ export function FloatingPageNav({
       </div>
 
       {/* Keyboard shortcut hint */}
-      <div className="mt-3 text-center text-xs text-slate-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+      <div className="hidden sm:block mt-3 text-center text-xs text-slate-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
         Use ← → to navigate
       </div>
     </div>

@@ -291,17 +291,17 @@ export function AuthForm() {
         {/* Animated gradient orbs */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div
-            className="absolute -top-32 -left-32 w-[500px] h-[500px] rounded-full opacity-[0.07]"
+            className="absolute -top-32 -left-32 w-[500px] h-[500px] rounded-full opacity-[0.04]"
             style={{
               background: "radial-gradient(circle, #3b82f6 0%, transparent 70%)",
-              animation: mounted ? "float1 18s ease-in-out infinite" : "none",
+              animation: mounted ? "float1 35s ease-in-out infinite" : "none",
             }}
           />
           <div
-            className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full opacity-[0.05]"
+            className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full opacity-[0.03]"
             style={{
               background: "radial-gradient(circle, #60a5fa 0%, transparent 70%)",
-              animation: mounted ? "float2 22s ease-in-out infinite" : "none",
+              animation: mounted ? "float2 45s ease-in-out infinite" : "none",
             }}
           />
           {/* Subtle grid overlay */}
@@ -391,11 +391,12 @@ export function AuthForm() {
       {/* ════════════════════════════════════════════════════════
           RIGHT — AUTH FORMS
          ════════════════════════════════════════════════════════ */}
-      <div className="flex-1 flex items-center justify-center p-6 sm:p-10 lg:p-16 bg-gradient-to-br from-slate-50/80 via-white to-blue-50/30">
+      <div className="flex-1 flex flex-col items-center justify-center p-6 sm:p-10 lg:p-16 bg-gradient-to-br from-slate-50/80 via-white to-blue-50/30">
         <div className="w-full max-w-md">
-          {/* Mobile logo header */}
-          <div className="lg:hidden mb-8">
-            <div className="flex items-center gap-3 mb-2">
+          {/* Mobile Hero Section */}
+          <div className="lg:hidden mb-12">
+            {/* Logo header */}
+            <div className="flex items-center gap-3 mb-8">
               <div className="w-11 h-11 rounded-xl bg-[#0a1628] flex items-center justify-center">
                 <LogoIconWhite size={26} />
               </div>
@@ -405,6 +406,39 @@ export function AuthForm() {
                   Smart Housing Planning
                 </p>
               </div>
+            </div>
+
+            {/* Hero Content */}
+            <div className="space-y-6 text-center">
+              <div className="space-y-3">
+                <h1 className="text-3xl font-bold text-slate-900 leading-tight">
+                  Design the Future of Housing
+                </h1>
+                <p className="text-sm text-slate-600 leading-relaxed">
+                  Harness advanced AI to synthesize complex architectural constraints into beautiful, functional living spaces. Real-time cost engineering meets high-fidelity design.
+                </p>
+              </div>
+
+              {/* CTA Buttons */}
+              <div className="flex gap-3 pt-2">
+                <button
+                  onClick={() => setActiveTab("signup")}
+                  className="flex-1 h-11 inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-sm font-semibold text-slate-900 transition-all"
+                >
+                  Explore Features
+                </button>
+                <button
+                  onClick={() => setActiveTab("signup")}
+                  className="flex-1 h-11 inline-flex items-center justify-center rounded-xl bg-[#0a1628] hover:bg-[#0a1628]/90 text-sm font-semibold text-white transition-all"
+                >
+                  Get Started
+                </button>
+              </div>
+
+              {/* Trust text */}
+              <p className="text-xs text-slate-500 font-medium pt-2">
+                No credit card required
+              </p>
             </div>
           </div>
 

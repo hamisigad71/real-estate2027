@@ -34,6 +34,10 @@ import { CreateProjectDialog } from "./create-project-dialog";
 import { ProjectCard } from "./project-card";
 import { UserProfile } from "./user-profile";
 import { GetStartedGuide } from "./get-started-guide";
+import { NotificationBell } from "./notification-bell";
+import { UserProfileMenu } from "./user-profile-menu";
+import { SettingsModal } from "./settings-modal";
+import { AnalyticsModal } from "./analytics-modal";
 
 export function ProjectsDashboard() {
   const { user, logout } = useAuth();
@@ -42,6 +46,8 @@ export function ProjectsDashboard() {
   const [showCreateDialog, setShowCreateDialog] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
+  const [showAnalytics, setShowAnalytics] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -153,22 +159,23 @@ export function ProjectsDashboard() {
               </nav>
 
               <div className="flex items-center gap-3 pl-6 border-l border-slate-200">
-                <button className="p-2 text-slate-400 hover:text-slate-900 transition-colors relative">
-                  <Bell className="w-5 h-5" />
-                  <span className="absolute top-2 right-2 w-2 h-2 bg-blue-600 rounded-full border-2 border-white" />
-                </button>
-                <button 
-                  onClick={() => {
+                <NotificationBell />
+                <UserProfileMenu 
+                  user={user} 
+                  onLogout={() => {
                     logout();
                     showInfo("You have been signed out successfully.");
                   }}
-                  className="flex items-center gap-2 p-1.5 pl-3 border border-slate-200 hover:border-slate-300 rounded-full bg-white transition-all"
-                >
-                  <span className="text-xs font-bold text-slate-700 hidden sm:inline">Sign Out</span>
-                  <div className="w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center text-slate-600">
-                    <LogOut className="w-4 h-4" />
-                  </div>
-                </button>
+                  onEditProfile={() => {
+                    setShowProfile(true);
+                  }}
+                  onSettings={() => {
+                    setShowSettings(true);
+                  }}
+                  onAnalytics={() => {
+                    setShowAnalytics(true);
+                  }}
+                />
               </div>
             </div>
 
@@ -491,6 +498,18 @@ export function ProjectsDashboard() {
             inProgressCount={projects.length}
           />
         )}
+
+        {/* Settings Modal */}
+        <SettingsModal
+          isOpen={showSettings}
+          onClose={() => setShowSettings(false)}
+        />
+
+        {/* Analytics Modal */}
+        <AnalyticsModal
+          isOpen={showAnalytics}
+          onClose={() => setShowAnalytics(false)}
+        />
       </main>
     </div>
   );
