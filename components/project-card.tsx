@@ -28,7 +28,7 @@ const projectTypeLabels: Record<Project["projectType"], string> = {
 };
 
 const projectTypeBadgeColors: Record<Project["projectType"], string> = {
-  apartment: "bg-blue-50 text-blue-800 border-blue-200",
+  apartment: "bg-[#F2EAF7] text-[#7A3F91] border-[#C59DD9]",
   "single-family": "bg-emerald-50 text-emerald-800 border-emerald-200",
   mixed: "bg-purple-50 text-purple-800 border-purple-200",
 };
@@ -76,7 +76,7 @@ export function ProjectCard({ project, onDelete }: ProjectCardProps) {
       <div
         className={`h-1 w-full ${
           project.projectType === "apartment"
-            ? "bg-blue-900"
+            ? "bg-[#2B0D3E]"
             : project.projectType === "single-family"
             ? "bg-emerald-500"
             : "bg-purple-500"
@@ -87,11 +87,11 @@ export function ProjectCard({ project, onDelete }: ProjectCardProps) {
         {/* Header row */}
         <div className="flex items-start justify-between gap-2 mb-3">
           <div className="min-w-0 flex-1">
-            <h3 className="font-semibold text-slate-900 text-sm leading-snug truncate group-hover:text-blue-900 transition-colors">
+            <h3 className="font-semibold text-slate-900 text-sm leading-snug truncate group-hover:text-[#7A3F91] transition-colors">
               {project.name}
             </h3>
             <div className="flex items-center gap-1 mt-1 text-xs text-slate-500">
-              <MapPin className="h-3 w-3 text-blue-700 shrink-0" />
+              <MapPin className="h-3 w-3 text-[#7A3F91] shrink-0" />
               <span className="truncate">
                 {project.location.city}, {project.location.country}
               </span>
@@ -120,7 +120,7 @@ export function ProjectCard({ project, onDelete }: ProjectCardProps) {
 
           <div className="bg-slate-50 rounded-lg px-3 py-2">
             <div className="flex items-center gap-1 mb-0.5">
-              <Building2 className="h-3 w-3 text-blue-700" />
+              <Building2 className="h-3 w-3 text-[#7A3F91]" />
               <span className="text-[10px] text-slate-500 font-medium">Land</span>
             </div>
             <p className="text-xs font-semibold text-slate-800">
@@ -176,7 +176,7 @@ export function ProjectCard({ project, onDelete }: ProjectCardProps) {
             <Button
               size="sm"
               onClick={handleOpen}
-              className="h-7 px-3 text-[10px] bg-blue-900 hover:bg-blue-800 text-white"
+              className="h-7 px-3 text-[10px] bg-[#2B0D3E] hover:bg-[#7A3F91] text-white"
             >
               Open
               <ArrowRight className="h-3 w-3 ml-1" />

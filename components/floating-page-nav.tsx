@@ -74,21 +74,21 @@ export function FloatingPageNav({
             onMouseLeave={() => setHoveredButton(null)}
             className={`relative p-2 sm:p-3 rounded-full transition-all duration-200 flex items-center justify-center group overflow-hidden ${
               canGoPrev
-                ? "cursor-pointer hover:bg-gradient-to-br hover:from-blue-400/20 hover:to-blue-500/20"
+                ? "cursor-pointer hover:bg-gradient-to-br hover:from-[#C59DD9]/20 hover:to-[#7A3F91]/20"
                 : "opacity-30 cursor-not-allowed"
             }`}
             aria-label="Previous project"
           >
             {/* Ripple effect */}
             {hoveredButton === "prev" && canGoPrev && (
-              <div className="absolute inset-0 bg-blue-400/10 rounded-full animate-pulse"></div>
+              <div className="absolute inset-0 bg-[#C59DD9]/10 rounded-full animate-pulse"></div>
             )}
             <div className="relative">
               <ChevronLeft
                 size={20}
                 className={`sm:h-6 sm:w-6 transition-all duration-200 ${
                   hoveredButton === "prev" && canGoPrev
-                    ? "text-blue-600 scale-110"
+                    ? "text-[#7A3F91] scale-110"
                     : "text-slate-600"
                 }`}
                 strokeWidth={2.5}
@@ -102,15 +102,15 @@ export function FloatingPageNav({
           {/* Home Button */}
           <a
             href="/"
-            className="relative p-2 sm:p-3 rounded-full transition-all duration-200 flex items-center justify-center group overflow-hidden cursor-pointer hover:bg-gradient-to-br hover:from-blue-400/20 hover:to-indigo-500/20"
+            className="relative p-2 sm:p-3 rounded-full transition-all duration-200 flex items-center justify-center group overflow-hidden cursor-pointer hover:bg-gradient-to-br hover:from-[#C59DD9]/20 hover:to-[#7A3F91]/20"
             aria-label="Go to home"
           >
             {/* Ripple effect */}
-            <div className="absolute inset-0 bg-blue-400/10 rounded-full animate-pulse opacity-0 group-hover:opacity-100"></div>
+            <div className="absolute inset-0 bg-[#C59DD9]/10 rounded-full animate-pulse opacity-0 group-hover:opacity-100"></div>
             <div className="relative">
               <Home
                 size={20}
-                className="sm:h-6 sm:w-6 transition-all duration-200 text-slate-600 group-hover:text-blue-600 group-hover:scale-110"
+                className="sm:h-6 sm:w-6 transition-all duration-200 text-slate-600 group-hover:text-[#7A3F91] group-hover:scale-110"
                 strokeWidth={2.5}
               />
             </div>
@@ -123,7 +123,7 @@ export function FloatingPageNav({
           {currentPage !== undefined && totalPages !== undefined && (
             <div className="px-2 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-bold tracking-wider">
               <div className="flex items-center gap-1.5 sm:gap-2">
-                <div className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
+                <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#7A3F91] to-[#2B0D3E]">
                   {currentPage}
                 </div>
                 <span className="text-slate-400 text-[10px] sm:text-xs font-normal">/</span>
@@ -143,21 +143,21 @@ export function FloatingPageNav({
             onMouseLeave={() => setHoveredButton(null)}
             className={`relative p-2 sm:p-3 rounded-full transition-all duration-200 flex items-center justify-center group overflow-hidden ${
               canGoNext
-                ? "cursor-pointer hover:bg-gradient-to-br hover:from-purple-400/20 hover:to-purple-500/20"
+                ? "cursor-pointer hover:bg-gradient-to-br hover:from-[#C59DD9]/20 hover:to-[#2B0D3E]/20"
                 : "opacity-30 cursor-not-allowed"
             }`}
             aria-label="Next project"
           >
             {/* Ripple effect */}
             {hoveredButton === "next" && canGoNext && (
-              <div className="absolute inset-0 bg-purple-400/10 rounded-full animate-pulse"></div>
+              <div className="absolute inset-0 bg-[#C59DD9]/10 rounded-full animate-pulse"></div>
             )}
             <div className="relative">
               <ChevronRight
                 size={20}
                 className={`sm:h-6 sm:w-6 transition-all duration-200 ${
                   hoveredButton === "next" && canGoNext
-                    ? "text-purple-600 scale-110"
+                    ? "text-[#2B0D3E] scale-110"
                     : "text-slate-600"
                 }`}
                 strokeWidth={2.5}
@@ -173,7 +173,7 @@ export function FloatingPageNav({
                   key={i}
                   className={`h-1 sm:h-1.5 rounded-full transition-all duration-300 ${
                     i < currentPage
-                      ? "bg-gradient-to-r from-blue-500 to-purple-500 w-1.5 sm:w-2"
+                      ? "bg-gradient-to-r from-[#7A3F91] to-[#2B0D3E] w-1.5 sm:w-2"
                       : "bg-slate-300 w-1 sm:w-1.5"
                   }`}
                 ></div>

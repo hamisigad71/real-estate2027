@@ -15,6 +15,10 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select"
 import { Button } from "@/components/ui/button"
 import {
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer, Cell
+} from "recharts"
+import { Logo } from "./logo"
+import {
   Building2, Home as HomeIcon, Ruler, DollarSign, Sparkles,
   MapPin, Wind, Hammer, Box, Info, Layout,
   ChevronLeft, ChevronRight, Wand2, Download, Save,
@@ -40,7 +44,7 @@ const HOME_STYLES = [
     name: "Standard",
     description: "Modern Comfort",
     image: "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&q=80&w=800",
-    color: "blue"
+    color: "amethyst"
   },
   {
     id: "modern",
@@ -61,7 +65,7 @@ const HOME_STYLES = [
     name: "Luxury",
     description: "Premium Excellence",
     image: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&q=80&w=800",
-    color: "indigo"
+    color: "purple"
   }
 ]
 
@@ -83,8 +87,8 @@ const BLUEPRINT_PRESETS = [
     description: "Perfect for young families",
     image: "https://i.pinimg.com/1200x/a4/ed/d0/a4edd0aa052edf59746ecc7a4b89b121.jpg",
     rooms: [
-      { id: "p2-1", type: "master", name: "Master", x: 10, y: 10, width: 160, height: 140, color: "bg-blue-500" },
-      { id: "p2-2", type: "bedroom", name: "Suite 2", x: 180, y: 10, width: 160, height: 100, color: "bg-blue-400" },
+      { id: "p2-1", type: "master", name: "Master", x: 10, y: 10, width: 160, height: 140, color: "bg-slate-500" },
+      { id: "p2-2", type: "bedroom", name: "Suite 2", x: 180, y: 10, width: 160, height: 100, color: "bg-slate-400" },
       { id: "p2-3", type: "living", name: "Lounge", x: 10, y: 160, width: 240, height: 140, color: "bg-slate-400" },
       { id: "p2-4", type: "kitchen", name: "Kitchen", x: 260, y: 160, width: 90, height: 140, color: "bg-amber-400" },
       { id: "p2-5", type: "bathroom", name: "Bath", x: 180, y: 115, width: 160, height: 40, color: "bg-cyan-400" }
@@ -96,9 +100,9 @@ const BLUEPRINT_PRESETS = [
     description: "Spacious suburban living",
     image: "https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?auto=format&fit=crop&q=80&w=400",
     rooms: [
-       { id: "p3-1", type: "master", name: "Master", x: 10, y: 10, width: 140, height: 140, color: "bg-blue-500" },
-       { id: "p3-2", type: "bedroom", name: "Bed 2", x: 160, y: 10, width: 90, height: 100, color: "bg-blue-400" },
-       { id: "p3-3", type: "bedroom", name: "Bed 3", x: 260, y: 10, width: 90, height: 100, color: "bg-blue-400" },
+       { id: "p3-1", type: "master", name: "Master", x: 10, y: 10, width: 140, height: 140, color: "bg-slate-500" },
+       { id: "p3-2", type: "bedroom", name: "Bed 2", x: 160, y: 10, width: 90, height: 100, color: "bg-slate-400" },
+       { id: "p3-3", type: "bedroom", name: "Bed 3", x: 260, y: 10, width: 90, height: 100, color: "bg-slate-400" },
        { id: "p3-4", type: "living", name: "Great Room", x: 10, y: 160, width: 240, height: 150, color: "bg-slate-400" },
        { id: "p3-5", type: "kitchen", name: "Island Kitchen", x: 260, y: 160, width: 90, height: 150, color: "bg-amber-400" },
        { id: "p3-6", type: "bathroom", name: "Bath 1", x: 160, y: 115, width: 90, height: 40, color: "bg-cyan-400" },
@@ -111,9 +115,9 @@ const BLUEPRINT_PRESETS = [
     description: "Premium executive layout",
     image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=400",
     rooms: [
-      { id: "p4-1", type: "master", name: "Owner's Suite", x: 10, y: 10, width: 200, height: 160, color: "bg-blue-600" },
-      { id: "p4-2", type: "living", name: "Grand Hall", x: 220, y: 10, width: 130, height: 300, color: "bg-slate-500" },
-      { id: "p4-3", type: "office", name: "Tech Hub", x: 10, y: 180, width: 200, height: 130, color: "bg-indigo-400" },
+      { id: "p4-1", type: "master", name: "Owner's Suite", x: 10, y: 10, width: 200, height: 160, color: "bg-slate-500" },
+      { id: "p4-2", type: "living", name: "Grand Hall", x: 220, y: 10, width: 130, height: 300, color: "bg-slate-400" },
+      { id: "p4-3", type: "office", name: "Tech Hub", x: 10, y: 180, width: 200, height: 130, color: "bg-slate-300" },
       { id: "p4-4", type: "kitchen", name: "Chef's Kitchen", x: 20, y: 180, width: 190, height: 130, color: "bg-amber-400" },
     ]
   }
@@ -287,17 +291,14 @@ export function HomeConfigurator() {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex h-16 items-center justify-between">
               <div className="flex items-center gap-8">
-                <div 
-                  className="flex items-center gap-2.5 cursor-pointer group" 
+                <div                   className="flex items-center gap-2.5 cursor-pointer group" 
                   onClick={() => window.location.href = "/"}
                   title="Return to Dashboard"
                 >
-                  <div className="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-lg shadow-blue-500/20 group-hover:scale-105 transition-transform">
-                    <Building2 className="w-5 h-5" />
-                  </div>
+                  <Logo size={44} className="group-hover:scale-105 transition-transform" />
                   <div className="flex flex-col">
                     <span className="text-xl font-bold text-slate-900 tracking-tight font-rethink leading-none">StudioConfig.</span>
-                    <span className="text-[8px] font-black text-blue-600 uppercase tracking-widest mt-0.5">Architectural Engine</span>
+                    <span className="text-[8px] font-black text-[#7A3F91] uppercase tracking-widest mt-0.5">Architectural Engine</span>
                   </div>
                 </div>
 
@@ -326,17 +327,17 @@ export function HomeConfigurator() {
                 
                 <div className="hidden lg:flex items-center gap-1 bg-slate-100/50 p-1 rounded-xl border border-slate-200 ml-4">
                   {['design', 'blueprint', 'finance'].map((tab) => (
-                    <button
-                      key={tab}
-                      onClick={() => setActiveTab(tab as any)}
-                      className={`px-4 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all ${
-                        activeTab === tab 
-                          ? "bg-white text-blue-600 shadow-sm border border-slate-200" 
-                          : "text-slate-500 hover:text-slate-900"
-                      }`}
-                    >
-                      {tab}
-                    </button>
+                      <button
+                        key={tab}
+                        onClick={() => setActiveTab(tab as any)}
+                        className={`px-4 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all ${
+                          activeTab === tab 
+                            ? "bg-white text-[#7A3F91] shadow-sm border border-slate-200" 
+                            : "text-slate-500 hover:text-slate-900"
+                        }`}
+                      >
+                        {tab}
+                      </button>
                   ))}
                 </div>
               </div>
@@ -385,12 +386,12 @@ export function HomeConfigurator() {
                 <h1 className="text-5xl md:text-7xl font-medium text-slate-900 leading-[1.05] mb-8 font-rethink tracking-tight">
                   Design the <br />
                   <span className="relative inline-block">
-                    <span className="relative z-10 text-blue-600">Future</span>
+                    <span className="relative z-10 text-[#7A3F91]">Future</span>
                     <motion.div 
                       initial={{ width: 0 }}
                       animate={{ width: "100%" }}
                       transition={{ delay: 1, duration: 0.8 }}
-                      className="absolute bottom-4 left-0 h-4 bg-blue-100 -z-10"
+                      className="absolute bottom-4 left-0 h-4 bg-[#F2EAF7] -z-10"
                     />
                   </span>
                   {" "}of Housing.
@@ -402,7 +403,7 @@ export function HomeConfigurator() {
 
                 <div className="grid grid-cols-2 gap-3 sm:gap-4">
                   <div className="flex items-center gap-3 px-3 sm:px-6 py-4 bg-white border border-slate-200 rounded-2xl shadow-sm">
-                    <div className="w-8 h-8 sm:w-10 sm:h-10 shrink-0 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600">
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 shrink-0 rounded-xl bg-[#F2EAF7] flex items-center justify-center text-[#7A3F91]">
                       <Zap className="w-4 h-4 sm:w-5 sm:h-5" />
                     </div>
                     <div>
@@ -429,8 +430,8 @@ export function HomeConfigurator() {
                 className="lg:col-span-5 relative hidden lg:block"
               >
                 <div className="relative group">
-                  <div className="absolute -inset-4 bg-gradient-to-tr from-blue-600/20 to-indigo-600/20 rounded-[2.5rem] blur-2xl group-hover:blur-3xl transition-all duration-500" />
-                  <div className="relative z-10 rounded-[2rem] overflow-hidden shadow-2xl shadow-blue-500/20 border-8 border-white transition-transform duration-700">
+                  <div className="absolute -inset-4 bg-gradient-to-tr from-[#7A3F91]/20 to-[#C59DD9]/20 rounded-[2.5rem] blur-2xl group-hover:blur-3xl transition-all duration-500" />
+                  <div className="relative z-10 rounded-[2rem] overflow-hidden shadow-2xl shadow-[#7A3F91]/20 border-8 border-white transition-transform duration-700">
                     <img 
                       src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&q=80&w=1200" 
                       alt="Premium House Design" 
@@ -438,7 +439,7 @@ export function HomeConfigurator() {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent flex flex-col justify-end p-10 text-white">
                       <div className="translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                        <Badge className="bg-blue-600 mb-4 px-3 py-1 font-bold">PREMIUM ARCHETYPE</Badge>
+                        <Badge className="bg-[#7A3F91] mb-4 px-3 py-1 font-bold">PREMIUM ARCHETYPE</Badge>
                         <h3 className="text-3xl font-bold font-rethink mb-2">The Obsidian Minimalist</h3>
                         <p className="text-sm text-slate-300 font-medium">A masterclass in volumetric purity and material honesty.</p>
                       </div>
@@ -465,7 +466,7 @@ export function HomeConfigurator() {
               <Card className="border-white/20 bg-white/70 backdrop-blur-xl shadow-2xl shadow-slate-200/50 overflow-hidden group border">
                 <CardHeader className="border-b border-slate-100 bg-white/50 py-5">
                   <CardTitle className="text-base font-semibold flex items-center gap-3 text-slate-900">
-                    <div className="w-9 h-9 rounded-xl bg-blue-100 flex items-center justify-center text-blue-600">
+                    <div className="w-9 h-9 rounded-xl bg-[#F2EAF7] flex items-center justify-center text-[#7A3F91]">
                       <MapPin className="w-5 h-5" />
                     </div>
                     Location & Resources
@@ -478,7 +479,7 @@ export function HomeConfigurator() {
                       const country = countries.find((c) => c.code === code)
                       if (country) setConfig((prev) => ({ ...prev, countryCode: code, country: country.name }))
                     }}>
-                      <SelectTrigger className="h-12 border-slate-200 bg-white/50 focus:ring-blue-500 rounded-xl">
+                      <SelectTrigger className="h-12 border-slate-200 bg-white/50 focus:ring-[#7A3F91] rounded-xl">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -497,7 +498,7 @@ export function HomeConfigurator() {
                         <Label className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest">Land Size</Label>
                         <p className="text-xs font-medium text-slate-500">Total area for development</p>
                       </div>
-                      <span className="text-xl font-bold text-blue-600">{config.landSize}m²</span>
+                      <span className="text-xl font-bold text-[#7A3F91]">{config.landSize}m²</span>
                     </div>
                     <Slider 
                       value={[config.landSize]} 
@@ -533,7 +534,7 @@ export function HomeConfigurator() {
                         <Label className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest">Construction Cost</Label>
                         <p className="text-xs font-medium text-slate-500">Price per square meter ($)</p>
                       </div>
-                      <span className="text-xl font-bold text-blue-600">${config.constructionCostPerSqm || specification?.costPerSqm?.toFixed(0) || 0}</span>
+                      <span className="text-xl font-bold text-[#7A3F91]">${config.constructionCostPerSqm || specification?.costPerSqm?.toFixed(0) || 0}</span>
                     </div>
                     <Slider 
                       value={[config.constructionCostPerSqm || specification?.costPerSqm || 400]} 
@@ -563,7 +564,7 @@ export function HomeConfigurator() {
                                   [infra]: Number(e.target.value) || 0
                                 }
                               }))}
-                              className="w-full h-9 pl-6 pr-2 bg-white/50 border border-slate-200 rounded-lg text-xs font-bold focus:ring-1 focus:ring-blue-500 outline-none"
+                              className="w-full h-9 pl-6 pr-2 bg-white/50 border border-slate-200 rounded-lg text-xs font-bold focus:ring-1 focus:ring-[#7A3F91] outline-none"
                             />
                           </div>
                         </div>
@@ -597,13 +598,13 @@ export function HomeConfigurator() {
                         onClick={() => setConfig(prev => ({ ...prev, style: style.id as any }))}
                         className={`group relative rounded-2xl overflow-hidden aspect-[3/4] transition-all duration-500 border-2 ${
                           config.style === style.id 
-                            ? "border-blue-600 shadow-2xl shadow-blue-500/20 scale-[1.05] z-10" 
+                            ? "border-[#7A3F91] shadow-2xl shadow-[#7A3F91]/20 scale-[1.05] z-10" 
                             : "border-transparent hover:border-slate-300 hover:scale-[1.02]"
                         }`}
                       >
                         <img src={style.image} alt={style.name} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-125" />
                         <div className={`absolute inset-0 bg-gradient-to-t ${
-                          config.style === style.id ? "from-blue-900/90 via-blue-900/40" : "from-slate-900/80 via-slate-900/20"
+                          config.style === style.id ? "from-[#2B0D3E]/90 via-[#2B0D3E]/40" : "from-slate-900/80 via-slate-900/20"
                         } to-transparent`} />
                         <div className="absolute inset-0 p-4 flex flex-col justify-end text-white text-left">
                           <p className="font-bold text-sm tracking-tight mb-0.5">{style.name}</p>
@@ -613,7 +614,7 @@ export function HomeConfigurator() {
                           <motion.div 
                             initial={{ scale: 0 }}
                             animate={{ scale: 1 }}
-                            className="absolute top-3 right-3 bg-blue-600 text-white rounded-full p-1.5 shadow-lg"
+                            className="absolute top-3 right-3 bg-[#7A3F91] text-white rounded-full p-1.5 shadow-lg"
                           >
                             <CheckCircle2 className="w-3.5 h-3.5" />
                           </motion.div>
@@ -697,18 +698,18 @@ export function HomeConfigurator() {
                           onClick={() => handleFeatureToggle(key as any)}
                           className={`relative group flex flex-col p-4 rounded-2xl border transition-all duration-300 cursor-pointer ${
                             isActive
-                              ? "border-blue-500 bg-blue-50/50 shadow-[0_8px_20px_-6px_rgba(59,130,246,0.2)]"
+                              ? "border-[#7A3F91] bg-[#F2EAF7] shadow-[0_8px_20px_-6px_rgba(122,63,145,0.2)]"
                               : "border-slate-200/60 bg-white/30 hover:bg-white/80 hover:border-slate-300"
                           }`}
                         >
                           <div className="flex items-start justify-between mb-3 pointer-events-none">
                             <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-500 ${
-                              isActive ? "bg-blue-600 text-white shadow-lg shadow-blue-500/20" : "bg-slate-100 text-slate-400 group-hover:bg-slate-200 group-hover:text-slate-600"
+                              isActive ? "bg-[#7A3F91] text-white shadow-lg shadow-[#7A3F91]/20" : "bg-slate-100 text-slate-400 group-hover:bg-slate-200 group-hover:text-slate-600"
                             }`}>
                               <Icon className="w-5 h-5" />
                             </div>
                             <div className="flex flex-col items-end">
-                              <span className={`text-[10px] font-black tracking-widest ${isActive ? "text-blue-600" : "text-slate-400"}`}>
+                              <span className={`text-[10px] font-black tracking-widest ${isActive ? "text-[#2B0D3E]" : "text-slate-400"}`}>
                                 +${(cost / 1000).toFixed(0)}K
                               </span>
                               {isActive && (
@@ -717,14 +718,14 @@ export function HomeConfigurator() {
                                   animate={{ scale: 1 }}
                                   className="mt-1"
                                 >
-                                  <div className="w-1.5 h-1.5 rounded-full bg-blue-600" />
+                                  <div className="w-1.5 h-1.5 rounded-full bg-[#7A3F91]" />
                                 </motion.div>
                               )}
                             </div>
                           </div>
                           
                           <div className="text-left pointer-events-none">
-                            <p className={`text-[11px] font-bold leading-none mb-1 font-rethink ${isActive ? "text-blue-900" : "text-slate-900"}`}>
+                            <p className={`text-[11px] font-bold leading-none mb-1 font-rethink ${isActive ? "text-purple-900" : "text-slate-900"}`}>
                               {label}
                             </p>
                             <p className="text-[9px] text-slate-400 font-medium tracking-tight truncate">
@@ -734,7 +735,7 @@ export function HomeConfigurator() {
  
                           {/* Selection Overlay Glow */}
                           {isActive && (
-                            <div className="absolute inset-0 rounded-2xl ring-1 ring-blue-500/50 pointer-events-none" />
+                            <div className="absolute inset-0 rounded-2xl ring-1 ring-[#7A3F91]/50 pointer-events-none" />
                           )}
                         </motion.div>
                       );
@@ -748,7 +749,7 @@ export function HomeConfigurator() {
             <div className="pt-4 flex flex-col gap-3">
               <Button 
                 onClick={handleCalculate} 
-                className="w-full bg-blue-900 hover:bg-blue-800 text-white py-7 text-lg font-bold rounded-xl shadow-xl shadow-blue-900/20 transition-all active:scale-95"
+                className="w-full bg-[#2B0D3E] hover:bg-[#7A3F91] text-white py-7 text-lg font-bold rounded-xl shadow-xl shadow-[#2B0D3E]/20 transition-all active:scale-95"
               >
                 Assemble Architecture
                 <ArrowRight className="w-5 h-5 ml-2" />
@@ -780,17 +781,17 @@ export function HomeConfigurator() {
                 >
                   <Card className="border-white/20 bg-white/70 backdrop-blur-xl shadow-2xl h-[600px] flex items-center justify-center border">
                     <div className="text-center p-12">
-                      <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-blue-500/10 to-indigo-500/10 flex items-center justify-center mx-auto mb-8 border border-blue-100">
+                      <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-purple-500/10 to-indigo-500/10 flex items-center justify-center mx-auto mb-8 border border-purple-100">
                         <motion.div
                           animate={{ rotate: 360 }}
                           transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
                         >
-                          <Building2 className="w-12 h-12 text-blue-600" />
+                          <Building2 className="w-12 h-12 text-[#7A3F91]" />
                         </motion.div>
                       </div>
                       <h3 className="text-2xl font-semibold text-slate-900 mb-4 tracking-tight">Project Status: Idle</h3>
                       <p className="text-slate-500 max-w-sm mx-auto leading-relaxed font-medium text-sm">
-                        Configure your architectural preferences and click <span className="text-blue-600 font-semibold">Assemble Architecture</span> to generate your high-fidelity plan.
+                        Configure your architectural preferences and click <span className="text-[#7A3F91] font-semibold">Assemble Architecture</span> to generate your high-fidelity plan.
                       </p>
                     </div>
                   </Card>
@@ -806,8 +807,8 @@ export function HomeConfigurator() {
                   <Card className="border-white/20 bg-white shadow-2xl overflow-hidden border">
                     <CardHeader className="bg-white border-b border-slate-100 text-slate-900 flex flex-row items-center justify-between py-6">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center">
-                          <Maximize2 className="w-5 h-5 text-blue-600" />
+                        <div className="w-10 h-10 rounded-xl bg-[#F2EAF7] flex items-center justify-center">
+                          <Maximize2 className="w-5 h-5 text-[#7A3F91]" />
                         </div>
                         <div>
                           <CardTitle className="text-base font-semibold">Plan V.{layoutVariant + 1}.0</CardTitle>
@@ -820,7 +821,7 @@ export function HomeConfigurator() {
                           size="sm"
                           onClick={() => setShowRenders(!showRenders)}
                           className={`h-9 rounded-full border-slate-200 transition-all ${
-                            showRenders ? "bg-blue-600 text-white border-blue-500" : "bg-white text-slate-600 hover:bg-slate-50 border"
+                            showRenders ? "bg-[#7A3F91] text-white border-[#7A3F91]" : "bg-white text-slate-600 hover:bg-slate-50 border"
                           }`}
                         >
                           <Sparkles className="w-4 h-4 mr-2" />
@@ -851,15 +852,15 @@ export function HomeConfigurator() {
                               <div className="flex gap-4 mb-6 w-full max-w-lg">
                                     <Button 
                                       variant="outline" 
-                                      className="flex-1 py-7 bg-blue-50/50 border-blue-200 text-blue-700 rounded-xl hover:bg-blue-100/50 transition-all font-bold group shadow-xl shadow-blue-500/10"
+                                      className="flex-1 py-7 bg-purple-50/50 border-purple-200 text-purple-700 rounded-xl hover:bg-purple-100/50 transition-all font-bold group shadow-xl shadow-purple-500/10"
                                       onClick={() => router.push('/planner')}
                                     >
                                       <div className="flex items-center gap-3">
-                                        <div className="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center shadow-lg shadow-blue-500/30 group-hover:scale-110 transition-transform">
+                                        <div className="w-10 h-10 rounded-xl bg-[#7A3F91] flex items-center justify-center shadow-lg shadow-[#7A3F91]/30 group-hover:scale-110 transition-transform">
                                           <Box className="w-4 h-4 text-white" />
                                         </div>
                                         <div className="text-left">
-                                          <p className="text-[11px] leading-none mb-0.5 font-black uppercase tracking-widest text-blue-600/70">Studio Mode</p>
+                                          <p className="text-[11px] leading-none mb-0.5 font-black uppercase tracking-widest text-[#7A3F91]/70">Studio Mode</p>
                                           <p className="text-sm text-slate-900 font-bold">Open Full-Page Planner</p>
                                         </div>
                                       </div>
@@ -870,7 +871,7 @@ export function HomeConfigurator() {
                                 <div className="flex flex-col gap-3 w-full max-w-lg mb-8">
                                   <div className="flex items-center justify-between mb-1">
                                     <Label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">Ready Architect designs</Label>
-                                    <Badge variant="outline" className="text-[8px] font-bold border-blue-100 text-blue-600 bg-blue-50">Hand-Crafted</Badge>
+                                    <Badge variant="outline" className="text-[8px] font-bold border-[#C59DD9]/30 text-[#7A3F91] bg-[#F2EAF7]">Hand-Crafted</Badge>
                                   </div>
                                   <div className="grid grid-cols-4 gap-2">
                                     {BLUEPRINT_PRESETS.map((preset) => (
@@ -879,8 +880,8 @@ export function HomeConfigurator() {
                                         onClick={() => setConfig({ ...config, architecture: { rooms: preset.rooms } })}
                                         className={`group relative rounded-xl overflow-hidden aspect-square border-2 transition-all ${
                                           config.architecture?.rooms?.[0]?.id?.startsWith(preset.id)
-                                            ? "border-blue-600 ring-2 ring-blue-100"
-                                            : "border-slate-200 hover:border-blue-400"
+                                            ? "border-[#7A3F91] ring-2 ring-[#C59DD9]/30"
+                                            : "border-slate-200 hover:border-[#C59DD9]"
                                         }`}
                                       >
                                         <img src={preset.image} className="absolute inset-0 w-full h-full object-cover transition-transform group-hover:scale-110" />
@@ -903,7 +904,7 @@ export function HomeConfigurator() {
                                   {/* Building Footprint */}
                                   <motion.div 
                                     layoutId="building"
-                                    className="border-[2px] border-slate-950 bg-[#0f172a] relative shadow-2xl overflow-hidden rounded-sm" 
+                                    className="border-[2px] border-slate-950 bg-[#0a1628] relative shadow-2xl overflow-hidden rounded-sm" 
                                     style={{ width: "360px", height: "240px" }}
                                   >
                                     {/* Technical Grid Overlay */}
@@ -939,7 +940,7 @@ export function HomeConfigurator() {
                                             {rooms.map((room: any) => (
                                               <motion.div 
                                                 key={room.id}
-                                                className={`absolute rounded-xs border-[0.5px] border-white/20 flex flex-col items-center justify-center ${room.color} bg-opacity-30 backdrop-blur-[1px]`}
+                                                className={`absolute rounded-sm border-[1.5px] border-white/40 flex flex-col items-center justify-center ${room.color} bg-opacity-20 backdrop-blur-[0.5px] shadow-sm hover:bg-opacity-40 transition-all`}
                                                 style={{
                                                   left: room.x * scale + offsetX + 0.5,
                                                   top: room.y * scale + offsetY + 0.5,
@@ -947,11 +948,11 @@ export function HomeConfigurator() {
                                                   height: room.height * scale - 1,
                                                 }}
                                               >
-                                                <div className="flex flex-col items-center text-center p-1 pointer-events-none overflow-hidden hover:scale-110 transition-transform">
-                                                  <p className="text-[8px] font-black uppercase tracking-tighter text-white truncate w-full shadow-sm">
+                                                <div className="flex flex-col items-center text-center p-1 pointer-events-none overflow-hidden group-hover:scale-110 transition-transform">
+                                                  <p className="text-[7px] font-black uppercase tracking-tighter text-white truncate w-full drop-shadow-sm">
                                                     {room.name}
                                                   </p>
-                                                  <p className="text-[6px] font-bold text-white/50 leading-none">
+                                                  <p className="text-[5px] font-black text-white/70 leading-none mt-0.5">
                                                     {(room.width/100).toFixed(1)}m × {(room.height/100).toFixed(1)}m
                                                   </p>
                                                 </div>
@@ -961,10 +962,10 @@ export function HomeConfigurator() {
                                         );
                                       })() : (
                                       <div className="absolute inset-0 grid gap-1.5 p-3" style={{ gridTemplateColumns: "repeat(3, 1fr)", gridTemplateRows: "repeat(2, 1fr)" }}>
-                                        <div className="bg-blue-500/10 border border-white/30 rounded-sm row-span-2 flex flex-col items-center justify-center p-2"><div className="text-[9px] font-semibold text-white uppercase">Master</div><div className="text-[7px] text-white/50">4.2m × 3.8m</div></div>
-                                        <div className="bg-blue-500/10 border border-white/20 rounded-sm flex flex-col items-center justify-center"><div className="text-[7px] font-medium text-white uppercase">Suite 2</div><div className="text-[6px] text-white/40">3.2m × 3.0m</div></div>
-                                        <div className="bg-amber-500/10 border border-white/30 rounded-sm row-span-2 flex flex-col items-center justify-center p-2"><div className="text-[9px] font-semibold text-white uppercase">Living</div><div className="text-[7px] text-white/50">5.5m × 4.8m</div></div>
-                                        <div className="bg-rose-500/10 border border-white/30 rounded-sm flex flex-col items-center justify-center"><div className="text-[7px] font-medium text-white uppercase">Kitchen</div></div>
+                                        <div className="bg-slate-500/10 border border-white/30 rounded-sm row-span-2 flex flex-col items-center justify-center p-2"><div className="text-[9px] font-semibold text-white uppercase">Master</div><div className="text-[7px] text-white/50">4.2m × 3.8m</div></div>
+                                        <div className="bg-slate-400/10 border border-white/20 rounded-sm flex flex-col items-center justify-center"><div className="text-[7px] font-medium text-white uppercase">Suite 2</div><div className="text-[6px] text-white/40">3.2m × 3.0m</div></div>
+                                        <div className="bg-slate-400/10 border border-white/30 rounded-sm row-span-2 flex flex-col items-center justify-center p-2"><div className="text-[9px] font-semibold text-white uppercase">Living</div><div className="text-[7px] text-white/50">5.5m × 4.8m</div></div>
+                                        <div className="bg-amber-500/10 border border-white/30 rounded-sm flex flex-col items-center justify-center"><div className="text-[7px] font-medium text-white uppercase">Kitchen</div></div>
                                       </div>
                                     )}
                                     </div>
@@ -1003,7 +1004,7 @@ export function HomeConfigurator() {
                       <div className="grid grid-cols-3 divide-x divide-slate-100 bg-white">
                         <div className="p-6 text-center">
                           <p className="text-[9px] font-semibold text-slate-400 uppercase tracking-widest mb-1">Site Coverage</p>
-                          <p className="text-xl font-bold text-blue-600">{((specification!.totalBuildingArea / config.landSize) * 100).toFixed(1)}%</p>
+                          <p className="text-xl font-bold text-[#7A3F91]">{((specification!.totalBuildingArea / config.landSize) * 100).toFixed(1)}%</p>
                         </div>
                         <div className="p-6 text-center">
                           <p className="text-[9px] font-semibold text-slate-400 uppercase tracking-widest mb-1">Eco Balance</p>
@@ -1011,7 +1012,7 @@ export function HomeConfigurator() {
                         </div>
                         <div className="p-6 text-center">
                           <p className="text-[9px] font-semibold text-slate-400 uppercase tracking-widest mb-1">Total Build</p>
-                          <p className="text-xl font-bold text-indigo-600">{Math.round(specification!.totalBuildingArea)}m²</p>
+                          <p className="text-xl font-bold text-[#7A3F91]">{Math.round(specification!.totalBuildingArea)}m²</p>
                         </div>
                       </div>
                     </CardContent>
@@ -1020,8 +1021,8 @@ export function HomeConfigurator() {
                   {/* Operational Metrics */}
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     {[
-                      { label: "Bedrooms", value: config.bedrooms, icon: Bed, color: "blue", sub: "Units" },
-                      { label: "Water Demand", value: `${Math.round(specification!.dailyWaterDemand)}L`, icon: Droplet, color: "blue", sub: "Daily Est." },
+                      { label: "Bedrooms", value: config.bedrooms, icon: Bed, color: "amethyst", sub: "Units" },
+                      { label: "Water Demand", value: `${Math.round(specification!.dailyWaterDemand)}L`, icon: Droplet, color: "amethyst", sub: "Daily Est." },
                       { label: "Electricity", value: `${Math.round(specification!.electricityDemand)}kWh`, icon: Zap, color: "amber", sub: "Daily Est." },
                       { label: "Waste Gen", value: `${Math.round(specification!.wasteGeneration)}kg`, icon: Car, color: "slate", sub: "Daily Est." },
                       { label: "Bathrooms", value: specification!.bathrooms, icon: Droplet, color: "emerald", sub: "Calculated" },
@@ -1035,7 +1036,7 @@ export function HomeConfigurator() {
                               <p className="text-2xl font-bold text-slate-900 leading-none">{stat.value}</p>
                               <p className="text-[9px] font-semibold text-slate-500 mt-2">{stat.sub}</p>
                             </div>
-                            <div className={`w-12 h-12 rounded-xl bg-${stat.color}-50 flex items-center justify-center text-${stat.color}-600`}>
+                            <div className={`w-12 h-12 rounded-xl bg-[#F2EAF7] flex items-center justify-center text-[#7A3F91]`}>
                               <stat.icon className="w-6 h-6" />
                             </div>
                           </div>
@@ -1048,12 +1049,12 @@ export function HomeConfigurator() {
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white shadow-lg shadow-blue-500/20">
+                        <div className="w-8 h-8 rounded-lg bg-[#7A3F91] flex items-center justify-center text-white shadow-lg shadow-[#7A3F91]/20">
                           <Sparkles className="w-4 h-4" />
                         </div>
                         <h3 className="text-sm font-bold text-slate-900 font-rethink tracking-tight uppercase">Studio Renders</h3>
                       </div>
-                      <Badge variant="outline" className="border-blue-100 text-blue-600 text-[9px] font-black tracking-widest uppercase bg-blue-50/50">4 High-Fidelity Views</Badge>
+                      <Badge variant="outline" className="border-[#C59DD9]/30 text-[#7A3F91] text-[9px] font-black tracking-widest uppercase bg-[#F2EAF7]/50">4 High-Fidelity Views</Badge>
                     </div>
 
                     <div className="grid grid-cols-2 gap-4">
@@ -1068,7 +1069,7 @@ export function HomeConfigurator() {
                           initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: 0.1 * idx }}
-                          className="group relative rounded-2xl overflow-hidden aspect-[4/3] cursor-pointer border-2 border-transparent hover:border-blue-500/50 transition-all shadow-lg"
+                          className="group relative rounded-2xl overflow-hidden aspect-[4/3] cursor-pointer border-2 border-transparent hover:border-purple-500/50 transition-all shadow-lg"
                         >
                           <img 
                             src={render.url} 
@@ -1110,73 +1111,140 @@ export function HomeConfigurator() {
                 animate={{ opacity: 1, y: 0 }}
                 className="lg:col-span-12 space-y-8"
               >
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                  {/* Technical Specs Table */}
-                  <Card className="lg:col-span-2 border-white/20 bg-white/70 backdrop-blur-xl shadow-2xl overflow-hidden border">
-                    <CardHeader className="border-b border-slate-100 bg-white/50 py-5">
-                      <CardTitle className="text-base font-semibold flex items-center gap-3 text-slate-900 font-rethink">
-                        <div className="w-9 h-9 rounded-xl bg-blue-100 flex items-center justify-center text-blue-600">
-                          <LayoutList className="w-5 h-5" />
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                  {/* Technical Specs & Distribution Graph */}
+                  <Card className="lg:col-span-8 border-white/20 bg-white shadow-2xl overflow-hidden border">
+                    <CardHeader className="border-b border-slate-100 bg-white/50 py-6 flex flex-row items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-[#F2EAF7] flex items-center justify-center text-[#7A3F91]">
+                          <BarChart className="w-5 h-5" />
                         </div>
-                        Technical Specifications
-                      </CardTitle>
+                        <div>
+                          <CardTitle className="text-base font-bold font-rethink">Technical Spec Sheet</CardTitle>
+                          <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Spatial Distribution v1.2</p>
+                        </div>
+                      </div>
+                      <Badge variant="outline" className="text-[9px] font-bold border-slate-200 text-slate-500 bg-slate-50">Metric: Area (m²)</Badge>
                     </CardHeader>
                     <CardContent className="p-0">
-                      <div className="overflow-x-auto">
-                        <table className="w-full text-left border-collapse">
-                          <thead>
-                            <tr className="bg-slate-50/50 border-b border-slate-100">
-                              <th className="px-6 py-4 text-[10px] font-black uppercase text-slate-400 tracking-widest">Dimension</th>
-                              <th className="px-6 py-4 text-[10px] font-black uppercase text-slate-400 tracking-widest">Description</th>
-                              <th className="px-6 py-4 text-[10px] font-black uppercase text-slate-400 tracking-widest text-right">Area (m²)</th>
-                            </tr>
-                          </thead>
-                          <tbody className="divide-y divide-slate-100">
-                            {specification.roomBreakdown.map((room, idx) => (
-                              <tr key={idx} className="hover:bg-slate-50/30 transition-colors">
-                                <td className="px-6 py-4 text-xs font-bold text-slate-900">{room.room}</td>
-                                <td className="px-6 py-4 text-xs text-slate-500 font-medium">{room.description}</td>
-                                <td className="px-6 py-4 text-xs font-black text-blue-600 text-right">{room.area.toFixed(1)}</td>
-                              </tr>
-                            ))}
-                            <tr className="bg-blue-50/30 font-bold border-t-2 border-blue-100">
-                              <td colSpan={2} className="px-6 py-4 text-xs text-slate-900">Total Structural Footprint</td>
-                              <td className="px-6 py-4 text-sm font-black text-blue-600 text-right">{specification.totalBuildingArea}m²</td>
-                            </tr>
-                          </tbody>
-                        </table>
+                      <div className="p-8">
+                        <div className="h-64 w-full">
+                          <ResponsiveContainer width="100%" height="100%">
+                            <BarChart data={specification.roomBreakdown} margin={{ top: 20, right: 30, left: 0, bottom: 0 }}>
+                              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E2E8F0" />
+                              <XAxis 
+                                dataKey="room" 
+                                axisLine={false} 
+                                tickLine={false} 
+                                tick={{ fontSize: 9, fontWeight: 700, fill: '#64748B' }}
+                                interval={0}
+                              />
+                              <YAxis 
+                                axisLine={false} 
+                                tickLine={false} 
+                                tick={{ fontSize: 9, fontWeight: 700, fill: '#94A3B8' }}
+                              />
+                              <RechartsTooltip 
+                                cursor={{ fill: '#F1F5F9' }}
+                                contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)' }}
+                                labelStyle={{ fontSize: '10px', fontWeight: '800', color: '#1E293B', marginBottom: '4px' }}
+                              />
+                              <Bar dataKey="area" radius={[6, 6, 0, 0]} barSize={24}>
+                                {specification.roomBreakdown.map((entry, index) => (
+                                  <Cell key={`cell-${index}`} fill={index === 0 ? '#7A3F91' : '#C59DD9'} />
+                                ))}
+                              </Bar>
+                            </BarChart>
+                          </ResponsiveContainer>
+                        </div>
+
+                        <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                          {specification.roomBreakdown.map((room, idx) => (
+                            <div key={idx} className="flex items-center justify-between p-4 bg-slate-50/50 rounded-2xl border border-slate-100 hover:border-[#C59DD9]/30 transition-all group">
+                              <div className="flex items-center gap-3">
+                                <div className="w-2 h-8 rounded-full bg-[#7A3F91]/20 group-hover:bg-[#7A3F91] transition-colors" />
+                                <div>
+                                  <p className="text-xs font-bold text-slate-900 leading-none mb-1">{room.room}</p>
+                                  <p className="text-[10px] text-slate-500 font-medium">{room.description}</p>
+                                </div>
+                              </div>
+                              <div className="text-right">
+                                <p className="text-sm font-black text-[#7A3F91]">{room.area.toFixed(1)}</p>
+                                <p className="text-[8px] font-bold text-slate-400">m²</p>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      
+                      <div className="bg-[#2B0D3E] p-6 flex items-center justify-between">
+                        <div className="flex items-center gap-4">
+                          <div className="p-3 bg-white/10 rounded-2xl border border-white/20">
+                            <Box className="w-5 h-5 text-white" />
+                          </div>
+                          <div>
+                            <p className="text-[9px] font-black text-white/50 uppercase tracking-[0.2em] mb-0.5">Total Envelope Area</p>
+                            <p className="text-2xl font-black text-white font-rethink">{specification.totalBuildingArea}m²</p>
+                          </div>
+                        </div>
+                        <Button variant="ghost" className="text-white hover:bg-white/10 text-xs font-bold uppercase tracking-wider">
+                          View Compliance Audit
+                          <ArrowRight className="w-4 h-4 ml-2" />
+                        </Button>
                       </div>
                     </CardContent>
                   </Card>
 
-                  {/* Architectural Advisor */}
-                  <div className="space-y-6">
-                    <Card className="border-blue-200 bg-blue-50/50 backdrop-blur-xl shadow-xl border">
-                      <CardHeader className="py-5">
-                        <CardTitle className="text-sm font-bold flex items-center gap-2 text-blue-900">
-                          <Sparkles className="w-4 h-4" />
-                          Architectural Advisor
+                  {/* Architectural Advisor & Integrity Cards */}
+                  <div className="lg:col-span-4 space-y-6">
+                    <Card className="border-indigo-100 bg-[#F2EAF7]/30 backdrop-blur-2xl shadow-xl border overflow-hidden">
+                      <div className="absolute top-0 right-0 w-32 h-32 bg-[#C59DD9]/10 rounded-full blur-3xl -mr-16 -mt-16" />
+                      <CardHeader className="py-6 relative z-10">
+                        <CardTitle className="text-xs font-black flex items-center gap-3 text-[#2B0D3E] uppercase tracking-widest">
+                          <div className="w-8 h-8 rounded-xl bg-[#7A3F91] flex items-center justify-center text-white">
+                            <Sparkles className="w-4 h-4" />
+                          </div>
+                          Architectural Insights
                         </CardTitle>
                       </CardHeader>
-                      <CardContent className="space-y-4 pt-0">
+                      <CardContent className="space-y-4 pt-0 relative z-10">
                         {getExpertAdvice().filter(a => a.type === 'architectural').map((advice, i) => (
-                          <div key={i} className="bg-white/80 p-4 rounded-xl border border-blue-100 shadow-sm space-y-2">
-                            <div className="flex justify-between items-center">
-                              <span className="text-[10px] font-black text-blue-600 uppercase tracking-widest">{advice.title}</span>
-                              <Badge className="bg-blue-100 text-blue-700 text-[8px] border-none">{advice.impact}</Badge>
+                          <motion.div 
+                            key={i} 
+                            initial={{ opacity: 0, x: 10 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: i * 0.1 }}
+                            className="bg-white/60 p-5 rounded-2xl border border-white shadow-sm space-y-3 group hover:shadow-md hover:-translate-y-1 transition-all"
+                          >
+                            <div className="flex justify-between items-start">
+                              <span className="text-[10px] font-black text-[#7A3F91] uppercase tracking-[0.2em]">{advice.title}</span>
+                              <Badge className="bg-[#F2EAF7] text-[#7A3F91] text-[8px] border-none font-black">{advice.impact}</Badge>
                             </div>
-                            <p className="text-[11px] text-slate-600 leading-relaxed font-medium">{advice.text}</p>
-                          </div>
+                            <p className="text-[11px] text-slate-600 leading-relaxed font-bold">{advice.text}</p>
+                          </motion.div>
                         ))}
                       </CardContent>
                     </Card>
 
-                    <div className="p-6 bg-blue-600 rounded-[2rem] text-white shadow-xl shadow-blue-500/20 space-y-4">
-                      <div className="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center">
-                        <Scale className="w-6 h-6 text-white" />
+                    <div className="relative group p-8 rounded-[2.5rem] bg-gradient-to-br from-[#7A3F91] via-[#4A235A] to-[#2B0D3E] text-white shadow-2xl shadow-[#7A3F91]/20 overflow-hidden">
+                      <div className="absolute top-0 right-0 w-48 h-48 bg-white/5 rounded-full blur-3xl -mr-24 -mt-24 group-hover:bg-white/10 transition-colors" />
+                      <div className="relative z-10 space-y-6">
+                        <div className="w-14 h-14 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center shadow-2xl">
+                          <Scale className="w-7 h-7 text-white" />
+                        </div>
+                        <div className="space-y-3">
+                          <h4 className="text-2xl font-black font-rethink leading-tight">Structural Integrity Verified.</h4>
+                          <p className="text-xs text-[#E9DEEF] leading-relaxed font-bold opacity-80">
+                            Our engine ensures every calculation adheres to the Eurocode and local KBR standards for load-bearing and volumetric optimization.
+                          </p>
+                        </div>
+                        <div className="pt-4 flex items-center gap-3">
+                          <div className="flex -space-x-2">
+                             {[1,2,3].map(i => <div key={i} className="w-6 h-6 rounded-full border-2 border-[#7A3F91] bg-slate-200" />)}
+                          </div>
+                          <p className="text-[9px] font-black text-[#C59DD9] uppercase tracking-widest">Authorized Specialist Review</p>
+                        </div>
                       </div>
-                      <h4 className="text-lg font-bold font-rethink">Structural Integrity</h4>
-                      <p className="text-xs text-blue-100 leading-relaxed">Our engine ensures every calculation adheres to the Eurocode and local KBR standards for load-bearing optimization.</p>
                     </div>
                   </div>
                 </div>
@@ -1204,10 +1272,10 @@ export function HomeConfigurator() {
                     <CardContent className="p-4 sm:p-8 space-y-6 sm:space-y-10">
                       <div className="grid grid-cols-2 gap-3 sm:gap-6">
                         {[
-                          { label: "Total Capex", value: specification.totalCost, color: "text-blue-600" },
+                          { label: "Total Capex", value: specification.totalCost, color: "text-[#7A3F91]" },
                           { label: "Cost/m²", value: specification.costPerSqm.toFixed(0), prefix: "$", color: "text-slate-900" },
                           { label: "Opex (Annual)", value: specification.annualMaintenanceCost, color: "text-emerald-600" },
-                          { label: "Delivery", value: specification.estimatedTimelineMonths, suffix: " Mo", color: "text-indigo-600" }
+                          { label: "Delivery", value: specification.estimatedTimelineMonths, suffix: " Mo", color: "text-[#7A3F91]" }
                         ].map((stat, i) => (
                           <div key={i} className="space-y-1">
                             <p className="text-[8px] sm:text-[10px] font-semibold text-slate-400 uppercase tracking-widest">{stat.label}</p>
@@ -1249,7 +1317,7 @@ export function HomeConfigurator() {
                       <div className="space-y-4 sm:space-y-6">
                          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                             <h4 className="text-xs sm:text-sm font-semibold text-slate-900 uppercase tracking-widest flex items-center gap-2">
-                              <Calendar className="w-4 h-4 text-indigo-500" />
+                              <Calendar className="w-4 h-4 text-[#7A3F91]" />
                               Construction Phases
                             </h4>
                             <Badge variant="outline" className="text-[8px] sm:text-[10px] w-fit">Estimated Efficiency: 94%</Badge>
@@ -1299,12 +1367,12 @@ export function HomeConfigurator() {
                       </CardContent>
                     </Card>
 
-                    <div className="p-8 bg-gradient-to-br from-indigo-600 to-blue-700 rounded-[2.5rem] text-white shadow-2xl shadow-indigo-500/20">
+                    <div className="p-8 bg-gradient-to-br from-[#7A3F91] to-[#2B0D3E] rounded-[2.5rem] text-white shadow-2xl shadow-[#7A3F91]/20">
                       <h4 className="text-2xl font-semibold font-rethink mb-4 leading-tight">Secure Your<br />Asset's Value.</h4>
-                      <p className="text-xs text-indigo-100 mb-8 leading-relaxed font-medium opacity-80">
+                      <p className="text-xs text-[#F2EAF7] mb-8 leading-relaxed font-medium opacity-80">
                         Resale projections for "{config.style}" archetypes in {config.country} show a 22% premium over standard builds due to integrated architectural efficiency.
                       </p>
-                      <Button className="w-full bg-white text-indigo-600 hover:bg-indigo-50 font-medium rounded-2xl py-6">
+                      <Button className="w-full bg-white text-[#7A3F91] hover:bg-[#F2EAF7] font-medium rounded-2xl py-6">
                         Unlock Yield Report
                       </Button>
                     </div>
@@ -1324,24 +1392,24 @@ export function HomeConfigurator() {
             <button 
               suppressHydrationWarning
               onClick={() => setActiveTab('design')}
-              className={`flex-1 flex flex-col items-center justify-center gap-1 transition-all relative z-10 ${activeTab === 'design' ? 'text-blue-600' : 'text-slate-400 hover:text-slate-600'}`}
+              className={`flex-1 flex flex-col items-center justify-center gap-1 transition-all relative z-10 ${activeTab === 'design' ? 'text-[#7A3F91]' : 'text-slate-400 hover:text-slate-600'}`}
             >
               <LayoutList className={`w-5 h-5 transition-transform duration-300 ${activeTab === 'design' ? 'scale-110' : ''}`} />
               <span className="text-[10px] font-bold tracking-tight">Design</span>
               {activeTab === 'design' && (
-                <motion.div layoutId="mobileActiveTab" className="absolute bottom-0 w-1 h-1 bg-blue-600 rounded-full" />
+                <motion.div layoutId="mobileActiveTab" className="absolute bottom-0 w-1 h-1 bg-[#7A3F91] rounded-full" />
               )}
             </button>
             
             <button 
               suppressHydrationWarning
               onClick={() => setActiveTab('blueprint')}
-              className={`flex-1 flex flex-col items-center justify-center gap-1 transition-all relative z-10 ${activeTab === 'blueprint' ? 'text-blue-600' : 'text-slate-400 hover:text-slate-600'}`}
+              className={`flex-1 flex flex-col items-center justify-center gap-1 transition-all relative z-10 ${activeTab === 'blueprint' ? 'text-[#7A3F91]' : 'text-slate-400 hover:text-slate-600'}`}
             >
               <Maximize2 className={`w-5 h-5 transition-transform duration-300 ${activeTab === 'blueprint' ? 'scale-110' : ''}`} />
               <span className="text-[10px] font-bold tracking-tight">Blueprint</span>
               {activeTab === 'blueprint' && (
-                <motion.div layoutId="mobileActiveTab" className="absolute bottom-0 w-1 h-1 bg-blue-600 rounded-full" />
+                <motion.div layoutId="mobileActiveTab" className="absolute bottom-0 w-1 h-1 bg-[#7A3F91] rounded-full" />
               )}
             </button>
 
@@ -1351,7 +1419,7 @@ export function HomeConfigurator() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => window.location.href = "/"}
-                className="w-16 h-16 bg-gradient-to-br from-blue-600 via-blue-500 to-indigo-600 rounded-full shadow-[0_12px_24px_rgba(37,99,235,0.4)] flex items-center justify-center text-white ring-8 ring-white/60 backdrop-blur-md relative group"
+                className="w-16 h-16 bg-gradient-to-br from-[#7A3F91] via-[#C59DD9] to-[#2B0D3E] rounded-full shadow-[0_12px_24px_rgba(122,63,145,0.4)] flex items-center justify-center text-white ring-8 ring-white/60 backdrop-blur-md relative group"
               >
                 <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <HomeIcon className="w-7 h-7 relative z-10" />
@@ -1361,12 +1429,12 @@ export function HomeConfigurator() {
             <button 
               suppressHydrationWarning
               onClick={() => setActiveTab('finance')}
-              className={`flex-1 flex flex-col items-center justify-center gap-1 transition-all relative z-10 ${activeTab === 'finance' ? 'text-blue-600' : 'text-slate-400 hover:text-slate-600'}`}
+              className={`flex-1 flex flex-col items-center justify-center gap-1 transition-all relative z-10 ${activeTab === 'finance' ? 'text-[#7A3F91]' : 'text-slate-400 hover:text-slate-600'}`}
             >
               <DollarSign className={`w-5 h-5 transition-transform duration-300 ${activeTab === 'finance' ? 'scale-110' : ''}`} />
               <span className="text-[10px] font-bold tracking-tight">Finance</span>
               {activeTab === 'finance' && (
-                <motion.div layoutId="mobileActiveTab" className="absolute bottom-0 w-1 h-1 bg-blue-600 rounded-full" />
+                <motion.div layoutId="mobileActiveTab" className="absolute bottom-0 w-1 h-1 bg-[#7A3F91] rounded-full" />
               )}
             </button>
 
@@ -1408,7 +1476,7 @@ function generatePDFContent(config: HomeBuilderConfig & { bedrooms?: number }, s
     .logo { font-size: 20px; font-weight: 700; color: #1e293b; letter-spacing: -0.4px; }
     .status { background: #f0fdf4; color: #166534; padding: 5px 10px; border-radius: 99px; font-size: 11px; font-weight: 600; text-transform: uppercase; }
     h1 { font-size: 26px; font-weight: 800; margin: 0; color: #0f172a; }
-    h2 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: #64748b; margin-top: 35px; margin-bottom: 18px; border-left: 3px solid #3b82f6; padding-left: 12px; }
+    h2 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: #64748b; margin-top: 35px; margin-bottom: 18px; border-left: 3px solid #7A3F91; padding-left: 12px; }
     .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 25px; }
     .stat-card { background: #f8fafc; padding: 18px; border-radius: 10px; border: 1px solid #f1f5f9; }
     .stat-label { font-size: 10px; font-weight: 600; color: #94a3b8; text-transform: uppercase; margin-bottom: 4px; }
@@ -1474,7 +1542,7 @@ function generatePDFContent(config: HomeBuilderConfig & { bedrooms?: number }, s
               ${featureRow}
               <tr class="total-row">
                 <td>Total Capital Required</td>
-                <td style="text-align: right; color: #3b82f6;">$${spec.totalCost.toLocaleString()}</td>
+                <td style="text-align: right; color: #7A3F91;">$${spec.totalCost.toLocaleString()}</td>
               </tr>
             </tbody>
           </table>

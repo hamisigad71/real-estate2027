@@ -91,6 +91,9 @@ export interface Scenario {
 
   // Cost parameters
   constructionCostPerSqm: number
+  softCostsPercentage?: number     // % of (construction + infra) — default 15
+  contingencyPercentage?: number   // % of (construction + infra) — default 10
+  infrastructureCostPerUnit?: number // per-unit infra cost override — default from country data
   infrastructureCosts: {
     water: number
     sewer: number

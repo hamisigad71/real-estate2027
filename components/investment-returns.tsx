@@ -77,10 +77,10 @@ export function InvestmentReturns({
 
   if (!results) {
     return (
-      <Card className="bg-gradient-to-br from-slate-50 to-slate-100">
+      <Card className="bg-gradient-to-br from-[#F2EAF7] to-[#C59DD9]/20">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <TrendingUp className="h-5 w-5 text-emerald-600" />
+            <TrendingUp className="h-5 w-5 text-[#7A3F91]" />
             Investment Returns Analysis
           </CardTitle>
           <CardDescription>Loading investment analysis...</CardDescription>
@@ -109,60 +109,60 @@ export function InvestmentReturns({
       {/* Key Metrics Overview */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* ROI Card */}
-        <Card className="bg-gradient-to-br from-emerald-50 to-emerald-100 border-emerald-200">
+        <Card className="bg-gradient-to-br from-[#F2EAF7] to-[#C59DD9]/10 border-[#C59DD9]/20">
           <CardHeader className="pb-3">
             <CardTitle className="text-sm font-medium text-slate-700 flex items-center gap-2">
-              <Target className="h-4 w-4 text-emerald-600" />
+              <Target className="h-4 w-4 text-[#7A3F91]" />
               ROI
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-emerald-700">{results.roi.toFixed(1)}%</div>
-            <p className="text-xs text-emerald-600 mt-1">Return on Investment</p>
+            <div className="text-2xl font-bold text-[#2B0D3E]">{results.roi.toFixed(1)}%</div>
+            <p className="text-xs text-[#7A3F91] mt-1">Return on Investment</p>
           </CardContent>
         </Card>
 
         {/* Net Profit Card */}
-        <Card className="bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
+        <Card className="bg-gradient-to-br from-[#F2EAF7] to-[#C59DD9]/10 border-[#C59DD9]/20">
           <CardHeader className="pb-3">
             <CardTitle className="text-sm font-medium text-slate-700 flex items-center gap-2">
-              <DollarSign className="h-4 w-4 text-blue-600" />
+              <DollarSign className="h-4 w-4 text-[#7A3F91]" />
               Net Profit
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-blue-700">
+            <div className="text-2xl font-bold text-[#2B0D3E]">
               {formatCurrency(results.netProfit, projectCurrency)}
             </div>
-            <p className="text-xs text-blue-600 mt-1">{results.profitMargin.toFixed(1)}% margin</p>
+            <p className="text-xs text-[#7A3F91] mt-1">{results.profitMargin.toFixed(1)}% margin</p>
           </CardContent>
         </Card>
 
         {/* Payback Period Card */}
-        <Card className="bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200">
+        <Card className="bg-gradient-to-br from-[#F2EAF7] to-[#C59DD9]/10 border-[#C59DD9]/20">
           <CardHeader className="pb-3">
             <CardTitle className="text-sm font-medium text-slate-700 flex items-center gap-2">
-              <Clock className="h-4 w-4 text-purple-600" />
+              <Clock className="h-4 w-4 text-[#7A3F91]" />
               Payback
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-purple-700">{results.paybackMonths} mo</div>
-            <p className="text-xs text-purple-600 mt-1">Break-even in {results.breakEvenMonths} months</p>
+            <div className="text-2xl font-bold text-[#2B0D3E]">{results.paybackMonths} mo</div>
+            <p className="text-xs text-[#7A3F91] mt-1">Break-even in {results.breakEvenMonths} months</p>
           </CardContent>
         </Card>
 
         {/* IRR Card */}
-        <Card className="bg-gradient-to-br from-orange-50 to-orange-100 border-orange-200">
+        <Card className="bg-gradient-to-br from-[#F2EAF7] to-[#C59DD9]/10 border-[#C59DD9]/20">
           <CardHeader className="pb-3">
             <CardTitle className="text-sm font-medium text-slate-700 flex items-center gap-2">
-              <Zap className="h-4 w-4 text-orange-600" />
+              <Zap className="h-4 w-4 text-[#7A3F91]" />
               IRR
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-orange-700">{results.irr.toFixed(1)}%</div>
-            <p className="text-xs text-orange-600 mt-1">Internal Rate of Return</p>
+            <div className="text-2xl font-bold text-[#2B0D3E]">{results.irr.toFixed(1)}%</div>
+            <p className="text-xs text-[#7A3F91] mt-1">Internal Rate of Return</p>
           </CardContent>
         </Card>
       </div>
@@ -278,23 +278,23 @@ export function InvestmentReturns({
             <CardContent className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* Financing Details */}
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                  <h4 className="font-semibold text-blue-900 mb-3">Loan Details</h4>
+                <div className="bg-[#F2EAF7] border border-[#C59DD9]/30 rounded-lg p-4">
+                  <h4 className="font-semibold text-[#2B0D3E] mb-3">Loan Details</h4>
                   <div className="space-y-3">
                     <div className="flex justify-between items-center">
                       <span className="text-sm text-slate-600">Monthly Payment</span>
-                      <span className="font-semibold text-blue-700">
+                      <span className="font-semibold text-[#7A3F91]">
                         {formatCurrency(results.monthlyLoanPayment, projectCurrency)}
                       </span>
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-sm text-slate-600">Total Interest Expense</span>
-                      <span className="font-semibold text-blue-700">{formatCurrency(results.interestExpense, projectCurrency)}</span>
+                      <span className="font-semibold text-[#7A3F91]">{formatCurrency(results.interestExpense, projectCurrency)}</span>
                     </div>
-                    <div className="border-t border-blue-200 pt-3">
+                    <div className="border-t border-[#C59DD9]/30 pt-3">
                       <div className="flex justify-between items-center">
-                        <span className="text-sm font-medium text-blue-900">Total Loan Cost</span>
-                        <span className="font-bold text-blue-700">
+                        <span className="text-sm font-medium text-[#2B0D3E]">Total Loan Cost</span>
+                        <span className="font-bold text-[#7A3F91]">
                           {formatCurrency(results.totalLoanCost, projectCurrency)}
                         </span>
                       </div>
@@ -409,7 +409,7 @@ export function InvestmentReturns({
                       formatter={(value) => formatCurrency(value as number, projectCurrency)}
                       contentStyle={{ backgroundColor: '#f8fafc', border: '1px solid #e2e8f0' }}
                     />
-                    <Bar dataKey="netProfit" fill="#10b981" radius={[8, 8, 0, 0]} />
+                    <Bar dataKey="netProfit" fill="#7A3F91" radius={[8, 8, 0, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>

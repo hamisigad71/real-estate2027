@@ -103,12 +103,12 @@ Generated: ${new Date().toLocaleString()}
     <Card>
       <CardHeader>
         <CardTitle className="text-lg flex items-center gap-2">
-          <FileText className="h-5 w-5" />
+          <FileText className="h-5 w-5 text-[#7A3F91]" />
           Export Project Report
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        <p className="text-sm text-slate-600">
+        <p className="text-sm text-[#2B0D3E]/80">
           Generate a comprehensive report including all scenarios, calculations, and comparisons. This report can be
           shared with stakeholders and decision-makers.
         </p>
@@ -128,7 +128,7 @@ Generated: ${new Date().toLocaleString()}
 
         <Button
           onClick={generateReport}
-          className="w-full bg-primary hover:bg-primary/90"
+          className="w-full bg-[#7A3F91] hover:bg-[#2B0D3E] shadow-lg shadow-[#7A3F91]/20"
           disabled={scenarios.length === 0}
         >
           <Download className="h-4 w-4 mr-2" />

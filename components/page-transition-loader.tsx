@@ -13,7 +13,7 @@ export function PageTransitionLoader() {
     setIsLoading(true);
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 500); // Show loader for 500ms
+    }, 5500); // Show loader for 5.5 seconds
 
     return () => clearTimeout(timer);
   }, [pathname]);

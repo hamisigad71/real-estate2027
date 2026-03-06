@@ -23,13 +23,13 @@ function StatPill({ label, value, accent = false }: { label: string; value: stri
   return (
     <div className={`rounded-xl p-4 border transition-shadow hover:shadow-md ${
       accent 
-        ? "bg-blue-50 border-blue-100 ring-1 ring-blue-200/50" 
+        ? "bg-[#F2EAF7] border-[#C59DD9]/30 ring-1 ring-[#C59DD9]/20" 
         : "bg-white border-slate-200"
     }`}>
       <div className={`text-[10px] font-semibold uppercase tracking-widest mb-1 ${
-        accent ? "text-blue-600" : "text-slate-400"
+        accent ? "text-[#7A3F91]" : "text-slate-400"
       }`}>{label}</div>
-      <div className={`text-xl font-bold ${accent ? "text-blue-900" : "text-slate-900"}`}>{value}</div>
+      <div className={`text-xl font-bold ${accent ? "text-[#2B0D3E]" : "text-slate-900"}`}>{value}</div>
     </div>
   )
 }
@@ -56,10 +56,10 @@ function UnitCell({
 }) {
   const typeStyles = {
     "1": {
-      bg: "bg-blue-100",
-      border: "border-blue-200",
-      hoverBg: "bg-blue-200",
-      text: "text-blue-700",
+      bg: "bg-[#F2EAF7]",
+      border: "border-[#C59DD9]/30",
+      hoverBg: "bg-[#C59DD9]/20",
+      text: "text-[#7A3F91]",
       label: "1BR",
     },
     "2": {
@@ -169,11 +169,11 @@ export function LayoutVisualization({ scenario, results, roomSizes }: LayoutVisu
           <div className="flex items-center gap-4 px-1">
             <span className="text-[10px] font-semibold uppercase tracking-widest text-slate-400">Unit Types:</span>
             <div className="flex items-center gap-1.5">
-              <div className="w-2.5 h-2.5 rounded bg-blue-200 border border-blue-300" />
+              <div className="w-2.5 h-2.5 rounded bg-[#F2EAF7] border border-[#C59DD9]/30" />
               <span className="text-[11px] text-slate-600 font-medium">1BR</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <div className="w-2.5 h-2.5 rounded bg-[#0a1628]/[0.12] border border-[#0a1628]/20" />
+              <div className="w-2.5 h-2.5 rounded bg-[#2B0D3E]/[0.12] border border-[#2B0D3E]/20" />
               <span className="text-[11px] text-slate-600 font-medium">2BR</span>
             </div>
             <div className="flex items-center gap-1.5">
@@ -185,8 +185,8 @@ export function LayoutVisualization({ scenario, results, roomSizes }: LayoutVisu
             onClick={() => setIs3D(!is3D)}
             className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
               is3D
-                ? "bg-blue-600 text-white shadow-md hover:bg-blue-700"
-                : "bg-white border border-slate-200 text-slate-600 hover:border-blue-300 hover:text-blue-600"
+                ? "bg-[#7A3F91] text-white shadow-md hover:bg-[#2B0D3E]"
+                : "bg-white border border-slate-200 text-slate-600 hover:border-[#C59DD9]/50 hover:text-[#7A3F91]"
             }`}
           >
             {is3D ? <LayoutGrid className="w-3.5 h-3.5" /> : <Box className="w-3.5 h-3.5" />}
@@ -200,14 +200,14 @@ export function LayoutVisualization({ scenario, results, roomSizes }: LayoutVisu
           style={is3D ? { perspective: "900px" } : {}}
         >
           {/* Sky gradient header */}
-          <div className={`bg-gradient-to-b from-blue-50 via-sky-50 to-transparent relative overflow-hidden transition-all duration-500 ${is3D ? "h-24" : "h-16"}`}>
+          <div className={`bg-gradient-to-b from-[#F2EAF7] via-[#C59DD9]/10 to-transparent relative overflow-hidden transition-all duration-500 ${is3D ? "h-24" : "h-16"}`}>
             <div className="absolute inset-0 opacity-30"
               style={{
-                backgroundImage: "radial-gradient(circle at 80% 50%, rgba(147,197,253,0.3) 0%, transparent 50%), radial-gradient(circle at 20% 30%, rgba(186,230,253,0.2) 0%, transparent 40%)",
+                backgroundImage: "radial-gradient(circle at 80% 50%, rgba(197,157,217,0.3) 0%, transparent 50%), radial-gradient(circle at 20% 30%, rgba(242,234,247,0.2) 0%, transparent 40%)",
               }}
             />
             {is3D && (
-              <div className="absolute bottom-3 left-1/2 -translate-x-1/2 text-[10px] font-bold text-blue-400/50 uppercase tracking-wider">
+              <div className="absolute bottom-3 left-1/2 -translate-x-1/2 text-[10px] font-bold text-[#7A3F91]/50 uppercase tracking-wider">
                 Isometric View
               </div>
             )}
@@ -238,9 +238,9 @@ export function LayoutVisualization({ scenario, results, roomSizes }: LayoutVisu
               {/* Floors — rendered top-down */}
               <div className="space-y-[3px] relative">
                 {/* Left elevation line */}
-                <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-gradient-to-b from-blue-600/60 via-blue-400/40 to-transparent rounded-full" />
+                <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-gradient-to-b from-[#7A3F91]/60 via-[#C59DD9]/40 to-transparent rounded-full" />
                 {/* Right elevation line */}
-                <div className="absolute right-0 top-0 bottom-0 w-[2px] bg-gradient-to-b from-blue-600/60 via-blue-400/40 to-transparent rounded-full" />
+                <div className="absolute right-0 top-0 bottom-0 w-[2px] bg-gradient-to-b from-[#7A3F91]/60 via-[#C59DD9]/40 to-transparent rounded-full" />
 
                 {floors.slice().reverse().map((floor, visualIdx) => {
                   const actualFloorIdx = floors.length - 1 - visualIdx
@@ -352,7 +352,7 @@ export function LayoutVisualization({ scenario, results, roomSizes }: LayoutVisu
         {/* Layout Visualization */}
         <div className="rounded-2xl overflow-hidden border border-slate-200 bg-gradient-to-b from-slate-50 to-white">
           <div className="bg-slate-50 px-5 py-3 flex items-center gap-2 border-b border-slate-200">
-            <Maximize2 className="w-4 h-4 text-blue-600" />
+            <Maximize2 className="w-4 h-4 text-[#7A3F91]" />
             <span className="text-sm font-bold text-slate-900 font-rethink">Floor Plan</span>
             <span className="ml-auto text-[10px] text-slate-400 font-bold uppercase tracking-widest">Architectural View</span>
           </div>
@@ -375,29 +375,29 @@ export function LayoutVisualization({ scenario, results, roomSizes }: LayoutVisu
                 >
                   {/* Rooms Grid */}
                   <div className="absolute inset-0 grid grid-cols-3 gap-[2px] p-[3px]">
-                    <div className="bg-blue-50 border border-blue-100 rounded-lg p-1.5 col-span-1 row-span-2 flex flex-col items-center justify-center">
-                      <div className="text-[10px] font-bold text-[#0a1628]">Master</div>
+                    <div className="bg-[#F2EAF7] border border-[#C59DD9]/30 rounded-lg p-1.5 col-span-1 row-span-2 flex flex-col items-center justify-center">
+                      <div className="text-[10px] font-bold text-[#2B0D3E]">Master</div>
                       <div className="text-[10px] text-slate-400">{masterBedroom}m²</div>
                     </div>
-                    <div className="bg-blue-50 border border-blue-100 rounded-lg p-1.5 flex flex-col items-center justify-center">
-                      <div className="text-[10px] font-bold text-[#0a1628]">Bed 2</div>
+                    <div className="bg-[#F2EAF7] border border-[#C59DD9]/30 rounded-lg p-1.5 flex flex-col items-center justify-center">
+                      <div className="text-[10px] font-bold text-[#2B0D3E]">Bed 2</div>
                       <div className="text-[10px] text-slate-400">{bedroom2}m²</div>
                     </div>
                     <div className="bg-slate-50 border border-slate-100 rounded-lg p-1.5 col-span-2 row-span-2 flex flex-col items-center justify-center">
-                      <div className="text-[10px] font-bold text-[#0a1628]">Living / Dining</div>
+                      <div className="text-[10px] font-bold text-[#2B0D3E]">Living / Dining</div>
                       <div className="text-[10px] text-slate-400">{livingRoom}m²</div>
                     </div>
                     <div className="bg-amber-50 border border-amber-100 rounded-lg p-1.5 flex flex-col items-center justify-center">
-                      <div className="text-[10px] font-bold text-[#0a1628]">Kitchen</div>
+                      <div className="text-[10px] font-bold text-[#2B0D3E]">Kitchen</div>
                       <div className="text-[10px] text-slate-400">{kitchen}m²</div>
                     </div>
                     <div className="bg-cyan-50 border border-cyan-100 rounded-lg p-1.5 col-span-1 flex flex-col items-center justify-center">
-                      <div className="text-[10px] font-bold text-[#0a1628]">Bath</div>
+                      <div className="text-[10px] font-bold text-[#2B0D3E]">Bath</div>
                       <div className="text-[10px] text-slate-400">{bathrooms}m²</div>
                     </div>
                   </div>
 
-                  <div className="absolute top-1.5 right-2 bg-[#0a1628] text-white rounded-md px-2 py-0.5 text-[10px] font-bold">
+                  <div className="absolute top-1.5 right-2 bg-[#2B0D3E] text-white rounded-md px-2 py-0.5 text-[10px] font-bold">
                     {houseSize}m²
                   </div>
                 </div>
@@ -434,8 +434,8 @@ export function LayoutVisualization({ scenario, results, roomSizes }: LayoutVisu
           </div>
           <div className="divide-y divide-slate-100">
             {[
-              { name: "Master Bedroom", size: masterBedroom, color: "bg-blue-500" },
-              { name: "Bedroom 2", size: bedroom2, color: "bg-blue-400" },
+              { name: "Master Bedroom", size: masterBedroom, color: "bg-[#7A3F91]" },
+              { name: "Bedroom 2", size: bedroom2, color: "bg-[#C59DD9]" },
               { name: "Living / Dining", size: livingRoom, color: "bg-slate-400" },
               { name: "Kitchen", size: kitchen, color: "bg-amber-400" },
               { name: "Bathrooms", size: bathrooms, color: "bg-cyan-400" },
@@ -482,7 +482,7 @@ export function LayoutVisualization({ scenario, results, roomSizes }: LayoutVisu
         {/* Apartments */}
         <div className="rounded-2xl overflow-hidden border border-slate-200">
           <div className="bg-slate-50 px-5 py-3 flex items-center gap-2 border-b border-slate-200">
-            <Building2 className="w-4 h-4 text-blue-600" />
+            <Building2 className="w-4 h-4 text-[#7A3F91]" />
             <span className="text-sm font-bold text-slate-900 font-rethink">Apartment Block</span>
             <span className="ml-auto text-[10px] text-slate-400 font-bold uppercase tracking-widest">{scenario.apartmentUnits || 100} units</span>
           </div>
@@ -507,7 +507,7 @@ export function LayoutVisualization({ scenario, results, roomSizes }: LayoutVisu
         {/* Single-family */}
         <div className="rounded-2xl overflow-hidden border border-slate-200">
           <div className="bg-slate-50 px-5 py-3 flex items-center gap-2 border-b border-slate-200">
-            <Home className="w-4 h-4 text-blue-600" />
+            <Home className="w-4 h-4 text-[#7A3F91]" />
             <span className="text-sm font-bold text-slate-900 font-rethink">Single-Family Homes</span>
             <span className="ml-auto text-[10px] text-slate-400 font-bold uppercase tracking-widest">{scenario.singleFamilyUnits || 50} units</span>
           </div>
@@ -518,13 +518,13 @@ export function LayoutVisualization({ scenario, results, roomSizes }: LayoutVisu
                   key={item.id}
                   className={`aspect-square rounded-lg border-[1.5px] transition-all duration-200 cursor-pointer flex items-center justify-center ${
                     hoveredUnit === item.id
-                      ? "bg-blue-50 border-blue-400 shadow-md scale-105"
-                      : "bg-slate-50 border-slate-200 hover:bg-slate-100"
+                      ? "bg-[#F2EAF7] border-[#7A3F91] shadow-md scale-105"
+                      : "bg-white border-slate-200 hover:bg-slate-100"
                   }`}
                   onMouseEnter={() => setHoveredUnit(item.id)}
                   onMouseLeave={() => setHoveredUnit(null)}
                 >
-                  <Home className={`w-3.5 h-3.5 ${hoveredUnit === item.id ? "text-blue-600" : "text-slate-400"}`} />
+                  <Home className={`w-3.5 h-3.5 ${hoveredUnit === item.id ? "text-[#7A3F91]" : "text-slate-400"}`} />
                 </div>
               ))}
             </div>
@@ -546,9 +546,9 @@ export function LayoutVisualization({ scenario, results, roomSizes }: LayoutVisu
      RENDER
      ═══════════════════════════════════════════════════════ */
   const typeIcon = {
-    apartment: <Building2 className="w-5 h-5 text-blue-300" />,
-    "single-family": <Home className="w-5 h-5 text-blue-300" />,
-    mixed: <Layers className="w-5 h-5 text-blue-300" />,
+    apartment: <Building2 className="w-5 h-5 text-[#C59DD9]" />,
+    "single-family": <Home className="w-5 h-5 text-[#C59DD9]" />,
+    mixed: <Layers className="w-5 h-5 text-[#C59DD9]" />,
   }
 
   const typeLabel = {
@@ -561,8 +561,8 @@ export function LayoutVisualization({ scenario, results, roomSizes }: LayoutVisu
     <Card className="overflow-hidden border-slate-200 shadow-sm">
       <CardHeader className="bg-slate-50 border-b border-slate-200 py-4">
         <CardTitle className="text-slate-900 font-bold text-base flex items-center gap-2.5 font-rethink">
-          <div className="p-1.5 bg-blue-100 rounded-lg">
-            {typeIcon[projectType as keyof typeof typeIcon] || <Grid3X3 className="w-5 h-5 text-blue-600" />}
+          <div className="p-1.5 bg-[#F2EAF7] rounded-lg">
+            {typeIcon[projectType as keyof typeof typeIcon] || <Grid3X3 className="w-5 h-5 text-[#7A3F91]" />}
           </div>
           Site Layout — {typeLabel[projectType as keyof typeof typeLabel] || "Development"}
           <span className="ml-auto text-[10px] text-slate-400 font-bold uppercase tracking-[0.15em] hidden sm:inline">
@@ -570,7 +570,7 @@ export function LayoutVisualization({ scenario, results, roomSizes }: LayoutVisu
           </span>
         </CardTitle>
       </CardHeader>
-      <CardContent className="p-5 bg-gradient-to-b from-slate-50/50 to-white">
+      <CardContent className="p-5 bg-gradient-to-b from-[#F2EAF7]/50 to-white">
         {projectType === "apartment" && renderApartmentLayout()}
         {projectType === "single-family" && renderSingleFamilyLayout()}
         {projectType === "mixed" && renderMixedLayout()}

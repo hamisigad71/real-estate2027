@@ -52,7 +52,7 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
       <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
-            <SettingsIcon className="w-5 h-5" />
+            <SettingsIcon className="w-5 h-5 text-[#7A3F91]" />
             Settings
           </DialogTitle>
         </DialogHeader>
@@ -61,7 +61,7 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
           {/* Appearance */}
           <div className="space-y-4">
             <h3 className="text-sm font-semibold text-slate-900 flex items-center gap-2">
-              <Palette className="w-4 h-4" />
+              <Palette className="w-4 h-4 text-[#7A3F91]" />
               Appearance
             </h3>
             <div className="space-y-3 pl-6">
@@ -101,7 +101,7 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
           {/* Notifications */}
           <div className="space-y-4">
             <h3 className="text-sm font-semibold text-slate-900 flex items-center gap-2">
-              <Bell className="w-4 h-4" />
+              <Bell className="w-4 h-4 text-[#7A3F91]" />
               Notifications
             </h3>
             <div className="space-y-3 pl-6">
@@ -153,7 +153,7 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
           {/* Language & Region */}
           <div className="space-y-4">
             <h3 className="text-sm font-semibold text-slate-900 flex items-center gap-2">
-              <Globe className="w-4 h-4" />
+              <Globe className="w-4 h-4 text-[#7A3F91]" />
               Language & Region
             </h3>
             <div className="space-y-3 pl-6">
@@ -179,7 +179,7 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
           {/* Privacy & Security */}
           <div className="space-y-4">
             <h3 className="text-sm font-semibold text-slate-900 flex items-center gap-2">
-              <Shield className="w-4 h-4" />
+              <Shield className="w-4 h-4 text-[#7A3F91]" />
               Privacy & Security
             </h3>
             <div className="space-y-3 pl-6">
@@ -229,7 +229,7 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
           {/* Data Management */}
           <div className="space-y-4">
             <h3 className="text-sm font-semibold text-slate-900 flex items-center gap-2">
-              <Download className="w-4 h-4" />
+              <Download className="w-4 h-4 text-[#7A3F91]" />
               Data Management
             </h3>
             <div className="space-y-3 pl-6">
@@ -249,7 +249,7 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
           <Button variant="outline" onClick={onClose}>
             Cancel
           </Button>
-          <Button onClick={handleSave}>
+          <Button onClick={handleSave} className="bg-[#7A3F91] hover:bg-[#2B0D3E] shadow-lg shadow-[#7A3F91]/20">
             Save Changes
           </Button>
         </div>

@@ -64,10 +64,10 @@ export function ProjectSettings({ project, onUpdate }: ProjectSettingsProps) {
   return (
     <div className="space-y-6">
       {/* Info Banner */}
-      <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg flex gap-3">
-        <AlertCircle className="h-5 w-5 text-blue-700 flex-shrink-0 mt-0.5" />
-        <div className="text-sm text-blue-900">
-          <p className="font-semibold mb-1">Custom Project Assumptions</p>
+      <div className="p-4 bg-[#F2EAF7] border border-[#C59DD9]/30 rounded-lg flex gap-3">
+        <AlertCircle className="h-5 w-5 text-[#7A3F91] flex-shrink-0 mt-0.5" />
+        <div className="text-sm text-[#2B0D3E]">
+          <p className="font-semibold mb-1 text-[#7A3F91]">Custom Project Assumptions</p>
           <p>Override country defaults for this specific project. These values will be used in all scenarios unless overridden at the scenario level.</p>
         </div>
       </div>
@@ -204,9 +204,8 @@ export function ProjectSettings({ project, onUpdate }: ProjectSettingsProps) {
         </CardContent>
       </Card>
 
-      {/* Save Button */}
       <div className="flex gap-3">
-        <Button onClick={handleSave} disabled={isSaving} className="flex items-center gap-2">
+        <Button onClick={handleSave} disabled={isSaving} className="flex items-center gap-2 bg-[#7A3F91] hover:bg-[#2B0D3E] shadow-lg shadow-[#7A3F91]/20">
           <Save className="h-4 w-4" />
           {isSaving ? "Saving..." : "Save Project Settings"}
         </Button>

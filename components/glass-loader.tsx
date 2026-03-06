@@ -1,107 +1,108 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { Logo } from "./logo";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface GlassLoaderProps {
   fullScreen?: boolean;
   message?: string;
 }
 
+const PROFESSIONAL_MESSAGES = [
+  "Initializing Workspace...",
+  "Running Structural Audit...",
+  "Calibrating Volumetric Data...",
+  "Rendering Design Layers...",
+  "Syncing Architectural Engine...",
+  "Optimizing Layout Assets..."
+];
+
 export function GlassLoader({
   fullScreen = true,
-  message = "Loading...",
+  message: initialMessage,
 }: GlassLoaderProps) {
+  const [msgIndex, setMsgIndex] = useState(0);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    const interval = setInterval(() => {
+      setMsgIndex((prev) => (prev + 1) % PROFESSIONAL_MESSAGES.length);
+    }, 2500);
+    return () => clearInterval(interval);
+  }, []);
+
+  const messages = initialMessage 
+    ? [initialMessage, ...PROFESSIONAL_MESSAGES] 
+    : PROFESSIONAL_MESSAGES;
+
+  const currentMessage = messages[msgIndex % messages.length];
+
   const loaderContent = (
-    <div className="flex flex-col items-center justify-center gap-6">
-      {/* Animated Rings - Creative Design */}
-      <div className="relative w-20 h-20 sm:w-28 sm:h-28">
-        {/* Outer orbit ring - Dark Blue */}
-        <div
-          className="absolute inset-0 rounded-full border-2 border-transparent border-t-blue-900/90 border-r-blue-800/50"
-          style={{
-            animation: "spin 3s linear infinite",
-            boxShadow: "0 0 20px rgba(30, 58, 138, 0.6)",
-          }}
-        />
-
-        {/* Middle orbit ring - Dark Blue */}
-        <div
-          className="absolute inset-3 rounded-full border-2 border-transparent border-b-blue-800/70 border-l-blue-900/40"
-          style={{
-            animation: "spin 4s linear reverse",
-            boxShadow: "inset 0 0 20px rgba(30, 58, 138, 0.4)",
-          }}
-        />
-
-        {/* Inner glowing core - Dark Blue Gradient */}
-        <div
-          className="absolute inset-6 rounded-full bg-linear-to-br from-blue-900/60 via-blue-800/40 to-transparent blur-sm"
-          style={{
-            animation: "pulse 2s ease-in-out infinite",
-            boxShadow:
-              "0 0 30px rgba(30, 58, 138, 0.6), inset 0 0 30px rgba(59, 130, 246, 0.3)",
-          }}
-        />
-
-        {/* Center dot - Dark Blue */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-blue-900 rounded-full shadow-lg shadow-blue-900/70" />
+    <div className="flex flex-col items-center justify-center gap-10">
+      {/* Premium Logo Focal Point */}
+      <div className="relative group">
+        {/* Outer orbital rings - high speed, very thin */}
+        <div className="absolute -inset-8 rounded-full border border-[#7A3F91]/5 border-t-[#7A3F91]/30 animate-spin" style={{ animationDuration: '2s' }} />
+        <div className="absolute -inset-10 rounded-full border border-dashed border-[#C59DD9]/10 animate-spin" style={{ animationDuration: '8s' }} />
+        
+        {/* Main Logo Container */}
+        <div className="relative w-28 h-28 bg-white rounded-[2.5rem] flex items-center justify-center shadow-[0_20px_50px_rgba(122,63,145,0.1)] border border-white/80 overflow-hidden">
+          {/* Internal Scanner Effect - Sharp Line */}
+          <div 
+            className="absolute inset-0 bg-gradient-to-b from-transparent via-[#7A3F91]/20 to-transparent w-full h-[30%] opacity-0 group-hover:opacity-100 transition-opacity"
+            style={{ animation: 'scan 2s ease-in-out infinite' }}
+          />
+          <div 
+            className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#7A3F91]/40 to-transparent"
+            style={{ animation: 'scan 2s ease-in-out infinite' }}
+          />
+          
+          <Logo size={64} className="relative z-10" />
+          
+          {/* Subtle pulsate glow */}
+          <div className="absolute inset-0 bg-[#7A3F91]/5 animate-pulse" />
+        </div>
       </div>
 
-      {/* Loading text with gradient */}
-      {message && (
-        <div className="text-center space-y-3">
-          <p className="text-base sm:text-lg font-semibold bg-linear-to-r from-blue-900 via-blue-800 to-blue-900 bg-clip-text text-transparent animate-pulse">
-            {message}
-          </p>
-
-          {/* Animated dots - Dark Blue */}
-          <div className="flex gap-2 justify-center">
-            <span
-              className="w-2 h-2 rounded-full bg-linear-to-r from-blue-900 to-blue-800"
-              style={{
-                animation: "bounce 1.4s infinite",
-                animationDelay: "0s",
-              }}
-            />
-            <span
-              className="w-2 h-2 rounded-full bg-linear-to-r from-blue-800 to-blue-900"
-              style={{
-                animation: "bounce 1.4s infinite",
-                animationDelay: "0.2s",
-              }}
-            />
-            <span
-              className="w-2 h-2 rounded-full bg-linear-to-r from-blue-900 to-blue-800"
-              style={{
-                animation: "bounce 1.4s infinite",
-                animationDelay: "0.4s",
-              }}
-            />
-          </div>
+      {/* Dynamic Status Messaging */}
+      <div className="text-center w-72 h-16 flex flex-col items-center justify-start gap-4">
+        <AnimatePresence mode="wait">
+          <motion.p
+            key={currentMessage}
+            initial={{ opacity: 0, y: 5 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -5 }}
+            className="text-[10px] font-black text-[#2B0D3E] uppercase tracking-[0.4em] font-rethink"
+          >
+            {currentMessage}
+          </motion.p>
+        </AnimatePresence>
+        
+        {/* Progress Bar - Minimalist Line */}
+        <div className="w-48 h-[1px] bg-slate-100 overflow-hidden relative">
+          <div 
+            className="absolute inset-0 bg-gradient-to-r from-transparent via-[#7A3F91]/60 to-transparent w-full h-full"
+            style={{ animation: 'progress 2s linear infinite' }}
+          />
         </div>
-      )}
+        
+        <p className="text-[8px] font-bold text-slate-300 uppercase tracking-widest mt-1">
+          System Integrity: Stable · Protocol 4.1
+        </p>
+      </div>
 
-      {/* Animated background orbs (decorative) */}
       <style>{`
-        @keyframes spin {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
+        @keyframes scan {
+          0% { transform: translateY(-100%); opacity: 0; }
+          10% { opacity: 1; }
+          90% { opacity: 1; }
+          100% { transform: translateY(400%); opacity: 0; }
         }
-        @keyframes pulse {
-          0%, 100% { opacity: 0.6; }
-          50% { opacity: 1; }
-        }
-        @keyframes bounce {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-8px); }
-        }
-        @keyframes float {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-8px); }
-        }
-        @keyframes glow {
-          0%, 100% { opacity: 0.3; }
-          50% { opacity: 0.8; }
+        @keyframes progress {
+          0% { left: -100%; }
+          100% { left: 100%; }
         }
       `}</style>
     </div>
@@ -109,52 +110,33 @@ export function GlassLoader({
 
   if (fullScreen) {
     return (
-      <div className="fixed inset-0 z-50 w-full h-screen flex items-center justify-center overflow-hidden">
-        {/* Dynamic gradient background - Lightened */}
-        <div className="absolute inset-0 bg-linear-to-br from-slate-900/25 via-blue-900/10 to-slate-900/25 backdrop-blur-lg" />
+      <div className="fixed inset-0 z-50 w-full h-screen flex items-center justify-center bg-white/40 backdrop-blur-2xl">
+        {/* High-end backdrop elements */}
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#7A3F91]/5 rounded-full blur-[120px]" />
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#C59DD9]/5 rounded-full blur-[100px]" />
 
-        {/* Animated background orbs */}
-        <div className="absolute top-1/4 left-1/4 w-40 h-40 bg-blue-500/15 rounded-full blur-3xl animate-pulse" />
-        <div
-          className="absolute bottom-1/4 right-1/4 w-32 h-32 bg-blue-400/15 rounded-full blur-3xl animate-pulse"
-          style={{ animationDelay: "1s" }}
-        />
+        <div className="relative p-16 rounded-[4rem] bg-white/40 border border-white/60 shadow-[0_32px_80px_rgba(43,13,62,0.06)] backdrop-blur-md">
+          {/* Corner accents */}
+          <div className="absolute top-8 left-8 w-4 h-4 border-t-2 border-l-2 border-[#7A3F91]/20 rounded-tl-xl" />
+          <div className="absolute bottom-8 right-8 w-4 h-4 border-b-2 border-r-2 border-[#7A3F91]/20 rounded-br-xl" />
+          
+          <div className="relative z-10">{loaderContent}</div>
+        </div>
 
-        {/* Main glass container - Perfectly centered */}
-        <div className="relative flex items-center justify-center px-4 sm:px-6">
-          <div
-            className="relative bg-white/8 backdrop-blur-sm rounded-3xl p-8 sm:p-12 border border-white/20 shadow-2xl animate-in fade-in duration-500"
-            style={{
-              boxShadow:
-                "0 8px 32px 0 rgba(31, 38, 135, 0.37), inset 0 0 32px rgba(255, 255, 255, 0.1)",
-            }}
-          >
-            {/* Gradient overlay */}
-            <div className="absolute inset-0 rounded-3xl bg-linear-to-br from-blue-500/10 via-transparent to-blue-600/10 pointer-events-none" />
-
-            {/* Content */}
-            <div className="relative">{loaderContent}</div>
-          </div>
+        {/* Brand Watermark */}
+        <div className="absolute bottom-10 left-10 opacity-10 flex items-center gap-2 grayscale">
+          <Logo size={20} />
+          <span className="text-[10px] font-black uppercase tracking-[0.5em] text-[#2B0D3E]">RHS Engine System</span>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="w-full flex items-center justify-center min-h-screen">
-      {/* Inline loader - centered on page */}
-      <div className="relative flex flex-col items-center justify-center">
-        {/* Glass card container */}
-        <div
-          className="bg-white/8 backdrop-blur-2xl rounded-3xl p-8 sm:p-12 border border-white/20 shadow-xl"
-          style={{
-            boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)",
-          }}
-        >
-          <div className="bg-linear-to-br from-blue-500/10 via-transparent to-blue-600/10 rounded-2xl p-8">
-            {loaderContent}
-          </div>
-        </div>
+    <div className="w-full flex items-center justify-center min-h-[500px] p-8">
+      <div className="p-16 rounded-[4rem] bg-slate-50 border border-slate-100/50 shadow-sm relative overflow-hidden group">
+        <div className="absolute inset-0 bg-gradient-to-tr from-[#7A3F91]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+        <div className="relative z-10">{loaderContent}</div>
       </div>
     </div>
   );

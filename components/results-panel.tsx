@@ -16,8 +16,8 @@ export function ResultsPanel({ results, project, scenario }: ResultsPanelProps) 
   const budgetStatusConfig = {
     under: {
       icon: AlertCircle,
-      color: "text-blue-600",
-      bg: "bg-blue-50",
+      color: "text-[#7A3F91]",
+      bg: "bg-[#F2EAF7]",
       label: "Under Budget",
     },
     within: {
@@ -77,7 +77,7 @@ export function ResultsPanel({ results, project, scenario }: ResultsPanelProps) 
             {isSingleFamily && (
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <Home className="h-6 w-6 text-blue-600" />
+                  <Home className="h-6 w-6 text-[#7A3F91]" />
                   <div>
                     <p className="text-sm text-slate-600">Total Homes</p>
                     <p className="text-3xl font-bold text-slate-900">{results.totalUnits}</p>
@@ -93,11 +93,11 @@ export function ResultsPanel({ results, project, scenario }: ResultsPanelProps) 
             {isApartment && (
               <div className="space-y-2">
                 <div className="flex items-center gap-3">
-                  <Building2 className="h-6 w-6 text-blue-600" />
+                  <Building2 className="h-6 w-6 text-[#7A3F91]" />
                   <div>
                     <p className="text-sm text-slate-600">Building Configuration</p>
                     <p className="text-2xl font-bold text-slate-900">
-                      {scenario?.numberOfFloors || 5} floors • {scenario?.unitsPerFloor || 8} units/floor
+                      {scenario?.numberOfFloors ?? "—"} floors • {scenario?.unitsPerFloor ?? "—"} units/floor
                     </p>
                   </div>
                 </div>
@@ -121,7 +121,7 @@ export function ResultsPanel({ results, project, scenario }: ResultsPanelProps) 
             {isMixed && (
               <div className="space-y-2">
                 <div className="flex items-center gap-3">
-                  <Building2 className="h-6 w-6 text-blue-600" />
+                  <Building2 className="h-6 w-6 text-[#7A3F91]" />
                   <div>
                     <p className="text-sm text-slate-600">Mixed Development</p>
                     <p className="text-2xl font-bold text-slate-900">{results.totalUnits} total units</p>
@@ -130,11 +130,11 @@ export function ResultsPanel({ results, project, scenario }: ResultsPanelProps) 
                 <div className="grid grid-cols-2 gap-3 pt-2">
                   <div>
                     <p className="text-xs text-slate-600">Apartments</p>
-                    <p className="text-lg font-bold text-slate-900">{scenario?.apartmentUnits || 100}</p>
+                    <p className="text-lg font-bold text-slate-900">{scenario?.apartmentUnits ?? "—"}</p>
                   </div>
                   <div>
                     <p className="text-xs text-slate-600">Single-Family</p>
-                    <p className="text-lg font-bold text-slate-900">{scenario?.singleFamilyUnits || 50}</p>
+                    <p className="text-lg font-bold text-slate-900">{scenario?.singleFamilyUnits ?? "—"}</p>
                   </div>
                 </div>
               </div>
@@ -174,16 +174,20 @@ export function ResultsPanel({ results, project, scenario }: ResultsPanelProps) 
                   </span>
                 </div>
 
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-slate-600">Cost per m² of Home</span>
-                  <span className="font-semibold text-slate-900">
-                    {formatCurrency((results.costPerUnit / (scenario?.houseSize || 100)), project.budgetRange.currency)}/m²
-                  </span>
-                </div>
+                {scenario?.houseSize ? (
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-slate-600">Cost per m² of Home</span>
+                    <span className="font-semibold text-slate-900">
+                      {formatCurrency(results.costPerUnit / scenario.houseSize, project.budgetRange.currency)}/m²
+                    </span>
+                  </div>
+                ) : null}
 
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-slate-600">Average Home Size</span>
-                  <span className="font-semibold text-slate-900">{scenario?.houseSize || 100} m²</span>
+                  <span className="font-semibold text-slate-900">
+                    {scenario?.houseSize ? `${scenario.houseSize} m²` : "—"}
+                  </span>
                 </div>
               </>
             )}
@@ -244,7 +248,7 @@ export function ResultsPanel({ results, project, scenario }: ResultsPanelProps) 
                     ? "bg-red-500"
                     : results.budgetStatus === "within"
                       ? "bg-green-500"
-                      : "bg-blue-500"
+                      : "bg-[#7A3F91]"
                 }`}
                 style={{
                   width: `${Math.min((results.totalProjectCost / project.budgetRange.max) * 100, 100)}%`,

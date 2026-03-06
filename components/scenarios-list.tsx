@@ -62,13 +62,13 @@ export function ScenariosList({
 
         const densityColor = {
           low: "bg-green-100 text-green-800",
-          medium: "bg-blue-100 text-blue-800",
+          medium: "bg-[#C59DD9]/20 text-[#2B0D3E]",
           high: "bg-orange-100 text-orange-800",
           "very-high": "bg-red-100 text-red-800",
         }[results.densityClassification]
 
         const budgetColor = {
-          under: "text-blue-600",
+          under: "text-[#7A3F91]",
           within: "text-green-600",
           over: "text-red-600",
         }[results.budgetStatus]

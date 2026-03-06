@@ -90,17 +90,17 @@ export function UserProfile({ onClose, projectCount = 0, completedCount = 0, inP
                   <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">{user?.name || "User Account"}</h2>
                   <CheckCircle2 className="h-5 w-5 sm:h-6 sm:w-6 text-emerald-400 drop-shadow-sm" />
                 </div>
-                <span className="w-fit mx-auto sm:mx-0 px-2.5 py-0.5 rounded-full bg-blue-500/20 border border-blue-400/30 text-[10px] font-black uppercase tracking-widest text-blue-300">
+                <span className="w-fit mx-auto sm:mx-0 px-2.5 py-0.5 rounded-full bg-[#7A3F91]/20 border border-[#C59DD9]/30 text-[10px] font-black uppercase tracking-widest text-[#C59DD9]">
                   Pro Architect
                 </span>
               </div>
               <div className="flex flex-wrap justify-center sm:justify-start gap-4 text-slate-300 text-sm font-medium">
                 <p className="flex items-center gap-1.5">
-                  <Mail className="h-4 w-4 text-blue-400" />
+                  <Mail className="h-4 w-4 text-[#C59DD9]" />
                   {user?.email}
                 </p>
                 <p className="flex items-center gap-1.5">
-                  <MapPin className="h-4 w-4 text-blue-400" />
+                  <MapPin className="h-4 w-4 text-[#C59DD9]" />
                   {user?.country || "Earth"}
                 </p>
               </div>
@@ -131,11 +131,11 @@ export function UserProfile({ onClose, projectCount = 0, completedCount = 0, inP
                   onClick={() => setActiveTab(tab.id as TabType)}
                   className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold transition-all whitespace-nowrap sm:w-full sm:mb-1 ${
                     isActive 
-                      ? "bg-blue-50 text-blue-700 shadow-sm" 
+                      ? "bg-[#F2EAF7] text-[#7A3F91] shadow-sm" 
                       : "text-slate-500 hover:bg-slate-50 hover:text-slate-900"
                   }`}
                 >
-                  <Icon className={`h-4 w-4 ${isActive ? "text-blue-600" : "text-slate-400"}`} />
+                  <Icon className={`h-4 w-4 ${isActive ? "text-[#7A3F91]" : "text-slate-400"}`} />
                   {tab.label}
                   {isActive && <ChevronRight className="hidden sm:block h-3.5 w-3.5 ml-auto opacity-50" />}
                 </button>
@@ -158,7 +158,7 @@ export function UserProfile({ onClose, projectCount = 0, completedCount = 0, inP
                   <div className="space-y-8">
                     {/* Stats Grid */}
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                      <StatCard icon={Zap} label="Active Projects" value={projectCount} iconBg="bg-blue-50" iconColor="text-blue-600" />
+                      <StatCard icon={Zap} label="Active Projects" value={projectCount} iconBg="bg-[#F2EAF7]" iconColor="text-[#7A3F91]" />
                       <StatCard icon={CheckCircle2} label="Completed" value={completedCount} iconBg="bg-emerald-50" iconColor="text-emerald-600" />
                       <StatCard icon={Clock} label="In Progress" value={inProgressCount} iconBg="bg-amber-50" iconColor="text-amber-600" />
                     </div>
@@ -190,8 +190,8 @@ export function UserProfile({ onClose, projectCount = 0, completedCount = 0, inP
                       <div className="grid grid-cols-1 gap-6">
                         <InfoItem label="Organization" value={formData.organization || "Independent Architect"} />
                         <InfoItem label="Current Role" value={formData.role || "Lead Designer"} />
-                        <div className="p-4 bg-blue-50/50 rounded-xl border border-blue-100/50">
-                          <p className="text-xs font-bold text-blue-600 uppercase tracking-widest mb-2 flex items-center gap-2">
+                        <div className="p-4 bg-[#F2EAF7]/50 rounded-xl border border-[#C59DD9]/50">
+                          <p className="text-xs font-bold text-[#7A3F91] uppercase tracking-widest mb-2 flex items-center gap-2">
                              <Settings className="h-3.5 w-3.5" /> Professional Status
                           </p>
                           <p className="text-sm text-slate-700 leading-relaxed font-medium">
@@ -262,14 +262,14 @@ export function UserProfile({ onClose, projectCount = 0, completedCount = 0, inP
               <div className="flex-1 overflow-y-auto p-4 sm:p-8">
                 <div className="max-w-2xl mx-auto space-y-8 pb-10">
                   <div className="space-y-5">
-                    <p className="text-[10px] font-black text-blue-600 uppercase tracking-[0.2em] px-1">Personal Details</p>
+                    <p className="text-[10px] font-black text-[#7A3F91] uppercase tracking-[0.2em] px-1">Personal Details</p>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div className="space-y-1.5">
                         <Label className="text-xs font-bold text-slate-700 ml-1">Full Name</Label>
                         <Input 
                           value={formData.name} 
                           onChange={(e) => setFormData({...formData, name: e.target.value})}
-                          className="rounded-xl border-slate-200 focus:ring-blue-500 h-11"
+                          className="rounded-xl border-slate-200 focus:ring-[#7A3F91] h-11"
                         />
                       </div>
                       <div className="space-y-1.5">
@@ -277,7 +277,7 @@ export function UserProfile({ onClose, projectCount = 0, completedCount = 0, inP
                         <Input 
                           value={formData.email} 
                           onChange={(e) => setFormData({...formData, email: e.target.value})}
-                          className="rounded-xl border-slate-200 focus:ring-blue-500 h-11"
+                          className="rounded-xl border-slate-200 focus:ring-[#7A3F91] h-11"
                         />
                       </div>
                       <div className="space-y-1.5">
@@ -285,7 +285,7 @@ export function UserProfile({ onClose, projectCount = 0, completedCount = 0, inP
                         <Input 
                           value={formData.phone} 
                           onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                          className="rounded-xl border-slate-200 focus:ring-blue-500 h-11"
+                          className="rounded-xl border-slate-200 focus:ring-[#7A3F91] h-11"
                         />
                       </div>
                       <div className="space-y-1.5">
@@ -293,21 +293,21 @@ export function UserProfile({ onClose, projectCount = 0, completedCount = 0, inP
                         <Input 
                           value={formData.country} 
                           onChange={(e) => setFormData({...formData, country: e.target.value})}
-                          className="rounded-xl border-slate-200 focus:ring-blue-500 h-11"
+                          className="rounded-xl border-slate-200 focus:ring-[#7A3F91] h-11"
                         />
                       </div>
                     </div>
                   </div>
 
                   <div className="space-y-5 pt-4 border-t border-slate-100">
-                    <p className="text-[10px] font-black text-blue-600 uppercase tracking-[0.2em] px-1">Professional Details</p>
+                    <p className="text-[10px] font-black text-[#7A3F91] uppercase tracking-[0.2em] px-1">Professional Details</p>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div className="space-y-1.5">
                         <Label className="text-xs font-bold text-slate-700 ml-1">Organization</Label>
                         <Input 
                           value={formData.organization} 
                           onChange={(e) => setFormData({...formData, organization: e.target.value})}
-                          className="rounded-xl border-slate-200 focus:ring-blue-500 h-11"
+                          className="rounded-xl border-slate-200 focus:ring-[#7A3F91] h-11"
                         />
                       </div>
                       <div className="space-y-1.5">
@@ -336,7 +336,7 @@ export function UserProfile({ onClose, projectCount = 0, completedCount = 0, inP
                 <Button variant="ghost" onClick={handleCancel} className="font-bold text-slate-500">Cancel</Button>
                 <Button 
                   onClick={handleSave}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-8 rounded-xl h-12 font-bold shadow-lg shadow-blue-500/20"
+                  className="bg-[#7A3F91] hover:bg-[#2B0D3E] text-white px-8 rounded-xl h-12 font-bold shadow-lg shadow-[#7A3F91]/20"
                 >
                   Save Changes
                 </Button>
@@ -391,8 +391,8 @@ function SecurityRow({ icon: Icon, title, desc, isToggle }: any) {
   return (
     <div className="flex items-center justify-between p-4 bg-slate-50 border border-slate-100 rounded-xl hover:bg-white hover:shadow-sm transition-all cursor-pointer group">
       <div className="flex items-center gap-4">
-        <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center border border-slate-100 group-hover:border-blue-200 transition-colors">
-          <Icon className="h-5 w-5 text-slate-400 group-hover:text-blue-500 transition-colors" />
+        <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center border border-slate-100 group-hover:border-[#C59DD9] transition-colors">
+          <Icon className="h-5 w-5 text-slate-400 group-hover:text-[#7A3F91] transition-colors" />
         </div>
         <div>
           <p className="text-sm font-bold text-slate-900">{title}</p>
@@ -400,7 +400,7 @@ function SecurityRow({ icon: Icon, title, desc, isToggle }: any) {
         </div>
       </div>
       {isToggle ? (
-        <div className="w-10 h-6 bg-blue-600 rounded-full flex items-center px-1">
+        <div className="w-10 h-6 bg-[#7A3F91] rounded-full flex items-center px-1">
           <div className="w-4 h-4 bg-white rounded-full ml-auto shadow-sm" />
         </div>
       ) : (

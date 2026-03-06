@@ -64,7 +64,7 @@ export function RegulatoryComplianceChecker({
 
   const getCategoryColor = (category: string) => {
     const colors: Record<string, string> = {
-      building: "bg-blue-50 text-blue-700 border-blue-200",
+      building: "bg-[#F2EAF7] text-[#2B0D3E] border-[#C59DD9]/30",
       zoning: "bg-purple-50 text-purple-700 border-purple-200",
       accessibility: "bg-emerald-50 text-emerald-700 border-emerald-200",
       environmental: "bg-green-50 text-green-700 border-green-200",
@@ -79,7 +79,7 @@ export function RegulatoryComplianceChecker({
       critical: "bg-red-100 text-red-700 border-red-300",
       high: "bg-orange-100 text-orange-700 border-orange-300",
       medium: "bg-yellow-100 text-yellow-700 border-yellow-300",
-      low: "bg-blue-100 text-blue-700 border-blue-300",
+      low: "bg-[#F2EAF7] text-[#7A3F91] border-[#C59DD9]/30",
     }
     return colors[impact] || "bg-slate-100 text-slate-700 border-slate-300"
   }
@@ -94,7 +94,7 @@ export function RegulatoryComplianceChecker({
         <Card className="bg-white border-slate-200 shadow-sm hover:shadow-md transition-shadow">
           <CardHeader className="pb-2 pt-4 px-5">
             <CardTitle className="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
-              <FileCheck className="h-3 w-3 text-blue-600" />
+              <FileCheck className="h-3 w-3 text-[#7A3F91]" />
               Compliance Score
             </CardTitle>
           </CardHeader>
@@ -186,7 +186,7 @@ export function RegulatoryComplianceChecker({
                 <div
                   key={status.ruleId}
                   className={`border rounded-lg p-4 cursor-pointer transition-all ${
-                    expandedRule === status.ruleId ? "ring-2 ring-blue-500" : ""
+                    expandedRule === status.ruleId ? "ring-2 ring-[#7A3F91]" : ""
                   } ${status.compliant ? 'bg-slate-50 border-slate-200' : 'bg-red-50 border-red-200'}`}
                   onClick={() => setExpandedRule(expandedRule === status.ruleId ? null : status.ruleId)}
                 >
@@ -231,8 +231,8 @@ export function RegulatoryComplianceChecker({
                           </div>
 
                           {status.suggestedAdjustment && (
-                            <div className="bg-blue-50 border border-blue-200 rounded p-3">
-                              <p className="font-medium text-sm text-blue-900 mb-1 flex items-center gap-2">
+                            <div className="bg-[#F2EAF7] border border-[#C59DD9]/30 rounded p-3">
+                              <p className="font-medium text-sm text-[#2B0D3E] mb-1 flex items-center gap-2">
                                 <Lightbulb className="h-4 w-4" />
                                 Suggested Adjustment
                               </p>

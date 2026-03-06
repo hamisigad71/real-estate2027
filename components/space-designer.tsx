@@ -34,8 +34,8 @@ interface SpaceDesignerProps {
 
 // ─── Sidebar room palette ────────────────────────────────────────────────────
 const ROOM_PALETTE = [
-  { type: "master",   name: "Master Bedroom", color: "bg-blue-500",   w: 260, h: 200, area: 20 },
-  { type: "bedroom",  name: "Bedroom",         color: "bg-blue-400",   w: 240, h: 180, area: 15 },
+  { type: "master",   name: "Master Bedroom", color: "bg-slate-500",   w: 260, h: 200, area: 20 },
+  { type: "bedroom",  name: "Bedroom",         color: "bg-slate-400",   w: 240, h: 180, area: 15 },
   { type: "living",   name: "Living Room",     color: "bg-slate-400",  w: 320, h: 240, area: 30 },
   { type: "kitchen",  name: "Kitchen",         color: "bg-amber-400",  w: 240, h: 180, area: 15 },
   { type: "bathroom", name: "Bathroom",        color: "bg-cyan-400",   w: 180, h: 140, area: 10 },
@@ -80,8 +80,8 @@ const LAYOUTS: Record<LayoutType, Omit<Room, "id">[]> = {
   ],
 
   "1br": [
-    { type: "master",   name: "Master Suite",            x: 60,  y: 60,  width: 300, height: 240, color: "bg-blue-600"   },
-    { type: "living",   name: "Great Room",              x: 370, y: 60,  width: 340, height: 280, color: "bg-indigo-500"  },
+    { type: "master",   name: "Master Suite",            x: 60,  y: 60,  width: 300, height: 240, color: "bg-[#7A3F91]"   },
+    { type: "living",   name: "Great Room",              x: 370, y: 60,  width: 340, height: 280, color: "bg-[#C59DD9]"  },
     { type: "kitchen",  name: "Dining & Kitchen",        x: 370, y: 350, width: 340, height: 180, color: "bg-amber-500"  },
     { type: "bathroom", name: "Full Bath",               x: 60,  y: 320, width: 240, height: 160, color: "bg-cyan-500"   },
     { type: "hallway",  name: "Grand Terrace",           x: 370, y: 550, width: 240, height: 100, color: "bg-emerald-500"},
@@ -151,12 +151,12 @@ function getTemplates(scenario?: Scenario): Template[] {
       beds: 1,
     },
     {
-      layoutType: "2br",
+      layoutType: "2-bedroom",
       label: "2-Bedroom",
       emoji: "🛏🛏",
       subtitle: `~${size}m² · 2 beds`,
       badge: mix ? `${mix.twoBedroom}% of mix` : "Popular",
-      badgeColor: "bg-indigo-500/20 text-indigo-300 border-indigo-500/30",
+      badgeColor: "bg-[#7A3F91]/20 text-[#7A3F91] border-[#7A3F91]/30",
       rooms: 7,
       beds: 2,
     },
@@ -271,7 +271,7 @@ export function SpaceDesigner({ project, scenario, onSave }: SpaceDesignerProps)
           <div className="h-8 w-px bg-slate-100" />
           
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-blue-600 rounded-xl hidden sm:block shadow-lg shadow-blue-500/20">
+            <div className="p-2 bg-[#7A3F91] rounded-xl hidden sm:block shadow-lg shadow-[#7A3F91]/20">
               <LayoutGrid className="w-5 h-5 text-white" />
             </div>
             <div>
@@ -320,7 +320,7 @@ export function SpaceDesigner({ project, scenario, onSave }: SpaceDesignerProps)
           >
             <div className="text-center space-y-2">
               <div className="flex justify-center mb-3">
-                <div className="p-3 bg-blue-600 rounded-2xl">
+                <div className="p-3 bg-[#7A3F91] rounded-2xl">
                   <Wand2 className="w-6 h-6 text-white" />
                 </div>
               </div>
@@ -346,7 +346,7 @@ export function SpaceDesigner({ project, scenario, onSave }: SpaceDesignerProps)
                     whileHover={{ scale: 1.03, y: -3 }}
                     whileTap={{ scale: 0.97 }}
                     onClick={() => applyTemplate(t.layoutType)}
-                    className="flex flex-col bg-white hover:bg-slate-50 border border-slate-200 hover:border-blue-500/50 rounded-2xl overflow-hidden text-left transition-colors group shadow-sm hover:shadow-md"
+                    className="flex flex-col bg-white hover:bg-[#F2EAF7] border border-slate-200 hover:border-[#7A3F91]/50 rounded-2xl overflow-hidden text-left transition-colors group shadow-sm hover:shadow-md"
                   >
                     {/* Mini blueprint */}
                     <div className="relative h-[150px] w-full overflow-hidden"
@@ -426,13 +426,13 @@ export function SpaceDesigner({ project, scenario, onSave }: SpaceDesignerProps)
             <div className="grid grid-cols-1 gap-2">
               {ROOM_PALETTE.map((p) => (
                 <button key={p.type} onClick={() => { addRoom(p); if (window.innerWidth < 1024) setShowRoomPalette(false); }}
-                  className="w-full flex items-center gap-3 p-2.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 hover:border-blue-500/30 transition-all text-left group shadow-sm">
+                  className="w-full flex items-center gap-3 p-2.5 rounded-xl border border-slate-200 bg-white hover:bg-[#F2EAF7] hover:border-[#7A3F91]/30 transition-all text-left group shadow-sm">
                   <div className={`w-7 h-7 rounded-lg ${p.color} flex-shrink-0 shadow-inner`} />
                   <div className="min-w-0">
-                    <p className="text-xs font-bold text-slate-800 group-hover:text-blue-600 transition-colors truncate">{p.name}</p>
+                    <p className="text-xs font-bold text-slate-800 group-hover:text-[#7A3F91] transition-colors truncate">{p.name}</p>
                     <p className="text-[9px] text-slate-500">~{p.area}m²</p>
                   </div>
-                  <Plus className="w-3 h-3 text-slate-400 ml-auto flex-shrink-0 group-hover:text-blue-600 transition-colors" />
+                  <Plus className="w-3 h-3 text-slate-400 ml-auto flex-shrink-0 group-hover:text-[#7A3F91] transition-colors" />
                 </button>
               ))}
             </div>
@@ -453,7 +453,7 @@ export function SpaceDesigner({ project, scenario, onSave }: SpaceDesignerProps)
                   <Label className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-1 block">Name</Label>
                   <Input value={selectedRoom.name}
                     onChange={(e) => updateRoom(selectedRoom.id, { name: e.target.value })}
-                    className="h-9 bg-white border-slate-200 text-slate-900 text-xs shadow-sm focus:ring-blue-500/20 focus:border-blue-500" />
+                    className="h-9 bg-white border-slate-200 text-slate-900 text-xs shadow-sm focus:ring-[#7A3F91]/20 focus:border-[#7A3F91]" />
                 </div>
                 <div className="grid grid-cols-2 gap-2">
                   {[["Width (cm)", "width"], ["Height (cm)", "height"]] .map(([lbl, key]) => (
@@ -461,7 +461,7 @@ export function SpaceDesigner({ project, scenario, onSave }: SpaceDesignerProps)
                       <Label className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-1 block">{lbl}</Label>
                       <Input type="number" value={(selectedRoom as any)[key]}
                         onChange={(e) => updateRoom(selectedRoom.id, { [key]: parseInt(e.target.value) || 60 } as any)}
-                        className="h-9 bg-white border-slate-200 text-slate-900 text-xs shadow-sm focus:ring-blue-500/20 focus:border-blue-500" />
+                        className="h-9 bg-white border-slate-200 text-slate-900 text-xs shadow-sm focus:ring-[#7A3F91]/20 focus:border-[#7A3F91]" />
                     </div>
                   ))}
                 </div>
@@ -561,7 +561,7 @@ export function SpaceDesigner({ project, scenario, onSave }: SpaceDesignerProps)
                     initial={{ opacity: 0, scale: 0.92 }}
                     animate={{ opacity: 1, scale: 1, translateZ: is3D ? 40 : 0 }}
                     className={`absolute rounded-xl border-2 cursor-move group transition-all duration-300
-                      ${selectedId === room.id ? "border-white ring-4 ring-blue-500/30 z-20" : "border-white/20 hover:border-white/50"}
+                      ${selectedId === room.id ? "border-white ring-4 ring-[#7A3F91]/30 z-20" : "border-white/20 hover:border-white/50"}
                       ${room.color} shadow-lg`}
                     style={{
                       left: room.x, top: room.y, width: room.width, height: room.height,
@@ -577,19 +577,24 @@ export function SpaceDesigner({ project, scenario, onSave }: SpaceDesignerProps)
                       </>
                     )}
                     {/* Label */}
-                    <div className="absolute inset-0 flex flex-col items-start p-4 pointer-events-none">
-                      <p className={`text-[12px] font-black uppercase tracking-widest text-white drop-shadow-md leading-tight
-                        ${is3D ? "[transform:rotateZ(-45deg)_rotateX(-55deg)]" : "w-full break-normal"}`}>
-                        {room.name}
-                      </p>
-                      <p className={`text-[11px] font-extrabold text-white/80 mt-1.5 drop-shadow-md 
+                    <div className="absolute inset-0 flex flex-col items-start p-3 pointer-events-none">
+                      <div className="flex items-center gap-2 mb-1">
+                        <div className="w-1.5 h-1.5 rounded-full bg-white shadow-sm" />
+                        <p className={`text-[10px] font-black uppercase tracking-[0.15em] text-white drop-shadow-md leading-none
+                          ${is3D ? "[transform:rotateZ(-45deg)_rotateX(-55deg)]" : "w-full break-normal"}`}>
+                          {room.name}
+                        </p>
+                      </div>
+                      <div className={`px-2 py-0.5 bg-black/20 backdrop-blur-sm rounded-md border border-white/10 mt-1
                         ${is3D ? "[transform:rotateZ(-45deg)_rotateX(-55deg)]" : ""}`}>
-                        {Math.round((room.width * room.height) / 1000)}m²
-                      </p>
+                        <p className="text-[9px] font-black text-white/90">
+                          {Math.round((room.width * room.height) / 1000)}m²
+                        </p>
+                      </div>
                     </div>
                     {/* Resize handle */}
                     {!is3D && selectedId === room.id && (
-                      <div className="absolute -bottom-1.5 -right-1.5 w-4 h-4 bg-white rounded-full border-2 border-blue-500 shadow-lg cursor-nwse-resize" />
+                      <div className="absolute -bottom-1.5 -right-1.5 w-4 h-4 bg-white rounded-full border-2 border-[#7A3F91] shadow-lg cursor-nwse-resize" />
                     )}
                   </motion.div>
                 ))}
@@ -599,7 +604,7 @@ export function SpaceDesigner({ project, scenario, onSave }: SpaceDesignerProps)
                   <div className="absolute inset-0 flex flex-col items-center justify-center gap-4">
                     <p className="text-slate-600 text-sm font-semibold">Canvas is empty</p>
                     <button onClick={() => setShowTemplates(true)}
-                      className="flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl transition-colors">
+                      className="flex items-center gap-2 px-5 py-2.5 bg-[#7A3F91] hover:bg-[#2B0D3E] text-white text-xs font-bold rounded-xl transition-colors">
                       <Wand2 className="w-3.5 h-3.5" />Pick a Template
                     </button>
                   </div>

@@ -50,11 +50,11 @@ function ToastNotification({
       progressBar: "bg-red-400/50 dark:bg-red-600/50",
     },
     info: {
-      bg: "bg-blue-50 dark:bg-blue-950/40",
-      border: "border-blue-200/60 dark:border-blue-800/60",
-      icon: "text-blue-600 dark:text-blue-400",
-      text: "text-blue-900 dark:text-blue-100",
-      progressBar: "bg-blue-400/50 dark:bg-blue-600/50",
+      bg: "bg-[#F2EAF7] dark:bg-[#2B0D3E]/80",
+      border: "border-[#C59DD9]/40 dark:border-[#C59DD9]/20",
+      icon: "text-[#7A3F91] dark:text-[#C59DD9]",
+      text: "text-[#2B0D3E] dark:text-[#F2EAF7]",
+      progressBar: "bg-[#7A3F91]/50 dark:bg-[#7A3F91]/70",
     },
   }[type];
 

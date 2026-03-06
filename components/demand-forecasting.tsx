@@ -165,7 +165,7 @@ export function DemandForecasting({ project, scenarios }: DemandForecastingProps
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-3">
-              <Users className="h-8 w-8 text-primary" />
+              <Users className="h-8 w-8 text-[#7A3F91]" />
               <div>
                 <div className="text-2xl font-semibold text-slate-900">{formatNumber(finalYear?.population || 0)}</div>
                 <div className="text-xs text-slate-600">in {timeHorizon} years</div>
@@ -180,7 +180,7 @@ export function DemandForecasting({ project, scenarios }: DemandForecastingProps
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-3">
-              <Home className="h-8 w-8 text-primary" />
+              <Home className="h-8 w-8 text-[#7A3F91]" />
               <div>
                 <div className="text-2xl font-semibold text-slate-900">{formatNumber(finalDemand)} units</div>
                 <div className="text-xs text-slate-600">projected need</div>
@@ -195,7 +195,7 @@ export function DemandForecasting({ project, scenarios }: DemandForecastingProps
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-3">
-              <TrendingUp className="h-8 w-8 text-primary" />
+              <TrendingUp className="h-8 w-8 text-[#7A3F91]" />
               <div>
                 <div className="text-2xl font-semibold text-slate-900">
                   {formatNumber(scenarioCapacity?.units || 0)} units
@@ -246,8 +246,8 @@ export function DemandForecasting({ project, scenarios }: DemandForecastingProps
                   type="monotone"
                   dataKey="population"
                   stackId="1"
-                  stroke="#1e40af"
-                  fill="#1e40af"
+                  stroke="#7A3F91"
+                  fill="#7A3F91"
                   fillOpacity={0.6}
                   name="Population"
                 />

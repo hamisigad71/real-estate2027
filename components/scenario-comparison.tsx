@@ -48,15 +48,15 @@ export function ScenarioComparison({ scenarios, project }: ScenarioComparisonPro
   }))
 
   const densityColors = {
-    low: "bg-green-100 text-green-800",
-    medium: "bg-blue-100 text-blue-800",
+    low: "bg-emerald-100 text-emerald-800",
+    medium: "bg-[#F2EAF7] text-[#7A3F91]",
     high: "bg-orange-100 text-orange-800",
     "very-high": "bg-red-100 text-red-800",
   }
 
   const budgetColors = {
-    under: "text-blue-600",
-    within: "text-green-600",
+    under: "text-[#7A3F91]",
+    within: "text-emerald-600",
     over: "text-red-600",
   }
 
@@ -145,8 +145,8 @@ export function ScenarioComparison({ scenarios, project }: ScenarioComparisonPro
                     <YAxis />
                     <Tooltip />
                     <Legend />
-                    <Bar dataKey="units" fill="#1e40af" name="Total Units" />
-                    <Bar dataKey="population" fill="#3b82f6" name="Population" />
+                    <Bar dataKey="units" fill="#7A3F91" name="Total Units" />
+                    <Bar dataKey="population" fill="#C59DD9" name="Population" />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
@@ -166,8 +166,8 @@ export function ScenarioComparison({ scenarios, project }: ScenarioComparisonPro
                     <YAxis />
                     <Tooltip formatter={(value: number, name: string) => [value.toFixed(2), name]} />
                     <Legend />
-                    <Bar dataKey="cost" fill="#1e40af" name="Total Cost (M)" />
-                    <Bar dataKey="costPerUnit" fill="#60a5fa" name="Cost/Unit (K)" />
+                    <Bar dataKey="cost" fill="#7A3F91" name="Total Cost (M)" />
+                    <Bar dataKey="costPerUnit" fill="#C59DD9" name="Cost/Unit (K)" />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
@@ -194,10 +194,10 @@ export function ScenarioComparison({ scenarios, project }: ScenarioComparisonPro
                   ))}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-200">
+              <tbody className="divide-y divide-[#C59DD9]/20">
                 {/* Layout Metrics */}
-                <tr className="bg-slate-50">
-                  <td colSpan={comparisonData.length + 1} className="py-2 px-4 text-xs font-semibold text-slate-600">
+                <tr className="bg-[#F2EAF7]/50">
+                  <td colSpan={comparisonData.length + 1} className="py-2 px-4 text-xs font-semibold text-[#7A3F91]">
                     LAYOUT
                   </td>
                 </tr>
@@ -235,8 +235,8 @@ export function ScenarioComparison({ scenarios, project }: ScenarioComparisonPro
                 </tr>
 
                 {/* Population Metrics */}
-                <tr className="bg-slate-50">
-                  <td colSpan={comparisonData.length + 1} className="py-2 px-4 text-xs font-semibold text-slate-600">
+                <tr className="bg-[#F2EAF7]/50">
+                  <td colSpan={comparisonData.length + 1} className="py-2 px-4 text-xs font-semibold text-[#7A3F91]">
                     POPULATION
                   </td>
                 </tr>
@@ -260,9 +260,9 @@ export function ScenarioComparison({ scenarios, project }: ScenarioComparisonPro
                   ))}
                 </tr>
 
-                {/* Cost Metrics */}
-                <tr className="bg-slate-50">
-                  <td colSpan={comparisonData.length + 1} className="py-2 px-4 text-xs font-semibold text-slate-600">
+                {/* Costs Metrics */}
+                <tr className="bg-[#F2EAF7]/50">
+                  <td colSpan={comparisonData.length + 1} className="py-2 px-4 text-xs font-semibold text-[#7A3F91]">
                     COSTS
                   </td>
                 </tr>
@@ -312,8 +312,8 @@ export function ScenarioComparison({ scenarios, project }: ScenarioComparisonPro
                 </tr>
 
                 {/* Infrastructure Metrics */}
-                <tr className="bg-slate-50">
-                  <td colSpan={comparisonData.length + 1} className="py-2 px-4 text-xs font-semibold text-slate-600">
+                <tr className="bg-[#F2EAF7]/50">
+                  <td colSpan={comparisonData.length + 1} className="py-2 px-4 text-xs font-semibold text-[#7A3F91]">
                     INFRASTRUCTURE
                   </td>
                 </tr>
@@ -356,7 +356,7 @@ export function ScenarioComparison({ scenarios, project }: ScenarioComparisonPro
 
       {/* Best Option Analysis */}
       {comparisonData.length >= 2 && (
-        <Card className="border-primary/20 bg-primary/5">
+        <Card className="border-[#C59DD9]/20 bg-[#F2EAF7]/30">
           <CardHeader>
             <CardTitle className="text-lg">Quick Insights</CardTitle>
           </CardHeader>

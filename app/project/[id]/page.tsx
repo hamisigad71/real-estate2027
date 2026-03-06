@@ -7,7 +7,7 @@ import { projectStorage, scenarioStorage } from "@/lib/storage";
 import type { Project, Scenario } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ArrowLeft, Plus, ChevronLeft, Home, Menu, X } from "lucide-react";
+import { ArrowLeft, Plus, ChevronLeft, Home, Menu, X, TrendingUp, Users } from "lucide-react";
 import Link from "next/link";
 import { GlassLoader } from "@/components/glass-loader";
 import { ScenarioSimulator } from "@/components/scenario-simulator";
@@ -130,94 +130,119 @@ export default function ProjectPage({
   const activeScenario = scenarios.find((s) => s.id === activeScenarioId);
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-white">
       {/* Top Navigation Bar */}
-      <header className="bg-white border-b border-slate-200 shadow-sm sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            {/* Left side - Back and Title */}
-            <div className="flex items-center gap-4 min-w-0">
-              <button
-                onClick={handleBack}
-                disabled={!canGoBack}
-                className={`p-2 rounded-lg transition-colors ${
-                  canGoBack
-                    ? "hover:bg-slate-100 cursor-pointer"
-                    : "opacity-40 cursor-not-allowed"
-                }`}
-                title="Go back"
+      <header className="sticky top-0 z-50 w-full border-b border-slate-200/60 bg-white/80 backdrop-blur-md">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex h-16 items-center justify-between gap-4">
+            
+            {/* Left side: Navigation & Identity */}
+            <div className="flex items-center gap-6">
+              <Link
+                href="/"
+                className="flex items-center gap-2 group transition-all"
               >
-                <ChevronLeft className="w-5 h-5 text-slate-600" />
-              </button>
-
-              <div className="min-w-0">
-               <h1 className="text-lg sm:text-xl font-semibold text-slate-900 truncate">
-  Project Control Center
-</h1>
-<p className="text-xs sm:text-sm text-slate-500 truncate">
-  Smart Planning Hub
-</p>
+                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-slate-900 text-white shadow-lg shadow-slate-200 group-hover:scale-105 transition-transform">
+                  <Home className="h-5 w-5" />
+                </div>
+                <div className="hidden flex-col sm:flex">
+                  <span className="text-sm font-black text-slate-900 leading-none">REALESTATE</span>
+                  <span className="text-[10px] font-bold text-[#7A3F91] uppercase tracking-[0.2em]">HUB 2027</span>
+                </div>
+              </Link>
+              
+              <div className="h-6 w-[1px] bg-slate-200" />
+              
+              <div className="flex items-center gap-1">
+                <button
+                  onClick={handleBack}
+                  disabled={!canGoBack}
+                  className={`group flex items-center gap-1.5 rounded-lg px-2 py-1.5 text-sm font-semibold transition-all ${
+                    canGoBack
+                      ? "text-slate-600 hover:bg-slate-100/80 hover:text-slate-900"
+                      : "opacity-30 cursor-not-allowed"
+                  }`}
+                >
+                  <ChevronLeft className={`h-4 w-4 transition-transform ${canGoBack ? "group-hover:-translate-x-0.5" : ""}`} />
+                  <span className="hidden md:inline">Back</span>
+                </button>
               </div>
             </div>
 
-            {/* Right side - Action buttons */}
-            <div className="hidden sm:flex items-center gap-2">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleHome}
-                className="text-slate-600"
-              >
-                <Home className="h-4 w-4 mr-1" />
-                Dashboard
-              </Button>
-              <Button
-                variant="default"
-                size="sm"
-                onClick={() => setActiveTab("scenarios")}
-              >
-                <Plus className="h-4 w-4 mr-1" />
-                New Scenario
-              </Button>
+            {/* Center Area: Page Context (Optional but professional) */}
+            <div className="hidden lg:block absolute left-1/2 -translate-x-1/2">
+              <div className="flex items-center gap-2 rounded-full border border-slate-200/60 bg-slate-50/50 px-4 py-1.5 shadow-sm">
+                <div className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+                <span className="text-[11px] font-bold uppercase tracking-widest text-slate-600">Project Control Center</span>
+              </div>
             </div>
 
-            {/* Mobile menu button */}
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="sm:hidden p-2 rounded-lg hover:bg-slate-100 transition-colors"
-            >
-              {mobileMenuOpen ? (
-                <X className="h-6 w-6 text-slate-600" />
-              ) : (
-                <Menu className="h-6 w-6 text-slate-600" />
-              )}
-            </button>
+            {/* Right side: Global Actions */}
+            <div className="flex items-center gap-3">
+              <div className="hidden sm:flex items-center gap-2">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleHome}
+                  className="text-slate-600 hover:bg-slate-100 font-semibold"
+                >
+                  <TrendingUp className="h-4 w-4 mr-2 text-[#7A3F91]" />
+                  Dashboard
+                </Button>
+                <Button
+                  variant="default"
+                  size="sm"
+                  onClick={() => setActiveTab("scenarios")}
+                  className="bg-slate-900 hover:bg-slate-800 text-white shadow-md shadow-slate-200 rounded-lg px-4"
+                >
+                  <Plus className="h-4 w-4 mr-2" />
+                  New Scenario
+                </Button>
+              </div>
+
+              {/* User / Profile Placeholder or Menu */}
+              <div className="h-8 w-8 rounded-full bg-[#7A3F91]/10 border border-[#7A3F91]/20 flex items-center justify-center">
+                <Users className="h-4 w-4 text-[#7A3F91]" />
+              </div>
+
+              {/* Mobile menu button */}
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="flex sm:hidden p-2 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 transition-colors"
+              >
+                {mobileMenuOpen ? (
+                  <X className="h-5 w-5" />
+                ) : (
+                  <Menu className="h-5 w-5" />
+                )}
+              </button>
+            </div>
           </div>
 
-          {/* Mobile menu */}
+          {/* Mobile menu drop-down */}
           {mobileMenuOpen && (
-            <div className="sm:hidden border-t border-slate-200 py-4 space-y-2 animate-in slide-in-from-top-2">
+            <div className="sm:hidden border-t border-slate-100 py-6 space-y-3 animate-in fade-in slide-in-from-top-4 duration-300">
               <Button
                 variant="outline"
-                className="w-full justify-start text-slate-600"
+                className="w-full justify-start rounded-xl border-slate-200 text-slate-600 font-bold"
                 onClick={() => {
                   handleHome();
                   setMobileMenuOpen(false);
                 }}
               >
-                <Home className="h-4 w-4 mr-2" />
-                Go to Dashboard
+                <Home className="h-4 w-4 mr-3 text-[#7A3F91]" />
+                Analytics Dashboard
               </Button>
               <Button
                 variant="default"
-                className="w-full justify-start"
+                className="w-full justify-start rounded-xl bg-slate-900 font-bold"
                 onClick={() => {
                   setActiveTab("scenarios");
                   setMobileMenuOpen(false);
                 }}
               >
-                <Plus className="h-4 w-4 mr-2" />
-                Create Scenario
+                <Plus className="h-4 w-4 mr-3" />
+                Initiate New Scenario
               </Button>
             </div>
           )}
@@ -225,8 +250,7 @@ export default function ProjectPage({
       </header>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* ProjectHeader - Shows project details */}
-        <div className="mb-8">
+        <div className="mb-0">
           <ProjectHeader project={project} scenarios={scenarios} />
         </div>
 

@@ -62,7 +62,7 @@ function NumberField({
           min={min}
           max={max}
           step={step}
-          className={`h-10 rounded-xl border-slate-200 font-semibold text-slate-900 focus:border-blue-500 focus:ring-blue-500/20 transition-all ${
+          className={`h-10 rounded-xl border-slate-200 font-semibold text-slate-900 focus:border-[#7A3F91] focus:ring-[#7A3F91]/20 transition-all ${
             prefix ? "pl-7" : ""
           } ${suffix ? "pr-12" : ""}`}
         />
@@ -153,24 +153,24 @@ export function ScenarioSimulator({ scenario: initialScenario, project, onUpdate
         { id: "a4", type: "hallway",  name: "Entry",        x: 50,  y: 140, width: 180, height: 26,  color: "bg-slate-300" },
       ],
       "1br": [
-        { id: "b1", type: "master",   name: "Bedroom",      x: 50,  y: 30,  width: 90,  height: 80,  color: "bg-blue-500"  },
+        { id: "b1", type: "master",   name: "Bedroom",      x: 50,  y: 30,  width: 90,  height: 80,  color: "bg-[#7A3F91]"  },
         { id: "b2", type: "living",   name: "Living Room",  x: 140, y: 30,  width: 110, height: 80,  color: "bg-slate-400" },
         { id: "b3", type: "bathroom", name: "Bathroom",     x: 50,  y: 110, width: 55,  height: 65,  color: "bg-cyan-400"  },
         { id: "b4", type: "hallway",  name: "Hallway",      x: 105, y: 110, width: 35,  height: 65,  color: "bg-slate-300" },
         { id: "b5", type: "kitchen",  name: "Kitchen",      x: 140, y: 110, width: 110, height: 65,  color: "bg-amber-400" },
       ],
       "2br": [
-        { id: "c1", type: "master",   name: "Master Bedroom", x: 50,  y: 30,  width: 100, height: 90,  color: "bg-blue-500"  },
+        { id: "c1", type: "master",   name: "Master Bedroom", x: 50,  y: 30,  width: 100, height: 90,  color: "bg-[#7A3F91]"  },
         { id: "c2", type: "living",   name: "Living Room",    x: 150, y: 30,  width: 120, height: 100, color: "bg-slate-400" },
         { id: "c3", type: "hallway",  name: "Hallway",        x: 150, y: 130, width: 120, height: 20,  color: "bg-slate-300" },
-        { id: "c4", type: "bedroom",  name: "Bedroom 2",      x: 50,  y: 150, width: 100, height: 80,  color: "bg-blue-400"  },
+        { id: "c4", type: "bedroom",  name: "Bedroom 2",      x: 50,  y: 150, width: 100, height: 80,  color: "bg-[#C59DD9]"  },
         { id: "c5", type: "kitchen",  name: "Kitchen",        x: 150, y: 150, width: 78,  height: 80,  color: "bg-amber-400" },
         { id: "c6", type: "bathroom", name: "Bathroom",       x: 228, y: 150, width: 52,  height: 80,  color: "bg-cyan-400"  },
       ],
       "3br": [
-        { id: "d1", type: "master",   name: "Master Bedroom", x: 50,  y: 30,  width: 110, height: 90,  color: "bg-blue-500"  },
-        { id: "d2", type: "bedroom",  name: "Bedroom 2",      x: 50,  y: 140, width: 100, height: 80,  color: "bg-blue-400"  },
-        { id: "d3", type: "bedroom",  name: "Bedroom 3",      x: 50,  y: 240, width: 100, height: 80,  color: "bg-blue-400"  },
+        { id: "d1", type: "master",   name: "Master Bedroom", x: 50,  y: 30,  width: 110, height: 90,  color: "bg-[#7A3F91]"  },
+        { id: "d2", type: "bedroom",  name: "Bedroom 2",      x: 50,  y: 140, width: 100, height: 80,  color: "bg-[#C59DD9]"  },
+        { id: "d3", type: "bedroom",  name: "Bedroom 3",      x: 50,  y: 240, width: 100, height: 80,  color: "#C59DD9"  },
         { id: "d4", type: "living",   name: "Living Room",    x: 160, y: 30,  width: 130, height: 110, color: "bg-slate-400" },
         { id: "d5", type: "hallway",  name: "Hallway",        x: 160, y: 140, width: 130, height: 20,  color: "bg-slate-300" },
         { id: "d6", type: "kitchen",  name: "Kitchen",        x: 160, y: 160, width: 90,  height: 80,  color: "bg-amber-400" },
@@ -204,7 +204,7 @@ export function ScenarioSimulator({ scenario: initialScenario, project, onUpdate
             <div className="pt-4 flex flex-col sm:flex-row gap-4">
               <Dialog open={showDesigner} onOpenChange={setShowDesigner}>
                 <DialogTrigger asChild>
-                  <Button className="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white h-12 rounded-xl shadow-lg shadow-blue-500/20 font-bold border-0">
+                  <Button className="flex-1 bg-gradient-to-r from-[#7A3F91] to-[#2B0D3E] hover:from-[#2B0D3E] hover:to-[#7A3F91] text-white h-12 rounded-xl shadow-lg shadow-[#7A3F91]/20 font-bold border-0">
                     <Sparkles className="w-4 h-4 mr-2" />
                     Enter Design Studio
                     <span className="ml-2 text-[10px] bg-white/20 px-2 py-0.5 rounded-full font-black uppercase tracking-tighter">Pro</span>
@@ -227,7 +227,7 @@ export function ScenarioSimulator({ scenario: initialScenario, project, onUpdate
 
               <Button
                 variant="outline"
-                className="flex-1 h-12 rounded-xl border-slate-200 text-slate-600 font-bold hover:bg-slate-50 hover:border-blue-300 hover:text-blue-600 transition-colors"
+                className="flex-1 h-12 rounded-xl border-slate-200 text-slate-600 font-bold hover:bg-[#F2EAF7] hover:border-[#C59DD9]/50 hover:text-[#7A3F91] transition-colors"
                 onClick={handleAutoGenerate}
               >
                 <LayoutGrid className="w-4 h-4 mr-2" />
@@ -583,7 +583,7 @@ export function ScenarioSimulator({ scenario: initialScenario, project, onUpdate
                   <div className="border-t border-slate-300 pt-2 mt-2">
                     <div className="flex items-center justify-between text-sm">
                       <span className="font-medium text-slate-700">Total Infrastructure</span>
-                      <span className="font-bold text-blue-600">
+                      <span className="font-bold text-[#7A3F91]">
                         ${(
                           scenario.infrastructureCosts.water +
                           scenario.infrastructureCosts.sewer +

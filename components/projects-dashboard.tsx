@@ -120,7 +120,7 @@ export function ProjectsDashboard() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-2.5 cursor-pointer" onClick={() => window.location.href = "/"}>
-              <div className="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-lg shadow-blue-500/20">
+              <div className="w-10 h-10 rounded-xl bg-[#7A3F91] flex items-center justify-center text-white shadow-lg shadow-[#7A3F91]/20">
                 <Building2 className="w-5 h-5" />
               </div>
               <div className="min-w-0">
@@ -138,9 +138,9 @@ export function ProjectsDashboard() {
                 <Button
                   variant="ghost"
                   onClick={() => (window.location.href = "/home-configurator")}
-                  className="px-5 py-2 h-auto text-[10px] font-black uppercase tracking-[0.1em] text-slate-500 hover:text-blue-600 hover:bg-white hover:shadow-sm rounded-full transition-all duration-300 flex items-center gap-2 group"
+                  className="px-5 py-2 h-auto text-[10px] font-black uppercase tracking-[0.1em] text-slate-500 hover:text-[#7A3F91] hover:bg-white hover:shadow-sm rounded-full transition-all duration-300 flex items-center gap-2 group"
                 >
-                  <div className="w-5 h-5 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
+                  <div className="w-5 h-5 rounded-full bg-[#F2EAF7] flex items-center justify-center text-[#7A3F91] group-hover:bg-[#7A3F91] group-hover:text-white transition-colors duration-300">
                     <HomeIcon className="h-3 w-3" />
                   </div>
                   Home Configurator
@@ -248,12 +248,12 @@ export function ProjectsDashboard() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <Badge className="w-fit mb-4 bg-blue-600 hover:bg-blue-500 border-0 text-[10px] font-black uppercase tracking-[0.2em] px-3 py-1">
+            <Badge className="w-fit mb-4 bg-[#7A3F91] hover:bg-[#2B0D3E] border-0 text-[10px] font-black uppercase tracking-[0.2em] px-3 py-1">
               Architectural Dashboard v4.0
             </Badge>
             <h2 className="text-3xl sm:text-5xl font-bold mb-4 max-w-2xl leading-[1.1] font-rethink tracking-tight">
               Design the Future of <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-300">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#C59DD9] to-[#7A3F91]">
                 Sustainable Housing.
               </span>
             </h2>
@@ -274,10 +274,10 @@ export function ProjectsDashboard() {
           <Card className="border-0 shadow-xl bg-white/90 backdrop-blur-md overflow-hidden hover:-translate-y-1 transition-transform">
             <CardContent className="p-6">
               <div className="flex items-center justify-between mb-4">
-                <div className="p-2 bg-blue-50 rounded-lg">
-                  <FolderOpen className="h-6 w-6 text-blue-900" />
+                <div className="p-2 bg-[#F2EAF7] rounded-lg">
+                  <FolderOpen className="h-6 w-6 text-[#2B0D3E]" />
                 </div>
-                <Badge variant="outline" className="text-blue-800 border-blue-200">Total Projects</Badge>
+                <Badge variant="outline" className="text-[#7A3F91] border-[#C59DD9]/30">Total Projects</Badge>
               </div>
               <div className="text-2xl font-bold text-slate-900 mb-1">{projects.length}</div>
               <p className="text-xs text-slate-500">Active development files</p>
@@ -338,7 +338,7 @@ export function ProjectsDashboard() {
               </div>
               <Button
                 onClick={() => setShowCreateDialog(true)}
-                className="bg-blue-900 hover:bg-blue-800 shadow-lg px-6"
+                className="bg-[#2B0D3E] hover:bg-[#7A3F91] shadow-lg px-6"
               >
                 <Plus className="h-4 w-4 mr-2" />
                 New Project
@@ -365,8 +365,8 @@ export function ProjectsDashboard() {
             <Card className="border-0 shadow-sm hover:shadow-md transition-shadow duration-300">
               <CardHeader className="pb-4 pt-5 px-6 border-b border-slate-50">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-blue-50 rounded-lg">
-                    <TrendingUp className="h-4 w-4 text-blue-700" />
+                  <div className="p-2 bg-[#F2EAF7] rounded-lg">
+                    <TrendingUp className="h-4 w-4 text-[#7A3F91]" />
                   </div>
                   <CardTitle className="text-sm font-bold text-slate-800 tracking-tight">Project Status</CardTitle>
                 </div>
@@ -377,9 +377,9 @@ export function ProjectsDashboard() {
                     <div className="text-xl font-black text-slate-900 leading-none">{projects.length}</div>
                     <div className="text-[9px] text-slate-400 font-bold uppercase tracking-wider mt-2">Total</div>
                   </div>
-                  <div className="text-center p-3 rounded-xl bg-blue-50/50 border border-blue-100/30">
-                    <div className="text-xl font-black text-blue-700 leading-none">{projects.length}</div>
-                    <div className="text-[9px] text-blue-400 font-bold uppercase tracking-wider mt-2">Active</div>
+                  <div className="text-center p-3 rounded-xl bg-[#F2EAF7] border border-[#C59DD9]/30">
+                    <div className="text-xl font-black text-[#7A3F91] leading-none">{projects.length}</div>
+                    <div className="text-[9px] text-[#C59DD9] font-bold uppercase tracking-wider mt-2">Active</div>
                   </div>
                   <div className="text-center p-3 rounded-xl bg-slate-50 border border-slate-100/50">
                     <div className="text-xl font-black text-slate-300 leading-none">0</div>
@@ -389,7 +389,7 @@ export function ProjectsDashboard() {
                 <div className="mt-6">
                   <div className="flex justify-between items-center mb-2">
                     <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Global Progress</span>
-                    <span className="text-[10px] font-black text-blue-600">
+                    <span className="text-[10px] font-black text-[#7A3F91]">
                       {projects.length > 0 ? stats.scenarioCount : 0} SCENARIOS
                     </span>
                   </div>
@@ -398,7 +398,7 @@ export function ProjectsDashboard() {
                       initial={{ width: 0 }}
                       animate={{ width: projects.length > 0 ? `${Math.min((stats.scenarioCount / (projects.length * 3)) * 100, 100)}%` : '0%' }}
                       transition={{ duration: 1, ease: "easeOut" }}
-                      className="bg-blue-600 h-full rounded-full"
+                      className="bg-[#2B0D3E] h-full rounded-full"
                     />
                   </div>
                 </div>
@@ -421,7 +421,7 @@ export function ProjectsDashboard() {
                     {recentProjects.map((project) => (
                       <div key={project.id} className="px-6 py-4 hover:bg-slate-50/50 transition-colors group">
                         <div className="flex justify-between items-start mb-1.5">
-                          <h4 className="text-xs font-bold text-slate-900 group-hover:text-blue-600 transition-colors truncate flex-1 mr-2">
+                          <h4 className="text-xs font-bold text-slate-900 group-hover:text-[#7A3F91] transition-colors truncate flex-1 mr-2">
                             {project.name}
                           </h4>
                           <span className="text-[9px] text-slate-400 font-black uppercase tracking-tighter shrink-0 pt-0.5">
@@ -429,7 +429,7 @@ export function ProjectsDashboard() {
                           </span>
                         </div>
                         <div className="flex items-center gap-1.5 text-[10px] text-slate-500 font-medium">
-                          <MapPin className="h-3 w-3 text-blue-500/70" />
+                          <MapPin className="h-3 w-3 text-[#7A3F91]/70" />
                           {project.location.city}
                         </div>
                       </div>
@@ -447,34 +447,34 @@ export function ProjectsDashboard() {
             </Card>
 
             {/* Optimization Tips */}
-            <Card className="border-0 shadow-sm bg-blue-900 text-white overflow-hidden relative">
+            <Card className="border-0 shadow-sm bg-[#2B0D3E] text-white overflow-hidden relative">
               <div className="absolute top-0 right-0 p-3 opacity-10">
                 <Lightbulb className="h-16 w-16" />
               </div>
               <CardHeader className="pb-2 pt-3 px-4">
                 <div className="relative z-10 flex items-center gap-2">
-                  <Lightbulb className="h-4 w-4 text-blue-300" />
+                  <Lightbulb className="h-4 w-4 text-[#C59DD9]" />
                   <CardTitle className="text-sm font-bold">Optimization Tips</CardTitle>
                 </div>
               </CardHeader>
               <CardContent className="relative z-10 space-y-2 px-4 pb-4">
                 <div className="bg-white/10 p-2.5 rounded-lg border border-white/10">
                   <p className="text-xs font-semibold mb-0.5 flex items-center gap-1.5">
-                    <Layout className="h-3.5 w-3.5 text-blue-300" /> Multi-Scenario Testing
+                    <Layout className="h-3.5 w-3.5 text-[#C59DD9]" /> Multi-Scenario Testing
                   </p>
-                  <p className="text-[10px] text-blue-100/80 leading-relaxed">
+                  <p className="text-[10px] text-white/80 leading-relaxed">
                     Compare layouts to maximize density while maintaining livability.
                   </p>
                 </div>
                 <div className="bg-white/10 p-2.5 rounded-lg border border-white/10">
                   <p className="text-xs font-semibold mb-0.5 flex items-center gap-1.5">
-                    <Building className="h-3.5 w-3.5 text-blue-300" /> Density Optimization
+                    <Building className="h-3.5 w-3.5 text-[#C59DD9]" /> Density Optimization
                   </p>
-                  <p className="text-[10px] text-blue-100/80 leading-relaxed">
+                  <p className="text-[10px] text-white/80 leading-relaxed">
                     Use zoning checks to ensure compliance with local regulations.
                   </p>
                 </div>
-                <Button variant="secondary" className="w-full bg-white text-blue-900 hover:bg-blue-50 border-0 h-8 text-xs font-semibold">
+                <Button variant="secondary" className="w-full bg-white text-[#2B0D3E] hover:bg-[#F2EAF7] border-0 h-8 text-xs font-semibold">
                   Explore Learning Center
                 </Button>
               </CardContent>

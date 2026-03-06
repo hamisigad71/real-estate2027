@@ -53,22 +53,22 @@ export function TimelineAndPhasing({
 
   const getPhaseColor = (index: number) => {
     const colors = [
-      "bg-blue-500",
-      "bg-emerald-500",
-      "bg-purple-500",
-      "bg-orange-500",
-      "bg-pink-500",
+      "bg-[#7A3F91]",
+      "bg-[#C59DD9]",
+      "bg-[#2B0D3E]",
+      "bg-[#9B59B6]",
+      "bg-[#E9DEEF]",
     ]
     return colors[index % colors.length]
   }
 
   const getPhaseColorClass = (index: number) => {
     const colors = [
-      "border-blue-200 bg-blue-50",
-      "border-emerald-200 bg-emerald-50",
-      "border-purple-200 bg-purple-50",
-      "border-orange-200 bg-orange-50",
-      "border-pink-200 bg-pink-50",
+      "border-[#C59DD9] bg-[#F2EAF7]",
+      "border-[#7A3F91] bg-[#C59DD9]/10",
+      "border-[#2B0D3E] bg-[#2B0D3E]/5",
+      "border-[#9B59B6] bg-[#9B59B6]/10",
+      "border-[#E9DEEF] bg-[#E9DEEF]/50",
     ]
     return colors[index % colors.length]
   }
@@ -83,16 +83,16 @@ export function TimelineAndPhasing({
     <div className="space-y-6">
       {/* Key Timeline Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card className="bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
+        <Card className="bg-gradient-to-br from-[#F2EAF7] to-[#C59DD9] border-[#C59DD9]">
           <CardHeader className="pb-3">
             <CardTitle className="text-sm font-medium text-slate-700 flex items-center gap-2">
-              <Calendar className="h-4 w-4 text-blue-600" />
+              <Calendar className="h-4 w-4 text-[#7A3F91]" />
               Total Duration
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-blue-700">{timeline.totalMonths} months</div>
-            <p className="text-xs text-blue-600 mt-1">
+            <div className="text-2xl font-bold text-[#2B0D3E]">{timeline.totalMonths} months</div>
+            <p className="text-xs text-[#7A3F91] mt-1">
               {Math.round(timeline.totalMonths / 12)} years, {timeline.totalMonths % 12} months
             </p>
           </CardContent>
@@ -235,8 +235,8 @@ export function TimelineAndPhasing({
                   <AreaChart data={timeline.monthlyBreakdown}>
                     <defs>
                       <linearGradient id="colorCost" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#ef4444" stopOpacity={0.8} />
-                        <stop offset="95%" stopColor="#ef4444" stopOpacity={0.1} />
+                        <stop offset="5%" stopColor="#7A3F91" stopOpacity={0.8} />
+                        <stop offset="95%" stopColor="#7A3F91" stopOpacity={0.1} />
                       </linearGradient>
                     </defs>
                     <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
@@ -249,7 +249,7 @@ export function TimelineAndPhasing({
                     <Area
                       type="monotone"
                       dataKey="costOutflow"
-                      stroke="#ef4444"
+                      stroke="#7A3F91"
                       fillOpacity={1}
                       fill="url(#colorCost)"
                     />
@@ -301,7 +301,7 @@ export function TimelineAndPhasing({
                 <div
                   key={phase.id}
                   className={`border rounded-lg p-4 cursor-pointer transition-all ${
-                    selectedPhase?.id === phase.id ? "ring-2 ring-blue-500 border-blue-300" : ""
+                    selectedPhase?.id === phase.id ? "ring-2 ring-[#7A3F91] border-[#C59DD9]" : ""
                   } ${getPhaseColorClass(idx)}`}
                   onClick={() => setSelectedPhase(phase)}
                 >

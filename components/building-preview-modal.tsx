@@ -185,10 +185,10 @@ export function BuildingPreviewModal({ isOpen, onClose, scenario, results }: Bui
         {isLoading ? (
           <div className="flex flex-col items-center justify-center py-32 px-8">
             <div className="relative mb-8">
-              <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[#0a1628] to-blue-600 flex items-center justify-center animate-pulse">
+              <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[#2B0D3E] to-[#7A3F91] flex items-center justify-center animate-pulse">
                 <Sparkles className="w-8 h-8 text-white animate-spin" style={{ animationDuration: "3s" }} />
               </div>
-              <div className="absolute -inset-2 rounded-3xl border-2 border-blue-200 animate-ping opacity-30" />
+              <div className="absolute -inset-2 rounded-3xl border-2 border-[#C59DD9]/30 animate-ping opacity-30" />
             </div>
             <h3 className="text-lg font-bold text-slate-900 mb-2">Generating Building Preview</h3>
             <p className="text-sm text-slate-500 text-center max-w-sm">
@@ -202,8 +202,8 @@ export function BuildingPreviewModal({ isOpen, onClose, scenario, results }: Bui
                   className="flex items-center gap-3 text-sm transition-all"
                   style={{ animation: `fadeInSlide 0.4s ease-out ${i * 0.5}s both` }}
                 >
-                  <div className="w-5 h-5 rounded-full bg-[#0a1628]/10 flex items-center justify-center">
-                    <div className="w-2 h-2 rounded-full bg-[#0a1628] animate-pulse" style={{ animationDelay: `${i * 0.3}s` }} />
+                  <div className="w-5 h-5 rounded-full bg-[#7A3F91]/10 flex items-center justify-center">
+                    <div className="w-2 h-2 rounded-full bg-[#7A3F91] animate-pulse" style={{ animationDelay: `${i * 0.3}s` }} />
                   </div>
                   <span className="text-slate-600 font-medium">{step}</span>
                 </div>
@@ -242,7 +242,7 @@ export function BuildingPreviewModal({ isOpen, onClose, scenario, results }: Bui
 
               {/* Badge */}
               <div className="absolute top-4 left-4 flex items-center gap-2 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1.5 shadow-md">
-                <Sparkles className="w-3.5 h-3.5 text-blue-600" />
+                <Sparkles className="w-3.5 h-3.5 text-[#7A3F91]" />
                 <span className="text-xs font-bold text-slate-900">AI Generated Preview</span>
               </div>
 
@@ -253,7 +253,7 @@ export function BuildingPreviewModal({ isOpen, onClose, scenario, results }: Bui
 
               {/* Caption overlay */}
               <div className="absolute bottom-0 left-0 right-0 p-5">
-                <div className="flex items-center gap-2 text-blue-300 mb-1.5">
+                <div className="flex items-center gap-2 text-[#C59DD9] mb-1.5">
                   {typeIcon[projectType as keyof typeof typeIcon]}
                   <span className="text-xs font-semibold uppercase tracking-wider">{currentView.label} View</span>
                 </div>
@@ -271,7 +271,7 @@ export function BuildingPreviewModal({ isOpen, onClose, scenario, results }: Bui
                   onClick={() => setActiveView(idx)}
                   className={`flex-1 flex items-center justify-center gap-2 py-3 text-xs font-semibold transition-all ${
                     idx === activeView
-                      ? "text-[#0a1628] border-b-2 border-[#0a1628] bg-blue-50/50"
+                      ? "text-[#2B0D3E] border-b-2 border-[#7A3F91] bg-[#F2EAF7]"
                       : "text-slate-400 hover:text-slate-600 hover:bg-slate-50"
                   }`}
                 >
@@ -335,13 +335,13 @@ export function BuildingPreviewModal({ isOpen, onClose, scenario, results }: Bui
                       key={item.label}
                       className={`flex items-center justify-between px-4 py-2.5 ${
                         item.highlight
-                          ? "bg-[#0a1628] text-white"
+                          ? "bg-[#2B0D3E] text-white"
                           : idx % 2 === 0
                           ? "bg-white"
-                          : "bg-slate-50"
+                          : "bg-[#F2EAF7]/30"
                       }`}
                     >
-                      <span className={`text-sm font-medium ${item.highlight ? "text-blue-200" : "text-slate-600"}`}>
+                      <span className={`text-sm font-medium ${item.highlight ? "text-[#C59DD9]" : "text-slate-600"}`}>
                         {item.label}
                       </span>
                       <span className={`text-sm font-bold ${item.highlight ? "text-white" : "text-slate-900"}`}>
@@ -357,9 +357,9 @@ export function BuildingPreviewModal({ isOpen, onClose, scenario, results }: Bui
                 <div>
                   <h3 className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2.5">Unit Mix</h3>
                   <div className="flex gap-1.5 h-2.5 rounded-full overflow-hidden">
-                    <div className="bg-blue-300 rounded-full" style={{ width: `${scenario.unitMix?.oneBedroom || 40}%` }} />
-                    <div className="bg-[#0a1628] rounded-full" style={{ width: `${scenario.unitMix?.twoBedroom || 35}%` }} />
-                    <div className="bg-slate-300 rounded-full" style={{ width: `${scenario.unitMix?.threeBedroom || 25}%` }} />
+                    <div className="bg-[#C59DD9] rounded-full" style={{ width: `${scenario.unitMix?.oneBedroom || 40}%` }} />
+                    <div className="bg-[#7A3F91] rounded-full" style={{ width: `${scenario.unitMix?.twoBedroom || 35}%` }} />
+                    <div className="bg-[#2B0D3E] rounded-full" style={{ width: `${scenario.unitMix?.threeBedroom || 25}%` }} />
                   </div>
                   <div className="flex justify-between mt-1.5">
                     <span className="text-[10px] text-slate-500 font-medium">1BR · {scenario.unitMix?.oneBedroom || 40}%</span>
@@ -370,9 +370,9 @@ export function BuildingPreviewModal({ isOpen, onClose, scenario, results }: Bui
               )}
 
               {/* Disclaimer */}
-              <div className="flex items-start gap-2 bg-blue-50 rounded-xl p-3 border border-blue-100">
-                <Sparkles className="w-3.5 h-3.5 text-blue-500 shrink-0 mt-0.5" />
-                <p className="text-[11px] text-blue-700 leading-relaxed">
+              <div className="flex items-start gap-2 bg-[#F2EAF7] rounded-xl p-3 border border-[#C59DD9]/20">
+                <Sparkles className="w-3.5 h-3.5 text-[#7A3F91] shrink-0 mt-0.5" />
+                <p className="text-[11px] text-[#7A3F91] leading-relaxed">
                   AI-generated preview based on your scenario parameters. Actual design may vary based on architectural plans and local regulations.
                 </p>
               </div>
@@ -388,16 +388,16 @@ export function GeneratePreviewButton({ onClick }: { onClick: () => void }) {
   return (
     <button
       onClick={onClick}
-      className="group flex items-center gap-2.5 w-full px-4 py-3 rounded-xl bg-gradient-to-r from-[#0a1628] to-[#132240] text-white font-semibold text-sm shadow-lg hover:shadow-xl transition-all hover:scale-[1.01] active:scale-[0.99]"
+      className="group flex items-center gap-2.5 w-full px-4 py-3 rounded-xl bg-gradient-to-r from-[#2B0D3E] to-[#7A3F91] text-white font-semibold text-sm shadow-lg hover:shadow-xl transition-all hover:scale-[1.01] active:scale-[0.99]"
     >
       <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center shrink-0">
-        <Sparkles className="w-4 h-4 text-blue-300" />
+        <Sparkles className="w-4 h-4 text-[#C59DD9]" />
       </div>
       <div className="flex-1 text-left">
         <div className="text-sm font-bold">Generate Building Preview</div>
-        <div className="text-[10px] text-blue-300/70 font-medium">4 AI-powered views · Exterior, Bedroom, Living, Entrance</div>
+        <div className="text-[10px] text-[#C59DD9]/70 font-medium">4 AI-powered views · Exterior, Bedroom, Living, Entrance</div>
       </div>
-      <ChevronRight className="w-4 h-4 text-blue-300 group-hover:translate-x-0.5 transition-transform" />
+      <ChevronRight className="w-4 h-4 text-[#C59DD9] group-hover:translate-x-0.5 transition-transform" />
     </button>
   )
 }

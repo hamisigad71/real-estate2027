@@ -26,6 +26,7 @@ import {
   ChevronDown,
   ChevronUp,
 } from "lucide-react";
+import { Logo } from "./logo";
 
 type RoleType =
   | "Government Planner"
@@ -100,8 +101,8 @@ function LogoIcon({ size = 40, className = "" }: { size?: number; className?: st
     >
       <defs>
         <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#3b82f6" />
-          <stop offset="100%" stopColor="#1e40af" />
+          <stop offset="0%" stopColor="#7A3F91" />
+          <stop offset="100%" stopColor="#2B0D3E" />
         </linearGradient>
       </defs>
       {/* Roofline */}
@@ -124,12 +125,12 @@ function LogoIcon({ size = 40, className = "" }: { size?: number; className?: st
       <path
         d="M62 48 L72 38 L82 42 L92 28"
         fill="none"
-        stroke="#3b82f6"
+        stroke="#7A3F91"
         strokeWidth="3"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      <circle cx="92" cy="28" r="3" fill="#3b82f6" />
+      <circle cx="92" cy="28" r="3" fill="#7A3F91" />
     </svg>
   );
 }
@@ -162,12 +163,12 @@ function LogoIconWhite({ size = 40 }: { size?: number }) {
       <path
         d="M62 48 L72 38 L82 42 L92 28"
         fill="none"
-        stroke="rgba(147,197,253,0.9)"
+        stroke="rgba(197,157,217,0.9)"
         strokeWidth="3"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      <circle cx="92" cy="28" r="3" fill="rgba(147,197,253,0.9)" />
+      <circle cx="92" cy="28" r="3" fill="rgba(197,157,217,0.9)" />
     </svg>
   );
 }
@@ -185,11 +186,11 @@ function FeatureItem({
   return (
     <div className="flex items-start gap-3 group">
       <div className="w-9 h-9 rounded-lg bg-white/[0.06] border border-white/[0.08] flex items-center justify-center shrink-0 group-hover:bg-white/[0.1] transition-colors">
-        <Icon className="w-4 h-4 text-blue-300" />
+        <Icon className="w-4 h-4 text-amethyst-200" style={{ color: '#C59DD9' }} />
       </div>
       <div>
         <h3 className="text-sm font-semibold text-white/95">{title}</h3>
-        <p className="text-xs text-blue-200/60 leading-relaxed">{desc}</p>
+        <p className="text-xs text-lavender-200/60 leading-relaxed" style={{ color: 'rgba(242, 234, 247, 0.6)' }}>{desc}</p>
       </div>
     </div>
   );
@@ -200,7 +201,7 @@ function StatBlock({ value, label }: { value: string; label: string }) {
   return (
     <div className="text-center">
       <p className="text-lg font-bold text-white">{value}</p>
-      <p className="text-[11px] text-blue-200/50 uppercase tracking-wider">{label}</p>
+      <p className="text-[11px] text-[#F2EAF7]/50 uppercase tracking-wider">{label}</p>
     </div>
   );
 }
@@ -287,20 +288,20 @@ export function AuthForm() {
       {/* ════════════════════════════════════════════════════════
           LEFT — DARK BRANDING PANEL
          ════════════════════════════════════════════════════════ */}
-      <div className="hidden lg:flex lg:w-[48%] relative overflow-hidden bg-[#0a1628] flex-col justify-between p-10 xl:p-14">
+      <div className="hidden lg:flex lg:w-[48%] relative overflow-hidden bg-[#2B0D3E] flex-col justify-between p-10 xl:p-14">
         {/* Animated gradient orbs */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div
             className="absolute -top-32 -left-32 w-[500px] h-[500px] rounded-full opacity-[0.04]"
             style={{
-              background: "radial-gradient(circle, #3b82f6 0%, transparent 70%)",
+              background: "radial-gradient(circle, #7A3F91 0%, transparent 70%)",
               animation: mounted ? "float1 35s ease-in-out infinite" : "none",
             }}
           />
           <div
             className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full opacity-[0.03]"
             style={{
-              background: "radial-gradient(circle, #60a5fa 0%, transparent 70%)",
+              background: "radial-gradient(circle, #C59DD9 0%, transparent 70%)",
               animation: mounted ? "float2 45s ease-in-out infinite" : "none",
             }}
           />
@@ -319,14 +320,14 @@ export function AuthForm() {
         <div className="relative z-10 space-y-10">
           {/* Logo + Title */}
           <div className="space-y-5">
-            <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-white/[0.06] border border-white/[0.08] backdrop-blur-sm">
-              <LogoIconWhite size={34} />
+            <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-white/[0.06] border border-white/[0.08] backdrop-blur-sm">
+              <Logo size={60} />
             </div>
             <div>
               <h1 className="text-4xl xl:text-[2.6rem] font-bold text-white tracking-tight leading-tight">
                 RHS Engine
               </h1>
-              <p className="mt-3 text-[15px] text-blue-200/50 leading-relaxed max-w-sm">
+              <p className="mt-3 text-[15px] text-[#F2EAF7]/50 leading-relaxed max-w-sm">
                 Smart Affordable Housing Planning — Data-driven solutions for
                 governments, NGOs, and developers.
               </p>
@@ -361,7 +362,7 @@ export function AuthForm() {
         {/* Bottom trust stats */}
         <div className="relative z-10">
           <div className="border-t border-white/[0.06] pt-6 mt-6">
-            <p className="text-[11px] uppercase tracking-widest text-blue-200/30 mb-4 font-medium">
+            <p className="text-[11px] uppercase tracking-widest text-[#F2EAF7]/30 mb-4 font-medium">
               Trusted by industry leaders
             </p>
             <div className="grid grid-cols-4 gap-3">
@@ -391,14 +392,14 @@ export function AuthForm() {
       {/* ════════════════════════════════════════════════════════
           RIGHT — AUTH FORMS
          ════════════════════════════════════════════════════════ */}
-      <div className="flex-1 flex flex-col items-center justify-center p-6 sm:p-10 lg:p-16 bg-gradient-to-br from-slate-50/80 via-white to-blue-50/30">
+      <div className="flex-1 flex flex-col items-center justify-center p-6 sm:p-10 lg:p-16 bg-gradient-to-br from-[#F2EAF7]/80 via-white to-[#C59DD9]/30">
         <div className="w-full max-w-md">
           {/* Mobile Hero Section */}
           <div className="lg:hidden mb-12">
             {/* Logo header */}
             <div className="flex items-center gap-3 mb-8">
-              <div className="w-11 h-11 rounded-xl bg-[#0a1628] flex items-center justify-center">
-                <LogoIconWhite size={26} />
+              <div className="w-16 h-16 rounded-xl bg-[#2B0D3E] flex items-center justify-center">
+                <Logo size={48} />
               </div>
               <div>
                 <h2 className="text-lg font-bold text-slate-900">RHS Engine</h2>
@@ -429,7 +430,7 @@ export function AuthForm() {
                 </button>
                 <button
                   onClick={() => setActiveTab("signup")}
-                  className="flex-1 h-11 inline-flex items-center justify-center rounded-xl bg-[#0a1628] hover:bg-[#0a1628]/90 text-sm font-semibold text-white transition-all"
+                  className="flex-1 h-11 inline-flex items-center justify-center rounded-xl bg-[#2B0D3E] hover:bg-[#2B0D3E]/90 text-sm font-semibold text-white transition-all"
                 >
                   Get Started
                 </button>
@@ -500,7 +501,7 @@ export function AuthForm() {
                 <button
                   type="button"
                   onClick={handleQuickDemoLogin}
-                  className="w-full h-11 inline-flex items-center justify-center gap-2 rounded-xl border-2 border-[#0a1628] bg-[#0a1628]/[0.03] hover:bg-[#0a1628] hover:text-white text-sm font-semibold text-[#0a1628] transition-all cursor-pointer"
+                  className="w-full h-11 inline-flex items-center justify-center gap-2 rounded-xl border-2 border-[#2B0D3E] bg-[#2B0D3E]/[0.03] hover:bg-[#2B0D3E] hover:text-white text-sm font-semibold text-[#2B0D3E] transition-all cursor-pointer"
                 >
                   <Play className="h-3.5 w-3.5" />
                   Try Demo Project
@@ -570,7 +571,7 @@ export function AuthForm() {
 
                   <Button
                     type="submit"
-                    className="w-full h-11 rounded-xl bg-[#0a1628] hover:bg-[#132240] text-white font-semibold shadow-lg shadow-slate-900/10 transition-all"
+                    className="w-full h-11 rounded-xl bg-[#2B0D3E] hover:bg-[#2B0D3E]/90 text-white font-semibold shadow-lg shadow-[#2B0D3E]/10 transition-all"
                   >
                     Sign In
                     <ArrowRight className="ml-2 h-4 w-4" />
@@ -769,7 +770,7 @@ export function AuthForm() {
 
                   <Button
                     type="submit"
-                    className="w-full h-11 rounded-xl bg-[#0a1628] hover:bg-[#132240] text-white font-semibold shadow-lg shadow-slate-900/10 transition-all"
+                    className="w-full h-11 rounded-xl bg-[#2B0D3E] hover:bg-[#2B0D3E]/90 text-white font-semibold shadow-lg shadow-[#2B0D3E]/10 transition-all"
                   >
                     Create Account & Get Started
                     <ArrowRight className="ml-2 h-4 w-4" />

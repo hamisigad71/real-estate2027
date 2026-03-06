@@ -75,11 +75,19 @@ export function calculateScenarioResults(
     builtUpArea = residentialUnits * 60
   }
 
-  // Calculate costs
+  // Calculate costs — read from user inputs, fall back to industry standards
   const costPerSqm = scenario.constructionCostPerSqm
-  const infrastructureCostPerUnit = 15000
-  const softCostPercentage = 15
-  const contingencyPercentage = 10
+  // Infrastructure cost: user-supplied per-unit value, or sum of their itemised infra costs
+  const infrastructureCostPerUnit =
+    scenario.infrastructureCostPerUnit ??
+    (scenario.infrastructureCosts
+      ? scenario.infrastructureCosts.water +
+        scenario.infrastructureCosts.sewer +
+        scenario.infrastructureCosts.roads +
+        scenario.infrastructureCosts.electricity
+      : 15000) // last-resort default only when no infra data at all
+  const softCostPercentage = scenario.softCostsPercentage ?? 15
+  const contingencyPercentage = scenario.contingencyPercentage ?? 10
 
   const constructionCost = builtUpArea * costPerSqm
   const infrastructureCost = totalUnits * infrastructureCostPerUnit
@@ -518,7 +526,7 @@ export function calculateInvestmentReturns(
     affordabilityGap,
     minimumAffordablePrice,
     marketPrice,
-    projectTimeline: generateDefaultPhases(scenario as any, scenario.constructionMonths),
+    projectTimeline: generateDefaultPhases(scenario as any, scenario.constructionMonths, totalProjectCost),
     sensitivity,
   }
 }
@@ -543,6 +551,7 @@ function calculatePaybackMonths(investment: number, monthlyProfit: number): numb
 export function generateDefaultPhases(
   scenario: Scenario | any,
   constructionMonths: number = 24,
+  totalProjectCost: number = 0,
 ): ProjectTimeline {
   const phases: ConstructionPhase[] = [
     {
@@ -553,7 +562,7 @@ export function generateDefaultPhases(
       startMonth: 1,
       endMonth: Math.ceil(constructionMonths * 0.1),
       costPercentage: 5,
-      estimatedCost: 50000,
+      estimatedCost: Math.round(totalProjectCost * 0.05),
     },
     {
       id: "phase-2",
@@ -563,7 +572,7 @@ export function generateDefaultPhases(
       startMonth: Math.ceil(constructionMonths * 0.1) + 1,
       endMonth: Math.ceil(constructionMonths * 0.25),
       costPercentage: 10,
-      estimatedCost: 100000,
+      estimatedCost: Math.round(totalProjectCost * 0.10),
     },
     {
       id: "phase-3",
@@ -573,7 +582,7 @@ export function generateDefaultPhases(
       startMonth: Math.ceil(constructionMonths * 0.25) + 1,
       endMonth: Math.ceil(constructionMonths * 0.6),
       costPercentage: 40,
-      estimatedCost: 300000,
+      estimatedCost: Math.round(totalProjectCost * 0.40),
     },
     {
       id: "phase-4",
@@ -583,7 +592,7 @@ export function generateDefaultPhases(
       startMonth: Math.ceil(constructionMonths * 0.6) + 1,
       endMonth: Math.ceil(constructionMonths * 0.85),
       costPercentage: 30,
-      estimatedCost: 200000,
+      estimatedCost: Math.round(totalProjectCost * 0.30),
     },
     {
       id: "phase-5",
@@ -593,7 +602,7 @@ export function generateDefaultPhases(
       startMonth: Math.ceil(constructionMonths * 0.85) + 1,
       endMonth: constructionMonths,
       costPercentage: 15,
-      estimatedCost: 80000,
+      estimatedCost: Math.round(totalProjectCost * 0.15),
     },
   ]
 

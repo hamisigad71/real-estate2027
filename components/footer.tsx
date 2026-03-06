@@ -30,7 +30,7 @@ export function Footer() {
                 <Building2 className="w-9 h-9 text-primary" />
                 <TrendingUp className="w-5 h-5 text-accent absolute -bottom-1 -right-1" />
               </div>
-              <h3 className="text-xl font-bold bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">
+              <h3 className="text-xl font-bold bg-gradient-to-r from-primary to-[#7A3F91] bg-clip-text text-transparent">
                 HousingPlan
               </h3>
             </div>
@@ -51,14 +51,14 @@ export function Footer() {
                 </div>
               </div>
               <div className="flex items-center gap-3">
-                <Zap className="w-5 h-5 text-yellow-500" />
+                <Zap className="w-5 h-5 text-secondary" />
                 <div>
                   <p className="font-medium">Instant Analysis</p>
                   <p className="text-xs text-muted-foreground">Real-time calculations</p>
                 </div>
               </div>
               <div className="flex items-center gap-3">
-                <Users className="w-5 h-5 text-blue-500" />
+                <Users className="w-5 h-5 text-primary" />
                 <div>
                   <p className="font-medium">Population Forecasting</p>
                   <p className="text-xs text-muted-foreground">Accurate demand insights</p>
