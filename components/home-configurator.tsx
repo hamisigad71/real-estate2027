@@ -131,10 +131,23 @@ export function HomeConfigurator() {
     country: "Kenya",
     countryCode: "KE",
     landSize: 500,
+    grossArea: 120,
+    netArea: 95,
+    storeys: 1,
     budget: 50000,
     style: "standard",
     sizePreference: "medium",
     bedrooms: 2,
+    bathrooms: 2,
+    finishLevel: "standard",
+    landServiced: true,
+    timelineMonths: 10,
+    financing: {
+      mode: "cash",
+      downPaymentPercent: 30,
+      annualInterestRate: 14,
+      loanTermYears: 15,
+    },
     constructionCostPerSqm: 0,
     infrastructureCosts: {
       water: 0,
@@ -142,8 +155,29 @@ export function HomeConfigurator() {
       roads: 0,
       electricity: 0,
     },
+    siteConditions: {
+      slope: "flat",
+      soilType: "stable",
+      floodRisk: "low",
+      seismicZone: "low",
+    },
+    household: {
+      adults: 2,
+      children: 1,
+      remoteWorkers: 0,
+      vehicles: 1,
+    },
+    utilitiesProfile: {
+      waterReliability: "medium",
+      gridReliability: "medium",
+    },
+    compliance: {
+      accessibilityRequired: false,
+      parkingSpaces: 1,
+    },
     features: {
       solarPanels: false,
+      waterStorage: true,
       smartHome: false,
       airConditioning: false,
       swimmingPool: false,
@@ -176,25 +210,53 @@ export function HomeConfigurator() {
     }
   }, [])
 
-  // Auto-calculate whenever config changes to provide real-time simulation
-  useEffect(() => {
-    if (config.id) {
-      const result = calculateHomeSpecification(config)
-      setSpecification(result)
-    }
-  }, [config])
-
   const [specification, setSpecification] = useState<HomeSpecification | null>(null)
   const [layoutVariant, setLayoutVariant] = useState<number>(0)
   const [activeTab, setActiveTab] = useState<'design' | 'blueprint' | 'finance'>('design')
   const [showRenders, setShowRenders] = useState(false)
+  const [hasAssembled, setHasAssembled] = useState(false)
   const countries = getAvailableCountries()
 
   const handleCalculate = () => {
-    // This is now handled by the auto-calculate useEffect
     const result = calculateHomeSpecification(config)
     setSpecification(result)
+    setHasAssembled(true)
   }
+
+  // Hide prior results when config changes; user must assemble again.
+  useEffect(() => {
+    setHasAssembled(false)
+  }, [
+    config.countryCode,
+    config.landSize,
+    config.grossArea,
+    config.netArea,
+    config.budget,
+    config.style,
+    config.sizePreference,
+    config.storeys,
+    config.bedrooms,
+    config.bathrooms,
+    config.finishLevel,
+    config.landServiced,
+    config.timelineMonths,
+    config.financing?.mode,
+    config.financing?.downPaymentPercent,
+    config.financing?.annualInterestRate,
+    config.financing?.loanTermYears,
+    config.constructionCostPerSqm,
+    config.infrastructureCosts?.water,
+    config.infrastructureCosts?.sewer,
+    config.infrastructureCosts?.roads,
+    config.infrastructureCosts?.electricity,
+    config.features?.solarPanels,
+    config.features?.waterStorage,
+    config.features?.smartHome,
+    config.features?.airConditioning,
+    config.features?.swimmingPool,
+    config.features?.garage,
+    config.features?.garden,
+  ])
 
   const getExpertAdvice = () => {
     if (!specification) return []
@@ -456,7 +518,7 @@ export function HomeConfigurator() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:pb-32 pb-40">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           {/* LEFT PANEL */}
-          <div className={`lg:col-span-5 space-y-6 ${activeTab !== 'design' ? 'hidden' : ''}`}>
+          <div className={`${activeTab !== 'design' ? 'hidden' : ''} ${hasAssembled ? 'lg:col-span-5' : 'lg:col-span-12'} space-y-6`}>
             {/* Location & Budget Card */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
@@ -575,6 +637,188 @@ export function HomeConfigurator() {
               </Card>
             </motion.div>
 
+            {/* Program + feasibility inputs */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.35 }}
+            >
+              <Card className="border-white/20 bg-white/70 backdrop-blur-xl shadow-2xl shadow-slate-200/50 overflow-hidden group border">
+                <CardHeader className="border-b border-slate-100 bg-white/50 py-5">
+                  <CardTitle className="text-base font-semibold flex items-center gap-3 text-slate-900">
+                    <div className="w-9 h-9 rounded-xl bg-[#F2EAF7] flex items-center justify-center text-[#7A3F91]">
+                      <Settings2 className="w-5 h-5" />
+                    </div>
+                    Project Program & Feasibility
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-6 pt-5">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest">Gross Area (m²)</Label>
+                      <Input
+                        type="number"
+                        min={40}
+                        step={5}
+                        value={config.grossArea ?? 120}
+                        onChange={(e) => setConfig((prev) => ({ ...prev, grossArea: Math.max(40, Number(e.target.value) || 40) }))}
+                        className="h-10 border-slate-200 bg-white/50 rounded-xl text-xs"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest">Net Area (m²)</Label>
+                      <Input
+                        type="number"
+                        min={30}
+                        step={5}
+                        value={config.netArea ?? 95}
+                        onChange={(e) => setConfig((prev) => ({ ...prev, netArea: Math.max(30, Number(e.target.value) || 30) }))}
+                        className="h-10 border-slate-200 bg-white/50 rounded-xl text-xs"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4 pt-2 border-t border-slate-100">
+                    <div className="space-y-2">
+                      <Label className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest">Storeys</Label>
+                      <Select value={String(config.storeys ?? 1)} onValueChange={(v) => setConfig((prev) => ({ ...prev, storeys: parseInt(v, 10) || 1 }))}>
+                        <SelectTrigger className="h-10 border-slate-200 bg-white/50 rounded-xl text-xs"><SelectValue /></SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="1">1 Storey</SelectItem>
+                          <SelectItem value="2">2 Storeys</SelectItem>
+                          <SelectItem value="3">3 Storeys</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest">Bathrooms</Label>
+                      <Select value={String(config.bathrooms ?? 2)} onValueChange={(v) => setConfig((prev) => ({ ...prev, bathrooms: parseInt(v, 10) || 1 }))}>
+                        <SelectTrigger className="h-10 border-slate-200 bg-white/50 rounded-xl text-xs"><SelectValue /></SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="1">1 Bathroom</SelectItem>
+                          <SelectItem value="2">2 Bathrooms</SelectItem>
+                          <SelectItem value="3">3 Bathrooms</SelectItem>
+                          <SelectItem value="4">4 Bathrooms</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest">Finish Level</Label>
+                      <Select value={config.finishLevel || "standard"} onValueChange={(v: "basic" | "standard" | "improved") => setConfig((prev) => ({ ...prev, finishLevel: v }))}>
+                        <SelectTrigger className="h-10 border-slate-200 bg-white/50 rounded-xl text-xs"><SelectValue /></SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="basic">Basic</SelectItem>
+                          <SelectItem value="standard">Standard</SelectItem>
+                          <SelectItem value="improved">Improved</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest">Land Serviced</Label>
+                      <Select value={config.landServiced ? "yes" : "no"} onValueChange={(v) => setConfig((prev) => ({ ...prev, landServiced: v === "yes" }))}>
+                        <SelectTrigger className="h-10 border-slate-200 bg-white/50 rounded-xl text-xs"><SelectValue /></SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="yes">Yes</SelectItem>
+                          <SelectItem value="no">No</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4 pt-2 border-t border-slate-100">
+                    <div className="space-y-2">
+                      <Label className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest">Financing Mode</Label>
+                      <Select
+                        value={config.financing?.mode || "cash"}
+                        onValueChange={(v: "cash" | "mortgage" | "mixed") =>
+                          setConfig((prev) => ({
+                            ...prev,
+                            financing: { ...prev.financing!, mode: v },
+                          }))
+                        }
+                      >
+                        <SelectTrigger className="h-10 border-slate-200 bg-white/50 rounded-xl text-xs"><SelectValue /></SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="cash">Cash</SelectItem>
+                          <SelectItem value="mortgage">Mortgage</SelectItem>
+                          <SelectItem value="mixed">Mixed</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest">Down Payment (%)</Label>
+                      <Input
+                        type="number"
+                        min={0}
+                        max={100}
+                        value={config.financing?.downPaymentPercent ?? 30}
+                        onChange={(e) =>
+                          setConfig((prev) => ({
+                            ...prev,
+                            financing: {
+                              ...prev.financing!,
+                              downPaymentPercent: Math.min(100, Math.max(0, Number(e.target.value) || 0)),
+                            },
+                          }))
+                        }
+                        className="h-10 border-slate-200 bg-white/50 rounded-xl text-xs"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest">Interest Rate (% p.a.)</Label>
+                      <Input
+                        type="number"
+                        min={0}
+                        max={40}
+                        step={0.1}
+                        value={config.financing?.annualInterestRate ?? 14}
+                        onChange={(e) =>
+                          setConfig((prev) => ({
+                            ...prev,
+                            financing: {
+                              ...prev.financing!,
+                              annualInterestRate: Math.min(40, Math.max(0, Number(e.target.value) || 0)),
+                            },
+                          }))
+                        }
+                        className="h-10 border-slate-200 bg-white/50 rounded-xl text-xs"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest">Loan Term (Years)</Label>
+                      <Input
+                        type="number"
+                        min={1}
+                        max={35}
+                        value={config.financing?.loanTermYears ?? 15}
+                        onChange={(e) =>
+                          setConfig((prev) => ({
+                            ...prev,
+                            financing: {
+                              ...prev.financing!,
+                              loanTermYears: Math.min(35, Math.max(1, Number(e.target.value) || 1)),
+                            },
+                          }))
+                        }
+                        className="h-10 border-slate-200 bg-white/50 rounded-xl text-xs"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest">Timeline (Months)</Label>
+                      <Input
+                        type="number"
+                        min={3}
+                        max={60}
+                        value={config.timelineMonths ?? 10}
+                        onChange={(e) => setConfig((prev) => ({ ...prev, timelineMonths: Math.max(3, Number(e.target.value) || 3) }))}
+                        className="h-10 border-slate-200 bg-white/50 rounded-xl text-xs"
+                      />
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+
             {/* Visual Style Selector */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
@@ -681,6 +925,7 @@ export function HomeConfigurator() {
                   <div className="grid grid-cols-2 gap-3">
                     {[
                       { key: "solarPanels", label: "Solar Array", icon: Zap, cost: 8000, desc: "Photovoltaic grid" },
+                      { key: "waterStorage", label: "Water Storage", icon: Droplet, cost: 4500, desc: "Tank + pressure set" },
                       { key: "smartHome", label: "Home OS", icon: Lightbulb, cost: 5000, desc: "Neural automation" },
                       { key: "airConditioning", label: "Climate Control", icon: Droplet, cost: 6000, desc: "Enviro-regulation" },
                       { key: "swimmingPool", label: "Hydra Suite", icon: Droplet, cost: 25000, desc: "Olympic filtration" },
@@ -768,7 +1013,7 @@ export function HomeConfigurator() {
           </div>
 
           {/* RIGHT PANEL - Results & Visualization */}
-          <div className={`lg:col-span-7 space-y-6 ${activeTab !== 'design' ? 'hidden' : ''}`}>
+          <div className={`lg:col-span-7 space-y-6 ${activeTab !== 'design' || !hasAssembled ? 'hidden' : ''}`}>
             {/* Show Blueprint logic only if Blueprint Tab is active OR on Desktop */}
             <div>
             <AnimatePresence mode="wait">

@@ -70,6 +70,7 @@ export function FloatingPageNav({
           <button
             onClick={onPrevious}
             disabled={!canGoPrev}
+            suppressHydrationWarning={true}
             onMouseEnter={() => setHoveredButton("prev")}
             onMouseLeave={() => setHoveredButton(null)}
             className={`relative p-2 sm:p-3 rounded-full transition-all duration-200 flex items-center justify-center group overflow-hidden ${
@@ -139,6 +140,7 @@ export function FloatingPageNav({
           <button
             onClick={onNext}
             disabled={!canGoNext}
+            suppressHydrationWarning={true}
             onMouseEnter={() => setHoveredButton("next")}
             onMouseLeave={() => setHoveredButton(null)}
             className={`relative p-2 sm:p-3 rounded-full transition-all duration-200 flex items-center justify-center group overflow-hidden ${

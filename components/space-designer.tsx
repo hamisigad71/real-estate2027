@@ -30,6 +30,23 @@ interface SpaceDesignerProps {
   project?: Project
   scenario?: Scenario
   onSave?: (totalArea: number, rooms: Room[]) => void
+  forceTemplatePicker?: boolean
+}
+
+const PX_PER_METER = 20
+const MIN_ROOM_GAP = 8 // px (~0.4m)
+
+const MIN_ROOM_SIZE: Record<string, { width: number; height: number }> = {
+  master: { width: 72, height: 64 },   // ~3.6m x 3.2m
+  bedroom: { width: 64, height: 56 },  // ~3.2m x 2.8m
+  living: { width: 88, height: 68 },   // ~4.4m x 3.4m
+  kitchen: { width: 56, height: 48 },  // ~2.8m x 2.4m
+  bathroom: { width: 32, height: 28 }, // ~1.6m x 1.4m
+  hallway: { width: 28, height: 20 },  // circulation minimum
+}
+
+function roomAreaM2(room: Pick<Room, "width" | "height">) {
+  return (room.width * room.height) / (PX_PER_METER * PX_PER_METER)
 }
 
 // ─── Sidebar room palette ────────────────────────────────────────────────────
@@ -73,39 +90,41 @@ function makeId() { return Math.random().toString(36).substr(2, 9) }
 
 const LAYOUTS: Record<LayoutType, Omit<Room, "id">[]> = {
   studio: [
-    { type: "living",   name: "Studio Lounge & Sleeping", x: 60,  y: 60,  width: 360, height: 300, color: "bg-indigo-500"  },
-    { type: "kitchen",  name: "Kitchenette Foyer",       x: 430, y: 60,  width: 180, height: 130, color: "bg-amber-500"  },
-    { type: "bathroom", name: "Modern Bath",             x: 430, y: 200, width: 180, height: 160, color: "bg-cyan-500"   },
-    { type: "hallway",  name: "Large Balcony",           x: 60,  y: 370, width: 240, height: 80,  color: "bg-emerald-500"},
+    { type: "living",   name: "Living / Sleeping Zone", x: 60,  y: 60,  width: 220, height: 180, color: "bg-indigo-500"  },
+    { type: "kitchen",  name: "Kitchenette",            x: 292, y: 60,  width: 120, height: 90,  color: "bg-amber-500"  },
+    { type: "bathroom", name: "Bathroom",               x: 292, y: 160, width: 120, height: 90,  color: "bg-cyan-500"   },
+    { type: "hallway",  name: "Entry Hall",             x: 60,  y: 260, width: 352, height: 50,  color: "bg-slate-300"  },
   ],
 
   "1br": [
-    { type: "master",   name: "Master Suite",            x: 60,  y: 60,  width: 300, height: 240, color: "bg-[#7A3F91]"   },
-    { type: "living",   name: "Great Room",              x: 370, y: 60,  width: 340, height: 280, color: "bg-[#C59DD9]"  },
-    { type: "kitchen",  name: "Dining & Kitchen",        x: 370, y: 350, width: 340, height: 180, color: "bg-amber-500"  },
-    { type: "bathroom", name: "Full Bath",               x: 60,  y: 320, width: 240, height: 160, color: "bg-cyan-500"   },
-    { type: "hallway",  name: "Grand Terrace",           x: 370, y: 550, width: 240, height: 100, color: "bg-emerald-500"},
+    { type: "master",   name: "Bedroom",          x: 60,  y: 60,  width: 180, height: 140, color: "bg-[#7A3F91]"  },
+    { type: "living",   name: "Living Room",      x: 252, y: 60,  width: 220, height: 160, color: "bg-[#C59DD9]"  },
+    { type: "kitchen",  name: "Kitchen & Dining", x: 252, y: 230, width: 220, height: 110, color: "bg-amber-500"  },
+    { type: "bathroom", name: "Bathroom",         x: 60,  y: 210, width: 100, height: 90,  color: "bg-cyan-500"   },
+    { type: "hallway",  name: "Hallway",          x: 170, y: 210, width: 72,  height: 90,  color: "bg-slate-300"  },
+    { type: "hallway",  name: "Balcony",          x: 60,  y: 310, width: 180, height: 50,  color: "bg-emerald-500"},
   ],
 
   "2br": [
-    { type: "living",   name: "Living & Social",        x: 510, y: 60,  width: 380, height: 320, color: "bg-indigo-500" },
-    { type: "master",   name: "Primary Suite",           x: 60,  y: 60,  width: 280, height: 220, color: "bg-blue-600"  },
-    { type: "kitchen",  name: "Chef's Kitchen",          x: 60,  y: 290, width: 280, height: 220, color: "bg-amber-500" },
-    { type: "bathroom", name: "Ensuite",                 x: 60,  y: 520, width: 240, height: 180, color: "bg-cyan-500"  },
-    { type: "bedroom",  name: "Bedroom 2",               x: 510, y: 390, width: 260, height: 240, color: "bg-blue-500"  },
-    { type: "bathroom", name: "Family Bath",             x: 780, y: 390, width: 110, height: 240, color: "bg-cyan-500"  },
-    { type: "hallway",  name: "Gallery Hall",            x: 350, y: 60,  width: 140, height: 640, color: "bg-blue-400"  },
+    { type: "master",   name: "Master Bedroom", x: 60,  y: 60,  width: 180, height: 140, color: "bg-[#7A3F91]"  },
+    { type: "bedroom",  name: "Bedroom 2",      x: 60,  y: 220, width: 160, height: 130, color: "bg-[#C59DD9]"  },
+    { type: "living",   name: "Living Room",    x: 270, y: 60,  width: 230, height: 170, color: "bg-indigo-500" },
+    { type: "kitchen",  name: "Kitchen",        x: 270, y: 240, width: 160, height: 120, color: "bg-amber-500"  },
+    { type: "bathroom", name: "Bathroom",       x: 440, y: 240, width: 90,  height: 90,  color: "bg-cyan-500"   },
+    { type: "bathroom", name: "Ensuite",        x: 60,  y: 360, width: 80,  height: 60,  color: "bg-cyan-500"   },
+    { type: "hallway",  name: "Hallway",        x: 270, y: 370, width: 220, height: 60,  color: "bg-slate-300"  },
   ],
 
   "3br": [
-    { type: "living",   name: "Grand Living Room",       x: 520, y: 60,  width: 440, height: 340, color: "bg-indigo-600" },
-    { type: "master",   name: "Owner's Retreat",         x: 60,  y: 60,  width: 380, height: 280, color: "bg-blue-700"  },
-    { type: "kitchen",  name: "Main Kitchen",            x: 60,  y: 470, width: 330, height: 260, color: "bg-amber-500" },
-    { type: "bathroom", name: "Master Spa",              x: 60,  y: 350, width: 260, height: 110, color: "bg-cyan-600"  },
-    { type: "bedroom",  name: "Bedroom 2",               x: 520, y: 460, width: 280, height: 260, color: "bg-blue-500"  },
-    { type: "bedroom",  name: "Bedroom 3",               x: 820, y: 460, width: 280, height: 260, color: "bg-blue-500"  },
-    { type: "bathroom", name: "Guest Bath",              x: 520, y: 740, width: 240, height: 160, color: "bg-cyan-500"  },
-    { type: "hallway",  name: "Foyer Corridor",          x: 460, y: 410, width: 640, height: 40,  color: "bg-slate-400" },
+    { type: "master",   name: "Master Bedroom", x: 60,  y: 60,  width: 190, height: 150, color: "bg-[#7A3F91]"  },
+    { type: "bedroom",  name: "Bedroom 2",      x: 60,  y: 230, width: 170, height: 130, color: "bg-[#C59DD9]"  },
+    { type: "bedroom",  name: "Bedroom 3",      x: 60,  y: 380, width: 170, height: 130, color: "bg-[#C59DD9]"  },
+    { type: "living",   name: "Living Room",    x: 300, y: 60,  width: 250, height: 180, color: "bg-indigo-600" },
+    { type: "kitchen",  name: "Kitchen",        x: 300, y: 250, width: 170, height: 130, color: "bg-amber-500"  },
+    { type: "bathroom", name: "Common Bath",    x: 480, y: 250, width: 90,  height: 90,  color: "bg-cyan-500"   },
+    { type: "bathroom", name: "Master Bath",    x: 300, y: 470, width: 90,  height: 80,  color: "bg-cyan-500"   },
+    { type: "hallway",  name: "Foyer / Hallway",x: 300, y: 390, width: 250, height: 70,  color: "bg-slate-300"  },
+    { type: "hallway",  name: "Utility Nook",   x: 560, y: 390, width: 90,  height: 70,  color: "bg-slate-400"  },
   ],
 }
 
@@ -151,7 +170,7 @@ function getTemplates(scenario?: Scenario): Template[] {
       beds: 1,
     },
     {
-      layoutType: "2-bedroom",
+      layoutType: "2br",
       label: "2-Bedroom",
       emoji: "🛏🛏",
       subtitle: `~${size}m² · 2 beds`,
@@ -174,7 +193,7 @@ function getTemplates(scenario?: Scenario): Template[] {
 }
 
 // ─── Component ────────────────────────────────────────────────────────────────
-export function SpaceDesigner({ project, scenario, onSave }: SpaceDesignerProps) {
+export function SpaceDesigner({ project, scenario, onSave, forceTemplatePicker = false }: SpaceDesignerProps) {
   const router = useRouter()
   const [rooms,         setRooms]         = useState<Room[]>(scenario?.architecture?.rooms || [])
   const [selectedId,    setSelectedId]    = useState<string | null>(null)
@@ -195,13 +214,17 @@ export function SpaceDesigner({ project, scenario, onSave }: SpaceDesignerProps)
   // On open: load saved rooms or show template picker
   useEffect(() => {
     if (!scenario) return
+    if (forceTemplatePicker) {
+      setShowTemplates(true)
+      return
+    }
     if (scenario.architecture?.rooms && scenario.architecture.rooms.length > 0) {
       setRooms(scenario.architecture.rooms)
       setShowTemplates(false)
     } else {
       setShowTemplates(true)
     }
-  }, [scenario])
+  }, [scenario, forceTemplatePicker])
 
   // Reset style index when room selection changes
   useEffect(() => {
@@ -220,6 +243,28 @@ export function SpaceDesigner({ project, scenario, onSave }: SpaceDesignerProps)
     setShowTemplates(false)
   }
 
+  const hasRequiredSpacing = (candidate: Room, roomList: Room[], ignoreId?: string) => {
+    return roomList.every((r) => {
+      if (r.id === ignoreId) return true
+      const overlapX =
+        candidate.x < r.x + r.width + MIN_ROOM_GAP &&
+        candidate.x + candidate.width + MIN_ROOM_GAP > r.x
+      const overlapY =
+        candidate.y < r.y + r.height + MIN_ROOM_GAP &&
+        candidate.y + candidate.height + MIN_ROOM_GAP > r.y
+      return !(overlapX && overlapY)
+    })
+  }
+
+  const clampRoomSize = (room: Room): Room => {
+    const min = MIN_ROOM_SIZE[room.type] ?? { width: 24, height: 24 }
+    return {
+      ...room,
+      width: Math.max(min.width, room.width),
+      height: Math.max(min.height, room.height),
+    }
+  }
+
   const addRoom = (p: typeof ROOM_PALETTE[0]) => {
     const nr: Room = { id: makeId(), type: p.type, name: p.name, x: 120, y: 120, width: p.w, height: p.h, color: p.color }
     setRooms(prev => [...prev, nr])
@@ -227,7 +272,19 @@ export function SpaceDesigner({ project, scenario, onSave }: SpaceDesignerProps)
   }
 
   const updateRoom = (id: string, updates: Partial<Room>) =>
-    setRooms(prev => prev.map(r => r.id === id ? { ...r, ...updates } : r))
+    setRooms(prev => {
+      const current = prev.find((r) => r.id === id)
+      if (!current) return prev
+      const candidate = clampRoomSize({ ...current, ...updates })
+      // For position/size updates, enforce minimum spacing to keep plans readable.
+      const isGeomUpdate =
+        updates.x !== undefined ||
+        updates.y !== undefined ||
+        updates.width !== undefined ||
+        updates.height !== undefined
+      if (isGeomUpdate && !hasRequiredSpacing(candidate, prev, id)) return prev
+      return prev.map(r => r.id === id ? candidate : r)
+    })
 
   const deleteRoom = (id: string) => {
     setRooms(prev => prev.filter(r => r.id !== id))
@@ -252,7 +309,7 @@ export function SpaceDesigner({ project, scenario, onSave }: SpaceDesignerProps)
   }
 
   const selectedRoom = rooms.find(r => r.id === selectedId)
-  const totalArea    = rooms.reduce((s, r) => s + (r.width * r.height) / 400, 0)
+  const totalArea    = rooms.reduce((s, r) => s + roomAreaM2(r), 0)
 
   return (
     <div className="flex flex-col h-full min-h-[700px] bg-slate-50 rounded-3xl overflow-hidden border border-slate-200 shadow-xl relative" suppressHydrationWarning>
@@ -333,7 +390,8 @@ export function SpaceDesigner({ project, scenario, onSave }: SpaceDesignerProps)
             {/* Template grid */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 w-full max-w-4xl">
               {templates.map((t) => {
-                const previewRooms = LAYOUTS[t.layoutType]
+                const previewRooms = LAYOUTS[t.layoutType] ?? []
+                if (!previewRooms.length) return null
                 const maxX = Math.max(...previewRooms.map(r => r.x + r.width))
                 const maxY = Math.max(...previewRooms.map(r => r.y + r.height))
                 const scX  = 180 / (maxX + 20)
@@ -466,7 +524,7 @@ export function SpaceDesigner({ project, scenario, onSave }: SpaceDesignerProps)
                   ))}
                 </div>
                 <p className="text-[10px] text-slate-500">
-                  Area: <span className="text-slate-900 font-bold">{Math.round((selectedRoom.width * selectedRoom.height) / 1000)}m²</span>
+                  Area: <span className="text-slate-900 font-bold">{Math.round(roomAreaM2(selectedRoom))}m²</span>
                 </p>
               </motion.div>
             )}
@@ -550,8 +608,8 @@ export function SpaceDesigner({ project, scenario, onSave }: SpaceDesignerProps)
                     onDrag={(e, info) => {
                       e.stopPropagation(); // BLOCK canvas panning
                       updateRoom(room.id, {
-                        x: Math.round(room.x + info.delta.x / zoom),
-                        y: Math.round(room.y + info.delta.y / zoom),
+                        x: Math.round((room.x + info.delta.x / zoom) / 2) * 2,
+                        y: Math.round((room.y + info.delta.y / zoom) / 2) * 2,
                       })
                     }}
                     onTap={(e) => {
@@ -588,7 +646,7 @@ export function SpaceDesigner({ project, scenario, onSave }: SpaceDesignerProps)
                       <div className={`px-2 py-0.5 bg-black/20 backdrop-blur-sm rounded-md border border-white/10 mt-1
                         ${is3D ? "[transform:rotateZ(-45deg)_rotateX(-55deg)]" : ""}`}>
                         <p className="text-[9px] font-black text-white/90">
-                          {Math.round((room.width * room.height) / 1000)}m²
+                          {Math.round(roomAreaM2(room))}m²
                         </p>
                       </div>
                     </div>

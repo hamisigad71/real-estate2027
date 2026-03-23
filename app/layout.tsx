@@ -1,6 +1,5 @@
 import type React from "react";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
@@ -10,8 +9,6 @@ import { PageNavigator } from "@/components/page-navigator";
 import { ToastProvider } from "@/components/toast-provider";
 import { ScrollToTop } from "@/components/scroll-to-top";
 import { PageTransitionLoader } from "@/components/page-transition-loader";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "HousingPlan – Smart Affordable Housing Tool",
@@ -52,7 +49,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full">
       <body
-        className={`${inter.className} antialiased bg-background text-foreground min-h-screen flex flex-col`}
+        className="antialiased bg-background text-foreground min-h-screen flex flex-col"
         suppressHydrationWarning
       >
         <ScrollToTop />

@@ -234,6 +234,9 @@ export interface HomeBuilderConfig {
   country: string
   countryCode: string
   landSize: number // in square meters
+  grossArea?: number // total built area in m²
+  netArea?: number // usable indoor area in m²
+  storeys?: number
   budget: number // total budget in USD
   style: "basic" | "standard" | "luxury" | "modern" | "traditional"
   sizePreference: "small" | "medium" | "large" | "spacious"
@@ -245,8 +248,38 @@ export interface HomeBuilderConfig {
     electricity: number
   }
   finishLevel?: "basic" | "standard" | "improved"
+  bathrooms?: number
+  financing?: {
+    mode: "cash" | "mortgage" | "mixed"
+    downPaymentPercent: number
+    annualInterestRate: number
+    loanTermYears: number
+  }
+  landServiced?: boolean
+  timelineMonths?: number
+  siteConditions?: {
+    slope: "flat" | "gentle" | "steep"
+    soilType: "stable" | "mixed" | "weak"
+    floodRisk: "low" | "medium" | "high"
+    seismicZone: "low" | "medium" | "high"
+  }
+  household?: {
+    adults: number
+    children: number
+    remoteWorkers: number
+    vehicles: number
+  }
+  utilitiesProfile?: {
+    waterReliability: "high" | "medium" | "low"
+    gridReliability: "high" | "medium" | "low"
+  }
+  compliance?: {
+    accessibilityRequired: boolean
+    parkingSpaces: number
+  }
   features: {
     solarPanels: boolean
+    waterStorage: boolean
     smartHome: boolean
     airConditioning: boolean
     swimmingPool: boolean

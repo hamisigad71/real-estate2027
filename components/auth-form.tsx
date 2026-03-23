@@ -25,6 +25,7 @@ import {
   Shield,
   ChevronDown,
   ChevronUp,
+  Sparkles,
 } from "lucide-react";
 import { Logo } from "./logo";
 
@@ -81,16 +82,19 @@ const ROLE_OPTIONS: RoleOption[] = [
     icon: CheckCircle,
     description: "Build your custom home",
   },
-  {
-    value: "Other",
-    label: "Other",
-    icon: Zap,
-    description: "Other roles",
-  },
+  { value: "Other", label: "Other", icon: Zap, description: "Other roles" },
 ];
 
-/* ── Professional Logo SVG ─────────────────────────────────── */
-function LogoIcon({ size = 40, className = "" }: { size?: number; className?: string }) {
+/* ─────────────────────────────────────────────────────────────
+   LOGO SVG — purple gradient version (used on light bg)
+   ───────────────────────────────────────────────────────────── */
+function LogoIcon({
+  size = 40,
+  className = "",
+}: {
+  size?: number;
+  className?: string;
+}) {
   return (
     <svg
       viewBox="0 0 100 100"
@@ -105,7 +109,6 @@ function LogoIcon({ size = 40, className = "" }: { size?: number; className?: st
           <stop offset="100%" stopColor="#2B0D3E" />
         </linearGradient>
       </defs>
-      {/* Roofline */}
       <path
         d="M10 58 L50 22 L90 58"
         fill="none"
@@ -114,14 +117,34 @@ function LogoIcon({ size = 40, className = "" }: { size?: number; className?: st
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      {/* Building body */}
-      <rect x="24" y="56" width="52" height="28" rx="3" fill="url(#logoGrad)" opacity="0.15" />
-      {/* Windows */}
-      <rect x="33" y="62" width="10" height="8" rx="1.5" fill="url(#logoGrad)" opacity="0.7" />
-      <rect x="57" y="62" width="10" height="8" rx="1.5" fill="url(#logoGrad)" opacity="0.7" />
-      {/* Door */}
+      <rect
+        x="24"
+        y="56"
+        width="52"
+        height="28"
+        rx="3"
+        fill="url(#logoGrad)"
+        opacity="0.15"
+      />
+      <rect
+        x="33"
+        y="62"
+        width="10"
+        height="8"
+        rx="1.5"
+        fill="url(#logoGrad)"
+        opacity="0.7"
+      />
+      <rect
+        x="57"
+        y="62"
+        width="10"
+        height="8"
+        rx="1.5"
+        fill="url(#logoGrad)"
+        opacity="0.7"
+      />
       <rect x="44" y="68" width="12" height="16" rx="2" fill="url(#logoGrad)" />
-      {/* Analytics accent — upward trend line */}
       <path
         d="M62 48 L72 38 L82 42 L92 28"
         fill="none"
@@ -135,6 +158,9 @@ function LogoIcon({ size = 40, className = "" }: { size?: number; className?: st
   );
 }
 
+/* ─────────────────────────────────────────────────────────────
+   LOGO SVG — white version (used on dark bg)
+   ───────────────────────────────────────────────────────────── */
 function LogoIconWhite({ size = 40 }: { size?: number }) {
   return (
     <svg
@@ -143,7 +169,6 @@ function LogoIconWhite({ size = 40 }: { size?: number }) {
       height={size}
       xmlns="http://www.w3.org/2000/svg"
     >
-      {/* Roofline */}
       <path
         d="M10 58 L50 22 L90 58"
         fill="none"
@@ -152,14 +177,42 @@ function LogoIconWhite({ size = 40 }: { size?: number }) {
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      {/* Building body */}
-      <rect x="24" y="56" width="52" height="28" rx="3" fill="white" opacity="0.12" />
-      {/* Windows */}
-      <rect x="33" y="62" width="10" height="8" rx="1.5" fill="white" opacity="0.5" />
-      <rect x="57" y="62" width="10" height="8" rx="1.5" fill="white" opacity="0.5" />
-      {/* Door */}
-      <rect x="44" y="68" width="12" height="16" rx="2" fill="white" opacity="0.8" />
-      {/* Analytics accent */}
+      <rect
+        x="24"
+        y="56"
+        width="52"
+        height="28"
+        rx="3"
+        fill="white"
+        opacity="0.12"
+      />
+      <rect
+        x="33"
+        y="62"
+        width="10"
+        height="8"
+        rx="1.5"
+        fill="white"
+        opacity="0.5"
+      />
+      <rect
+        x="57"
+        y="62"
+        width="10"
+        height="8"
+        rx="1.5"
+        fill="white"
+        opacity="0.5"
+      />
+      <rect
+        x="44"
+        y="68"
+        width="12"
+        height="16"
+        rx="2"
+        fill="white"
+        opacity="0.8"
+      />
       <path
         d="M62 48 L72 38 L82 42 L92 28"
         fill="none"
@@ -173,7 +226,9 @@ function LogoIconWhite({ size = 40 }: { size?: number }) {
   );
 }
 
-/* ── Feature item for the branding panel ───────────────────── */
+/* ─────────────────────────────────────────────────────────────
+   FEATURE ITEM — left branding panel
+   ───────────────────────────────────────────────────────────── */
 function FeatureItem({
   icon: Icon,
   title,
@@ -184,31 +239,147 @@ function FeatureItem({
   desc: string;
 }) {
   return (
-    <div className="flex items-start gap-3 group">
-      <div className="w-9 h-9 rounded-lg bg-white/[0.06] border border-white/[0.08] flex items-center justify-center shrink-0 group-hover:bg-white/[0.1] transition-colors">
-        <Icon className="w-4 h-4 text-amethyst-200" style={{ color: '#C59DD9' }} />
+    <div className="flex items-start gap-3.5 group">
+      <div
+        className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 transition-all duration-200 group-hover:scale-105"
+        style={{
+          background: "rgba(197,157,217,0.1)",
+          border: "1px solid rgba(197,157,217,0.15)",
+        }}
+      >
+        <Icon className="w-4 h-4 text-[#C59DD9]" />
       </div>
-      <div>
-        <h3 className="text-sm font-semibold text-white/95">{title}</h3>
-        <p className="text-xs text-lavender-200/60 leading-relaxed" style={{ color: 'rgba(242, 234, 247, 0.6)' }}>{desc}</p>
+      <div className="pt-0.5">
+        <h3
+          className="text-sm font-semibold"
+          style={{ color: "rgba(255,255,255,0.92)" }}
+        >
+          {title}
+        </h3>
+        <p
+          className="text-xs leading-relaxed mt-0.5"
+          style={{ color: "rgba(242,234,247,0.45)" }}
+        >
+          {desc}
+        </p>
       </div>
     </div>
   );
 }
 
-/* ── Stat block ────────────────────────────────────────────── */
+/* ─────────────────────────────────────────────────────────────
+   STAT BLOCK — left branding panel
+   ───────────────────────────────────────────────────────────── */
 function StatBlock({ value, label }: { value: string; label: string }) {
   return (
-    <div className="text-center">
-      <p className="text-lg font-bold text-white">{value}</p>
-      <p className="text-[11px] text-[#F2EAF7]/50 uppercase tracking-wider">{label}</p>
+    <div
+      className="text-center py-3 rounded-xl"
+      style={{
+        background: "rgba(255,255,255,0.04)",
+        border: "1px solid rgba(255,255,255,0.07)",
+      }}
+    >
+      <p className="text-base font-extrabold text-white tracking-tight">
+        {value}
+      </p>
+      <p
+        className="text-[10px] font-semibold uppercase tracking-widest mt-0.5"
+        style={{ color: "rgba(242,234,247,0.35)" }}
+      >
+        {label}
+      </p>
     </div>
   );
 }
 
-/* ══════════════════════════════════════════════════════════════
-   AUTH FORM — PREMIUM REDESIGN
-   ══════════════════════════════════════════════════════════════ */
+/* ─────────────────────────────────────────────────────────────
+   GOOGLE SVG ICON
+   ───────────────────────────────────────────────────────────── */
+function GoogleIcon() {
+  return (
+    <svg className="h-[18px] w-[18px]" viewBox="0 0 24 24">
+      <path
+        d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+        fill="#4285F4"
+      />
+      <path
+        d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+        fill="#34A853"
+      />
+      <path
+        d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+        fill="#FBBC05"
+      />
+      <path
+        d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+        fill="#EA4335"
+      />
+    </svg>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────────
+   DIVIDER
+   ───────────────────────────────────────────────────────────── */
+function Divider({ label }: { label: string }) {
+  return (
+    <div className="relative flex items-center gap-3 my-0.5">
+      <div className="flex-1 h-px" style={{ background: "#E9DEEF" }} />
+      <span
+        className="text-[10px] font-bold uppercase tracking-widest whitespace-nowrap px-1"
+        style={{ color: "#C59DD9" }}
+      >
+        {label}
+      </span>
+      <div className="flex-1 h-px" style={{ background: "#E9DEEF" }} />
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────────
+   FIELD WRAPPER — label + icon + input slot
+   ───────────────────────────────────────────────────────────── */
+function FieldWrap({
+  htmlFor,
+  label,
+  required,
+  icon: Icon,
+  children,
+}: {
+  htmlFor: string;
+  label: string;
+  required?: boolean;
+  icon?: React.ComponentType<{ className?: string }>;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="space-y-1.5">
+      <Label
+        htmlFor={htmlFor}
+        className="text-[10px] font-bold uppercase tracking-widest"
+        style={{ color: "#7A3F91" }}
+      >
+        {label}
+        {required && <span style={{ color: "#ef4444" }}> *</span>}
+      </Label>
+      <div className="relative">
+        {Icon && (
+          <Icon className="absolute left-3.5 top-1/2 -translate-y-1/2 w-[15px] h-[15px] pointer-events-none text-[#C59DD9]" />
+        )}
+        {children}
+      </div>
+    </div>
+  );
+}
+
+const inputBase =
+  "h-11 rounded-xl text-sm border-[#E9DEEF] bg-white focus-visible:ring-2 focus-visible:ring-[#7A3F91]/20 focus-visible:border-[#7A3F91] transition-all duration-150 text-[#2B0D3E] placeholder:text-[#C59DD9]";
+const withIcon = `${inputBase} pl-10`;
+const noIcon = `${inputBase} pl-4`;
+
+/* ═════════════════════════════════════════════════════════════
+   AUTH FORM — MAIN EXPORT
+   ═════════════════════════════════════════════════════════════ */
 export function AuthForm() {
   const [activeTab, setActiveTab] = useState<"signin" | "signup">("signin");
   const [showRoleSelector, setShowRoleSelector] = useState(false);
@@ -216,12 +387,12 @@ export function AuthForm() {
   const { login } = useAuth();
   const { showSuccess, showError } = useToast();
 
-  // Sign In Form State
+  // Sign In state
   const [signInEmail, setSignInEmail] = useState("");
   const [signInName, setSignInName] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
 
-  // Sign Up Form State
+  // Sign Up state
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [organization, setOrganization] = useState("");
@@ -229,13 +400,12 @@ export function AuthForm() {
   const [phone, setPhone] = useState("");
   const [country, setCountry] = useState("");
 
-  // Mounted state for animations
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  /* ── handlers (unchanged logic) ──────────────────────────── */
+  /* ── handlers — identical logic to original ─────────────── */
   const handleSignIn = (e: React.FormEvent) => {
     e.preventDefault();
     if (!signInEmail || !signInName) {
@@ -243,7 +413,9 @@ export function AuthForm() {
       return;
     }
     login(signInEmail, signInName);
-    showSuccess(`Welcome back to RHS Engine, ${signInName}! Your dashboard is ready.`);
+    showSuccess(
+      `Welcome back to RHS Engine, ${signInName}! Your dashboard is ready.`,
+    );
   };
 
   const handleSignUp = (e: React.FormEvent) => {
@@ -253,23 +425,41 @@ export function AuthForm() {
       return;
     }
     login(email, name, organization, role, phone, country);
-    showSuccess(`Account successfully created! Welcome to the RHS Engine ecosystem, ${name}.`);
+    showSuccess(
+      `Account successfully created! Welcome to the RHS Engine ecosystem, ${name}.`,
+    );
   };
 
   const handleGoogleSignIn = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    const demoEmail = "demo@example.com";
-    const demoName = "Demo User";
-    login(demoEmail, demoName, "Demo Organization", "Government Planner", "+1234567890", "United States");
-    showSuccess(`Welcome back, ${demoName}! Access to your RHS Engine profile has been restored.`);
+    login(
+      "demo@example.com",
+      "Demo User",
+      "Demo Organization",
+      "Government Planner",
+      "+1234567890",
+      "United States",
+    );
+    showSuccess(
+      "Welcome back, Demo User! Access to your RHS Engine profile has been restored.",
+    );
   };
 
   const handleQuickDemoLogin = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    login("demo@example.com", "Demo User", "Demo Organization", "Government Planner", "+1234567890", "United States");
-    showSuccess(`Demo environment initialized. Explore advanced architectural analysis for a sample 500-unit project.`);
+    login(
+      "demo@example.com",
+      "Demo User",
+      "Demo Organization",
+      "Government Planner",
+      "+1234567890",
+      "United States",
+    );
+    showSuccess(
+      "Demo environment initialized. Explore advanced architectural analysis for a sample 500-unit project.",
+    );
   };
 
   const handleRoleSelect = (selectedRole: RoleType) => {
@@ -277,114 +467,320 @@ export function AuthForm() {
     setShowRoleSelector(false);
   };
 
-  const getRoleLabel = () => {
-    const selected = ROLE_OPTIONS.find((opt) => opt.value === role);
-    return selected ? selected.label : "Select your role";
-  };
+  const getRoleLabel = () =>
+    ROLE_OPTIONS.find((o) => o.value === role)?.label ?? "Select your role";
 
   /* ── render ──────────────────────────────────────────────── */
   return (
-    <div className="min-h-screen flex bg-white">
+    <div
+      className="min-h-screen flex bg-white"
+      style={{ fontFamily: "'DM Sans','Inter',system-ui,sans-serif" }}
+    >
       {/* ════════════════════════════════════════════════════════
           LEFT — DARK BRANDING PANEL
          ════════════════════════════════════════════════════════ */}
-      <div className="hidden lg:flex lg:w-[48%] relative overflow-hidden bg-[#2B0D3E] flex-col justify-between p-10 xl:p-14">
+      <div
+        className="hidden lg:flex lg:w-[46%] relative overflow-hidden flex-col justify-between p-12 xl:p-14"
+        style={{ background: "#2B0D3E" }}
+      >
         {/* Animated gradient orbs */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div
-            className="absolute -top-32 -left-32 w-[500px] h-[500px] rounded-full opacity-[0.04]"
+            className="absolute -top-40 -left-40 w-[520px] h-[520px] rounded-full"
             style={{
-              background: "radial-gradient(circle, #7A3F91 0%, transparent 70%)",
-              animation: mounted ? "float1 35s ease-in-out infinite" : "none",
+              background:
+                "radial-gradient(circle,rgba(122,63,145,0.32) 0%,transparent 68%)",
+              animation: mounted ? "float1 38s ease-in-out infinite" : "none",
             }}
           />
           <div
-            className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full opacity-[0.03]"
+            className="absolute -bottom-20 -right-20 w-[420px] h-[420px] rounded-full"
             style={{
-              background: "radial-gradient(circle, #C59DD9 0%, transparent 70%)",
-              animation: mounted ? "float2 45s ease-in-out infinite" : "none",
+              background:
+                "radial-gradient(circle,rgba(197,157,217,0.15) 0%,transparent 68%)",
+              animation: mounted ? "float2 48s ease-in-out infinite" : "none",
             }}
           />
-          {/* Subtle grid overlay */}
+          {/* Dot-grid overlay */}
           <div
-            className="absolute inset-0 opacity-[0.03]"
+            className="absolute inset-0"
             style={{
               backgroundImage:
-                "linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)",
-              backgroundSize: "60px 60px",
+                "radial-gradient(rgba(255,255,255,0.07) 1px,transparent 1px)",
+              backgroundSize: "28px 28px",
+              opacity: 0.6,
             }}
           />
         </div>
 
-        {/* Top content */}
+        {/* ── Top content ──────────────────────────────────── */}
         <div className="relative z-10 space-y-10">
-          {/* Logo + Title */}
-          <div className="space-y-5">
-            <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-white/[0.06] border border-white/[0.08] backdrop-blur-sm">
-              <Logo size={60} />
+          {/* Logo box + wordmark */}
+          <div className="flex items-center gap-4 anim-logo">
+            <div
+              className="w-16 h-16 rounded-2xl flex items-center justify-center shrink-0"
+              style={{
+                background: "rgba(255,255,255,0.06)",
+                border: "1px solid rgba(255,255,255,0.1)",
+              }}
+            >
+              <LogoIconWhite size={46} />
             </div>
             <div>
-              <h1 className="text-4xl xl:text-[2.6rem] font-bold text-white tracking-tight leading-tight">
+              <p className="text-xl font-extrabold text-white tracking-tight leading-none">
                 RHS Engine
-              </h1>
-              <p className="mt-3 text-[15px] text-[#F2EAF7]/50 leading-relaxed max-w-sm">
-                Smart Affordable Housing Planning — Data-driven solutions for
-                governments, NGOs, and developers.
+              </p>
+              <p
+                className="text-xs mt-1 font-medium"
+                style={{ color: "rgba(242,234,247,0.42)" }}
+              >
+                Smart Affordable Housing Planning
               </p>
             </div>
           </div>
 
+          {/* Hero headline */}
+          <div className="anim-headline">
+            <h1
+              className="font-extrabold leading-[1.1] tracking-tight text-white"
+              style={{ fontSize: "clamp(2rem,3vw,2.75rem)" }}
+            >
+              Plan smarter.
+              <br />
+              <span style={{ color: "#C59DD9" }}>Build better.</span>
+              <br />
+              House more.
+            </h1>
+            <p
+              className="mt-4 text-sm leading-relaxed max-w-xs"
+              style={{ color: "rgba(242,234,247,0.48)" }}
+            >
+              Data-driven solutions for governments, NGOs, and developers
+              building the future of affordable housing.
+            </p>
+          </div>
+
           {/* Feature highlights */}
           <div className="space-y-4">
-            <FeatureItem
-              icon={Zap}
-              title="Real-Time Financial Modeling"
-              desc="Instantly calculate costs, ROI, and affordability metrics"
-            />
-            <FeatureItem
-              icon={BarChart3}
-              title="Scenario Comparison Engine"
-              desc="Compare layouts, densities, and infrastructure impact"
-            />
-            <FeatureItem
-              icon={Globe}
-              title="Infrastructure Assessment"
-              desc="Evaluate water, electricity, waste, and compliance needs"
-            />
-            <FeatureItem
-              icon={TrendingUp}
-              title="Demand Forecasting"
-              desc="Project 5-20 year housing demand with demographic analysis"
-            />
-          </div>
-        </div>
-
-        {/* Bottom trust stats */}
-        <div className="relative z-10">
-          <div className="border-t border-white/[0.06] pt-6 mt-6">
-            <p className="text-[11px] uppercase tracking-widest text-[#F2EAF7]/30 mb-4 font-medium">
-              Trusted by industry leaders
-            </p>
-            <div className="grid grid-cols-4 gap-3">
-              <StatBlock value="50K+" label="Units" />
-              <StatBlock value="15+" label="Orgs" />
-              <StatBlock value="$2B+" label="Modeled" />
-              <StatBlock value="100%" label="Secure" />
+            <div className="anim-feat-1">
+              <FeatureItem
+                icon={Zap}
+                title="Real-Time Financial Modeling"
+                desc="Instantly calculate costs, ROI, and affordability metrics"
+              />
+            </div>
+            <div className="anim-feat-2">
+              <FeatureItem
+                icon={BarChart3}
+                title="Scenario Comparison Engine"
+                desc="Compare layouts, densities, and infrastructure impact"
+              />
+            </div>
+            <div className="anim-feat-3">
+              <FeatureItem
+                icon={Globe}
+                title="Infrastructure Assessment"
+                desc="Evaluate water, electricity, waste, and compliance needs"
+              />
+            </div>
+            <div className="anim-feat-4">
+              <FeatureItem
+                icon={TrendingUp}
+                title="Demand Forecasting"
+                desc="Project 5–20 year housing demand with demographic analysis"
+              />
             </div>
           </div>
         </div>
 
-        {/* Keyframes injected inline */}
+        {/* ── Bottom — stats + trust ────────────────────────── */}
+        <div className="relative z-10 space-y-5 anim-stats">
+          <div
+            className="h-px"
+            style={{ background: "rgba(255,255,255,0.08)" }}
+          />
+          <p
+            className="text-[10px] font-bold uppercase tracking-[0.15em]"
+            style={{ color: "rgba(242,234,247,0.28)" }}
+          >
+            Trusted by industry leaders
+          </p>
+          <div className="grid grid-cols-4 gap-2">
+            <StatBlock value="50K+" label="Units" />
+            <StatBlock value="15+" label="Orgs" />
+            <StatBlock value="$2B+" label="Modeled" />
+            <StatBlock value="100%" label="Secure" />
+          </div>
+          <div className="flex items-center gap-2">
+            <Shield
+              className="w-3 h-3 shrink-0"
+              style={{ color: "rgba(197,157,217,0.45)" }}
+            />
+            <span
+              className="text-[11px]"
+              style={{ color: "rgba(242,234,247,0.3)" }}
+            >
+              SOC 2 compliant · End-to-end encrypted · GDPR ready
+            </span>
+          </div>
+        </div>
+
+        {/* Keyframe animations */}
         <style jsx global>{`
+          @import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap");
+
+          /* ── Floating orb animations ── */
           @keyframes float1 {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(40px, 30px) scale(1.05); }
-            66% { transform: translate(-20px, 50px) scale(0.97); }
+            0%,
+            100% {
+              transform: translate(0, 0) scale(1);
+            }
+            33% {
+              transform: translate(45px, 35px) scale(1.06);
+            }
+            66% {
+              transform: translate(-25px, 55px) scale(0.96);
+            }
           }
           @keyframes float2 {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(-30px, -40px) scale(1.03); }
-            66% { transform: translate(20px, -20px) scale(0.98); }
+            0%,
+            100% {
+              transform: translate(0, 0) scale(1);
+            }
+            33% {
+              transform: translate(-35px, -45px) scale(1.04);
+            }
+            66% {
+              transform: translate(25px, -20px) scale(0.97);
+            }
+          }
+
+          /* ── Page-load entry animations ── */
+          @keyframes fadeUp {
+            from {
+              opacity: 0;
+              transform: translateY(18px);
+            }
+            to {
+              opacity: 1;
+              transform: translateY(0);
+            }
+          }
+          @keyframes fadeLeft {
+            from {
+              opacity: 0;
+              transform: translateX(-18px);
+            }
+            to {
+              opacity: 1;
+              transform: translateX(0);
+            }
+          }
+          @keyframes fadeRight {
+            from {
+              opacity: 0;
+              transform: translateX(18px);
+            }
+            to {
+              opacity: 1;
+              transform: translateX(0);
+            }
+          }
+          @keyframes fadeScale {
+            from {
+              opacity: 0;
+              transform: scale(0.94);
+            }
+            to {
+              opacity: 1;
+              transform: scale(1);
+            }
+          }
+
+          /* ── Left panel staggered entry ── */
+          .anim-logo {
+            animation: fadeLeft 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+            animation-delay: 0.05s;
+          }
+          .anim-headline {
+            animation: fadeUp 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+            animation-delay: 0.18s;
+          }
+          .anim-feat-1 {
+            animation: fadeLeft 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+            animation-delay: 0.3s;
+          }
+          .anim-feat-2 {
+            animation: fadeLeft 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+            animation-delay: 0.4s;
+          }
+          .anim-feat-3 {
+            animation: fadeLeft 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+            animation-delay: 0.5s;
+          }
+          .anim-feat-4 {
+            animation: fadeLeft 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+            animation-delay: 0.6s;
+          }
+          .anim-stats {
+            animation: fadeUp 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+            animation-delay: 0.72s;
+          }
+
+          /* ── Right panel entry ── */
+          .anim-mobile-hero {
+            animation: fadeUp 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+            animation-delay: 0.1s;
+          }
+          .anim-card {
+            animation: fadeScale 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+            animation-delay: 0.2s;
+          }
+          .anim-trust {
+            animation: fadeUp 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+            animation-delay: 0.55s;
+          }
+
+          /* ── Tab content slide-in ── */
+          @keyframes slideIn {
+            from {
+              opacity: 0;
+              transform: translateY(10px);
+            }
+            to {
+              opacity: 1;
+              transform: translateY(0);
+            }
+          }
+          .slide-in {
+            animation: slideIn 0.22s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+          }
+
+          /* ── Expandable sections ── */
+          @keyframes expandDown {
+            from {
+              opacity: 0;
+              transform: translateY(-6px);
+            }
+            to {
+              opacity: 1;
+              transform: translateY(0);
+            }
+          }
+          .expand-in {
+            animation: expandDown 0.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+          }
+
+          /* ── Scrollbar ── */
+          .scrollbar-thin::-webkit-scrollbar {
+            width: 4px;
+          }
+          .scrollbar-thin::-webkit-scrollbar-track {
+            background: transparent;
+          }
+          .scrollbar-thin::-webkit-scrollbar-thumb {
+            background: #e9deef;
+            border-radius: 4px;
           }
         `}</style>
       </div>
@@ -392,140 +788,240 @@ export function AuthForm() {
       {/* ════════════════════════════════════════════════════════
           RIGHT — AUTH FORMS
          ════════════════════════════════════════════════════════ */}
-      <div className="flex-1 flex flex-col items-center justify-center p-6 sm:p-10 lg:p-16 bg-gradient-to-br from-[#F2EAF7]/80 via-white to-[#C59DD9]/30">
-        <div className="w-full max-w-md">
-          {/* Mobile Hero Section */}
-          <div className="lg:hidden mb-12">
-            {/* Logo header */}
+      <div
+        className="flex-1 flex flex-col items-center justify-center p-6 sm:p-10 lg:p-14 relative overflow-y-auto"
+        style={{
+          background:
+            "linear-gradient(145deg,#F2EAF7 0%,#FFFFFF 50%,#F9F5FC 100%)",
+        }}
+      >
+        {/* Soft background blobs */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div
+            className="absolute -top-10 -right-10 w-80 h-80 rounded-full"
+            style={{
+              background:
+                "radial-gradient(circle,rgba(197,157,217,0.18) 0%,transparent 70%)",
+            }}
+          />
+          <div
+            className="absolute -bottom-10 -left-10 w-64 h-64 rounded-full"
+            style={{
+              background:
+                "radial-gradient(circle,rgba(122,63,145,0.07) 0%,transparent 70%)",
+            }}
+          />
+        </div>
+
+        <div className="w-full max-w-[420px] relative z-10">
+          {/* ════════════════════════════════════════════════
+              MOBILE HERO — visible only below lg breakpoint
+             ════════════════════════════════════════════════ */}
+          <div className="lg:hidden mb-10 anim-mobile-hero">
+            {/* Mobile logo row */}
             <div className="flex items-center gap-3 mb-8">
-              <div className="w-16 h-16 rounded-xl bg-[#2B0D3E] flex items-center justify-center">
-                <Logo size={48} />
+              <div
+                className="w-14 h-14 rounded-2xl flex items-center justify-center shrink-0"
+                style={{ background: "#2B0D3E" }}
+              >
+                <LogoIconWhite size={40} />
               </div>
               <div>
-                <h2 className="text-lg font-bold text-slate-900">RHS Engine</h2>
-                <p className="text-xs text-slate-500">
+                <h2
+                  className="text-lg font-extrabold tracking-tight"
+                  style={{ color: "#2B0D3E" }}
+                >
+                  RHS Engine
+                </h2>
+                <p className="text-xs font-medium" style={{ color: "#7A3F91" }}>
                   Smart Housing Planning
                 </p>
               </div>
             </div>
 
-            {/* Hero Content */}
-            <div className="space-y-6 text-center">
-              <div className="space-y-3">
-                <h1 className="text-3xl font-bold text-slate-900 leading-tight">
-                  Design the Future of Housing
+            {/* Mobile hero content */}
+            <div className="space-y-5 text-center">
+              <div className="space-y-2.5">
+                <h1
+                  className="font-extrabold tracking-tight leading-tight"
+                  style={{
+                    fontSize: "clamp(1.75rem,6vw,2.25rem)",
+                    color: "#2B0D3E",
+                  }}
+                >
+                  Design the Future
+                  <br />
+                  <span style={{ color: "#7A3F91" }}>of Housing</span>
                 </h1>
-                <p className="text-sm text-slate-600 leading-relaxed">
-                  Harness advanced AI to synthesize complex architectural constraints into beautiful, functional living spaces. Real-time cost engineering meets high-fidelity design.
+                <p
+                  className="text-sm leading-relaxed"
+                  style={{ color: "#7A3F91", opacity: 0.72 }}
+                >
+                  Harness advanced AI to synthesize complex architectural
+                  constraints into beautiful, functional living spaces.
+                  Real-time cost engineering meets high-fidelity design.
                 </p>
               </div>
 
-              {/* CTA Buttons */}
-              <div className="flex gap-3 pt-2">
+              {/* Mobile CTA buttons */}
+              <div className="flex gap-3 pt-1">
                 <button
                   onClick={() => setActiveTab("signup")}
-                  className="flex-1 h-11 inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-sm font-semibold text-slate-900 transition-all"
+                  className="flex-1 h-11 inline-flex items-center justify-center rounded-xl text-sm font-semibold transition-all duration-150 hover:scale-[1.02] active:scale-[0.98]"
+                  style={{
+                    border: "1.5px solid #E9DEEF",
+                    background: "#FFFFFF",
+                    color: "#2B0D3E",
+                  }}
                 >
                   Explore Features
                 </button>
                 <button
                   onClick={() => setActiveTab("signup")}
-                  className="flex-1 h-11 inline-flex items-center justify-center rounded-xl bg-[#2B0D3E] hover:bg-[#2B0D3E]/90 text-sm font-semibold text-white transition-all"
+                  className="flex-1 h-11 inline-flex items-center justify-center gap-1.5 rounded-xl text-sm font-bold transition-all duration-150 hover:scale-[1.02] active:scale-[0.98]"
+                  style={{
+                    background: "#2B0D3E",
+                    color: "#FFFFFF",
+                    border: "none",
+                    boxShadow: "0 4px 14px rgba(43,13,62,0.25)",
+                  }}
                 >
+                  <Sparkles className="w-3.5 h-3.5" />
                   Get Started
                 </button>
               </div>
 
-              {/* Trust text */}
-              <p className="text-xs text-slate-500 font-medium pt-2">
-                No credit card required
+              {/* Mobile trust line */}
+              <p className="text-xs font-medium" style={{ color: "#C59DD9" }}>
+                No credit card required · Free to explore
               </p>
             </div>
           </div>
 
-          {/* Card */}
-          <div className="bg-white rounded-2xl shadow-[0_4px_40px_rgba(0,0,0,0.06)] border border-slate-100/80 p-7 sm:p-9">
-            {/* Header */}
-            <div className="mb-7">
-              <h2 className="text-2xl font-bold text-slate-900">
-                {activeTab === "signin" ? "Welcome back" : "Create account"}
-              </h2>
-              <p className="mt-1.5 text-sm text-slate-500">
-                {activeTab === "signin"
-                  ? "Access the platform for housing planning & analysis"
-                  : "Get started with smart housing analysis today"}
-              </p>
-            </div>
+          {/* ════════════════════════════════════════════════
+              AUTH CARD
+             ════════════════════════════════════════════════ */}
+          <div
+            className="rounded-2xl anim-card"
+            style={{
+              background: "#FFFFFF",
+              border: "1.5px solid #E9DEEF",
+              boxShadow:
+                "0 8px 48px rgba(43,13,62,0.10), 0 2px 6px rgba(43,13,62,0.05)",
+            }}
+          >
+            <div className="px-8 pt-8">
+              {/* Card heading */}
+              <div className="mb-6">
+                <h2
+                  className="text-2xl font-extrabold tracking-tight"
+                  style={{ color: "#2B0D3E" }}
+                >
+                  {activeTab === "signin"
+                    ? "Welcome back"
+                    : "Create your account"}
+                </h2>
+                <p
+                  className="mt-1.5 text-sm"
+                  style={{ color: "#7A3F91", opacity: 0.65 }}
+                >
+                  {activeTab === "signin"
+                    ? "Access the platform for housing planning & analysis"
+                    : "Get started with smart housing analysis today"}
+                </p>
+              </div>
 
-            {/* Tabs */}
-            <Tabs
-              value={activeTab}
-              onValueChange={(v: string) => {
-                if (v === "signin" || v === "signup") setActiveTab(v);
-              }}
-              className="w-full"
-            >
-              <TabsList className="grid w-full grid-cols-2 mb-6 h-11 bg-slate-100/80 rounded-xl p-1">
-                <TabsTrigger
+              {/* Tabs */}
+              <Tabs
+                value={activeTab}
+                onValueChange={(v: string) => {
+                  if (v === "signin" || v === "signup") setActiveTab(v);
+                }}
+                className="w-full"
+              >
+                <TabsList
+                  className="grid w-full grid-cols-2 h-11 p-1 rounded-xl mb-0"
+                  style={{ background: "#F2EAF7" }}
+                >
+                  <TabsTrigger
+                    value="signin"
+                    className="rounded-lg text-sm font-bold transition-all duration-150 data-[state=active]:bg-white data-[state=active]:text-[#2B0D3E] data-[state=active]:shadow-sm data-[state=inactive]:text-[#7A3F91]"
+                  >
+                    Sign In
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="signup"
+                    className="rounded-lg text-sm font-bold transition-all duration-150 data-[state=active]:bg-white data-[state=active]:text-[#2B0D3E] data-[state=active]:shadow-sm data-[state=inactive]:text-[#7A3F91]"
+                  >
+                    Sign Up
+                  </TabsTrigger>
+                </TabsList>
+
+                {/* ──────────────────────────────────────────
+                    SIGN IN TAB
+                   ────────────────────────────────────────── */}
+                <TabsContent
                   value="signin"
-                  className="rounded-lg text-sm font-semibold data-[state=active]:bg-white data-[state=active]:text-slate-900 data-[state=active]:shadow-sm"
+                  className="mt-0 pt-6 space-y-3 slide-in"
                 >
-                  Sign In
-                </TabsTrigger>
-                <TabsTrigger
-                  value="signup"
-                  className="rounded-lg text-sm font-semibold data-[state=active]:bg-white data-[state=active]:text-slate-900 data-[state=active]:shadow-sm"
-                >
-                  Sign Up
-                </TabsTrigger>
-              </TabsList>
+                  {/* Google */}
+                  <button
+                    type="button"
+                    onClick={handleGoogleSignIn}
+                    className="w-full h-11 inline-flex items-center justify-center gap-2.5 rounded-xl text-sm font-semibold cursor-pointer transition-all duration-150 hover:scale-[1.01] active:scale-[0.99]"
+                    style={{
+                      border: "1.5px solid #E9DEEF",
+                      background: "#FFFFFF",
+                      color: "#2B0D3E",
+                      boxShadow: "0 1px 3px rgba(43,13,62,0.06)",
+                    }}
+                    onMouseEnter={(e) => {
+                      (e.currentTarget as HTMLButtonElement).style.borderColor =
+                        "#C59DD9";
+                      (e.currentTarget as HTMLButtonElement).style.background =
+                        "#F2EAF7";
+                    }}
+                    onMouseLeave={(e) => {
+                      (e.currentTarget as HTMLButtonElement).style.borderColor =
+                        "#E9DEEF";
+                      (e.currentTarget as HTMLButtonElement).style.background =
+                        "#FFFFFF";
+                    }}
+                  >
+                    <GoogleIcon /> Continue with Google
+                  </button>
 
-              {/* ──── SIGN IN TAB ──────────────────────────── */}
-              <TabsContent value="signin" className="space-y-4 mt-0">
-                {/* Google button */}
-                <button
-                  type="button"
-                  onClick={handleGoogleSignIn}
-                  className="w-full h-11 inline-flex items-center justify-center gap-2.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 hover:border-slate-300 text-sm font-medium transition-all cursor-pointer shadow-sm"
-                >
-                  <svg className="h-[18px] w-[18px]" viewBox="0 0 24 24">
-                    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" />
-                    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" />
-                    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05" />
-                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335" />
-                  </svg>
-                  Continue with Google
-                </button>
+                  {/* Demo */}
+                  <button
+                    type="button"
+                    onClick={handleQuickDemoLogin}
+                    className="w-full h-11 inline-flex items-center justify-center gap-2 rounded-xl text-sm font-bold cursor-pointer transition-all duration-150 hover:scale-[1.01] active:scale-[0.99]"
+                    style={{
+                      border: "2px solid #7A3F91",
+                      background: "rgba(122,63,145,0.04)",
+                      color: "#7A3F91",
+                    }}
+                    onMouseEnter={(e) => {
+                      (e.currentTarget as HTMLButtonElement).style.background =
+                        "rgba(122,63,145,0.09)";
+                    }}
+                    onMouseLeave={(e) => {
+                      (e.currentTarget as HTMLButtonElement).style.background =
+                        "rgba(122,63,145,0.04)";
+                    }}
+                  >
+                    <Play className="h-3.5 w-3.5" /> Try Demo Project
+                  </button>
 
-                {/* Demo button */}
-                <button
-                  type="button"
-                  onClick={handleQuickDemoLogin}
-                  className="w-full h-11 inline-flex items-center justify-center gap-2 rounded-xl border-2 border-[#2B0D3E] bg-[#2B0D3E]/[0.03] hover:bg-[#2B0D3E] hover:text-white text-sm font-semibold text-[#2B0D3E] transition-all cursor-pointer"
-                >
-                  <Play className="h-3.5 w-3.5" />
-                  Try Demo Project
-                </button>
+                  <Divider label="or continue with email" />
 
-                {/* Divider */}
-                <div className="relative py-1">
-                  <div className="absolute inset-0 flex items-center">
-                    <span className="w-full border-t border-slate-200" />
-                  </div>
-                  <div className="relative flex justify-center text-xs uppercase">
-                    <span className="bg-white px-3 text-slate-400 font-medium tracking-wider">
-                      or continue with email
-                    </span>
-                  </div>
-                </div>
-
-                <form onSubmit={handleSignIn} className="space-y-4">
-                  <div className="space-y-1.5">
-                    <Label htmlFor="signin-email" className="text-xs font-semibold text-slate-600 uppercase tracking-wider">
-                      Email Address
-                    </Label>
-                    <div className="relative">
-                      <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+                  <form onSubmit={handleSignIn} className="space-y-4">
+                    <FieldWrap
+                      htmlFor="signin-email"
+                      label="Email Address"
+                      required
+                      icon={Mail}
+                    >
                       <Input
                         id="signin-email"
                         type="email"
@@ -533,17 +1029,16 @@ export function AuthForm() {
                         value={signInEmail}
                         onChange={(e) => setSignInEmail(e.target.value)}
                         required
-                        className="pl-10 h-11 rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500/20 transition-all"
+                        className={withIcon}
                       />
-                    </div>
-                  </div>
+                    </FieldWrap>
 
-                  <div className="space-y-1.5">
-                    <Label htmlFor="signin-name" className="text-xs font-semibold text-slate-600 uppercase tracking-wider">
-                      Full Name
-                    </Label>
-                    <div className="relative">
-                      <User className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+                    <FieldWrap
+                      htmlFor="signin-name"
+                      label="Full Name"
+                      required
+                      icon={User}
+                    >
                       <Input
                         id="signin-name"
                         type="text"
@@ -551,72 +1046,90 @@ export function AuthForm() {
                         value={signInName}
                         onChange={(e) => setSignInName(e.target.value)}
                         required
-                        className="pl-10 h-11 rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500/20 transition-all"
+                        className={withIcon}
                       />
-                    </div>
-                  </div>
+                    </FieldWrap>
 
-                  <div className="flex items-center gap-2">
-                    <input
-                      type="checkbox"
-                      id="remember"
-                      checked={rememberMe}
-                      onChange={(e) => setRememberMe(e.target.checked)}
-                      className="rounded border-slate-300 text-blue-600 focus:ring-blue-500/20 w-4 h-4"
-                    />
-                    <Label htmlFor="remember" className="text-sm text-slate-500 cursor-pointer">
-                      Remember me
-                    </Label>
-                  </div>
-
-                  <Button
-                    type="submit"
-                    className="w-full h-11 rounded-xl bg-[#2B0D3E] hover:bg-[#2B0D3E]/90 text-white font-semibold shadow-lg shadow-[#2B0D3E]/10 transition-all"
-                  >
-                    Sign In
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                </form>
-              </TabsContent>
-
-              {/* ──── SIGN UP TAB ──────────────────────────── */}
-              <TabsContent value="signup" className="space-y-4 mt-0 max-h-[580px] overflow-y-auto pr-1">
-                {/* Google button */}
-                <button
-                  type="button"
-                  onClick={handleGoogleSignIn}
-                  className="w-full h-11 inline-flex items-center justify-center gap-2.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 hover:border-slate-300 text-sm font-medium transition-all cursor-pointer shadow-sm"
-                >
-                  <svg className="h-[18px] w-[18px]" viewBox="0 0 24 24">
-                    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" />
-                    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" />
-                    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05" />
-                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335" />
-                  </svg>
-                  Sign up with Google
-                </button>
-
-                {/* Divider */}
-                <div className="relative py-1">
-                  <div className="absolute inset-0 flex items-center">
-                    <span className="w-full border-t border-slate-200" />
-                  </div>
-                  <div className="relative flex justify-center text-xs uppercase">
-                    <span className="bg-white px-3 text-slate-400 font-medium tracking-wider">
-                      or create account
-                    </span>
-                  </div>
-                </div>
-
-                <form onSubmit={handleSignUp} className="space-y-4">
-                  {/* Essential fields */}
-                  <div className="grid grid-cols-2 gap-3">
-                    <div className="space-y-1.5">
-                      <Label htmlFor="name" className="text-xs font-semibold text-slate-600 uppercase tracking-wider">
-                        Full Name *
+                    {/* Remember me */}
+                    <div className="flex items-center gap-2.5">
+                      <input
+                        type="checkbox"
+                        id="remember"
+                        checked={rememberMe}
+                        onChange={(e) => setRememberMe(e.target.checked)}
+                        className="w-4 h-4 rounded cursor-pointer"
+                        style={{ accentColor: "#7A3F91" }}
+                      />
+                      <Label
+                        htmlFor="remember"
+                        className="text-sm cursor-pointer font-medium"
+                        style={{ color: "#7A3F91" }}
+                      >
+                        Remember me
                       </Label>
-                      <div className="relative">
-                        <User className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+                    </div>
+
+                    <Button
+                      type="submit"
+                      className="w-full h-11 rounded-xl font-bold text-sm text-white transition-all duration-150 hover:scale-[1.01] active:scale-[0.99]"
+                      style={{
+                        background:
+                          "linear-gradient(135deg,#7A3F91 0%,#5d2e70 100%)",
+                        border: "none",
+                        boxShadow: "0 4px 20px rgba(122,63,145,0.28)",
+                      }}
+                    >
+                      Sign In <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </form>
+                </TabsContent>
+
+                {/* ──────────────────────────────────────────
+                    SIGN UP TAB
+                   ────────────────────────────────────────── */}
+                <TabsContent
+                  value="signup"
+                  className="mt-0 pt-6 space-y-3 slide-in scrollbar-thin"
+                  style={{ maxHeight: 580, overflowY: "auto", paddingRight: 2 }}
+                >
+                  {/* Google */}
+                  <button
+                    type="button"
+                    onClick={handleGoogleSignIn}
+                    className="w-full h-11 inline-flex items-center justify-center gap-2.5 rounded-xl text-sm font-semibold cursor-pointer transition-all duration-150 hover:scale-[1.01] active:scale-[0.99]"
+                    style={{
+                      border: "1.5px solid #E9DEEF",
+                      background: "#FFFFFF",
+                      color: "#2B0D3E",
+                      boxShadow: "0 1px 3px rgba(43,13,62,0.06)",
+                    }}
+                    onMouseEnter={(e) => {
+                      (e.currentTarget as HTMLButtonElement).style.borderColor =
+                        "#C59DD9";
+                      (e.currentTarget as HTMLButtonElement).style.background =
+                        "#F2EAF7";
+                    }}
+                    onMouseLeave={(e) => {
+                      (e.currentTarget as HTMLButtonElement).style.borderColor =
+                        "#E9DEEF";
+                      (e.currentTarget as HTMLButtonElement).style.background =
+                        "#FFFFFF";
+                    }}
+                  >
+                    <GoogleIcon /> Sign up with Google
+                  </button>
+
+                  <Divider label="or create account" />
+
+                  <form onSubmit={handleSignUp} className="space-y-4">
+                    {/* Name + Email row */}
+                    <div className="grid grid-cols-2 gap-3">
+                      <FieldWrap
+                        htmlFor="name"
+                        label="Full Name"
+                        required
+                        icon={User}
+                      >
                         <Input
                           id="name"
                           type="text"
@@ -624,17 +1137,15 @@ export function AuthForm() {
                           value={name}
                           onChange={(e) => setName(e.target.value)}
                           required
-                          className="pl-10 h-11 rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500/20 transition-all"
+                          className={withIcon}
                         />
-                      </div>
-                    </div>
-
-                    <div className="space-y-1.5">
-                      <Label htmlFor="email" className="text-xs font-semibold text-slate-600 uppercase tracking-wider">
-                        Email *
-                      </Label>
-                      <div className="relative">
-                        <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+                      </FieldWrap>
+                      <FieldWrap
+                        htmlFor="email"
+                        label="Email"
+                        required
+                        icon={Mail}
+                      >
                         <Input
                           id="email"
                           type="email"
@@ -642,149 +1153,223 @@ export function AuthForm() {
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
                           required
-                          className="pl-10 h-11 rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500/20 transition-all"
+                          className={withIcon}
                         />
-                      </div>
+                      </FieldWrap>
                     </div>
-                  </div>
 
-                  {/* Role selection */}
-                  <div className="space-y-1.5">
-                    <Label className="text-xs font-semibold text-slate-600 uppercase tracking-wider">
-                      Role *
-                    </Label>
-                    <button
-                      type="button"
-                      onClick={() => setShowRoleSelector(!showRoleSelector)}
-                      className="w-full h-11 px-4 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 hover:border-slate-300 text-sm font-medium text-left flex items-center justify-between transition-all"
-                    >
-                      <span className={role ? "text-slate-900" : "text-slate-400"}>
-                        {getRoleLabel()}
-                      </span>
-                      {showRoleSelector ? (
-                        <ChevronUp className="h-4 w-4 text-slate-400" />
-                      ) : (
-                        <ChevronDown className="h-4 w-4 text-slate-400" />
-                      )}
-                    </button>
+                    {/* Role selector */}
+                    <div className="space-y-1.5">
+                      <Label
+                        className="text-[10px] font-bold uppercase tracking-widest"
+                        style={{ color: "#7A3F91" }}
+                      >
+                        Role <span style={{ color: "#ef4444" }}>*</span>
+                      </Label>
+                      <button
+                        type="button"
+                        onClick={() => setShowRoleSelector(!showRoleSelector)}
+                        className="w-full h-11 px-4 rounded-xl text-sm flex items-center justify-between transition-all duration-150"
+                        style={{
+                          border: `1.5px solid ${showRoleSelector ? "#7A3F91" : "#E9DEEF"}`,
+                          background: showRoleSelector
+                            ? "rgba(122,63,145,0.03)"
+                            : "#FFFFFF",
+                          color: role ? "#2B0D3E" : "#C59DD9",
+                          fontWeight: role ? 600 : 400,
+                          fontFamily: "inherit",
+                        }}
+                      >
+                        <span>{getRoleLabel()}</span>
+                        {showRoleSelector ? (
+                          <ChevronUp
+                            className="h-4 w-4 shrink-0"
+                            style={{ color: "#7A3F91" }}
+                          />
+                        ) : (
+                          <ChevronDown
+                            className="h-4 w-4 shrink-0"
+                            style={{ color: "#C59DD9" }}
+                          />
+                        )}
+                      </button>
 
-                    {showRoleSelector && (
-                      <div className="grid grid-cols-2 gap-1.5 p-2 border border-slate-200 rounded-xl bg-slate-50/50">
-                        {ROLE_OPTIONS.map((opt) => {
-                          const IconComponent = opt.icon;
-                          return (
-                            <button
-                              key={opt.value}
-                              type="button"
-                              onClick={() => handleRoleSelect(opt.value)}
-                              className={`p-2.5 rounded-lg text-left border transition-all ${
-                                role === opt.value
-                                  ? "border-blue-500 bg-blue-50 shadow-sm"
-                                  : "border-transparent bg-white hover:bg-slate-50 hover:border-slate-200"
-                              }`}
-                            >
-                              <div className="flex items-center gap-2 mb-0.5">
-                                <IconComponent className={`h-3.5 w-3.5 ${role === opt.value ? "text-blue-600" : "text-slate-500"}`} />
-                                <p className="text-xs font-semibold text-slate-800">
-                                  {opt.label}
+                      {showRoleSelector && (
+                        <div
+                          className="grid grid-cols-2 gap-1.5 p-2 rounded-xl slide-in expand-in"
+                          style={{
+                            border: "1.5px solid #E9DEEF",
+                            background: "#F2EAF7",
+                          }}
+                        >
+                          {ROLE_OPTIONS.map((opt) => {
+                            const IconComp = opt.icon;
+                            const sel = role === opt.value;
+                            return (
+                              <button
+                                key={opt.value}
+                                type="button"
+                                onClick={() => handleRoleSelect(opt.value)}
+                                className="p-2.5 rounded-xl text-left transition-all duration-150 hover:scale-[1.02]"
+                                style={{
+                                  border: `1.5px solid ${sel ? "#7A3F91" : "transparent"}`,
+                                  background: sel
+                                    ? "rgba(122,63,145,0.08)"
+                                    : "#FFFFFF",
+                                  fontFamily: "inherit",
+                                }}
+                              >
+                                <div className="flex items-center gap-1.5 mb-0.5">
+                                  <IconComp
+                                    className={`h-3.5 w-3.5 shrink-0 ${sel ? "text-[#7A3F91]" : "text-[#C59DD9]"}`}
+                                  />
+                                  <p
+                                    className="text-xs font-bold truncate"
+                                    style={{
+                                      color: sel ? "#7A3F91" : "#2B0D3E",
+                                    }}
+                                  >
+                                    {opt.label}
+                                  </p>
+                                </div>
+                                <p
+                                  className="text-[11px] leading-snug"
+                                  style={{ color: "#C59DD9" }}
+                                >
+                                  {opt.description}
                                 </p>
-                              </div>
-                              <p className="text-[11px] text-slate-500 leading-snug">
-                                {opt.description}
-                              </p>
-                            </button>
-                          );
-                        })}
-                      </div>
-                    )}
-                  </div>
+                              </button>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </div>
 
-                  {/* Optional fields */}
-                  <div className="border-t border-slate-100 pt-3">
-                    <button
-                      type="button"
-                      onClick={() => setExpandedOptionalFields(!expandedOptionalFields)}
-                      className="w-full flex items-center justify-between py-2 px-1 text-sm font-medium text-slate-600 hover:text-slate-900 rounded transition-colors"
+                    {/* Optional fields toggle */}
+                    <div
+                      style={{ borderTop: "1px solid #E9DEEF", paddingTop: 12 }}
                     >
-                      <span className="text-xs font-semibold uppercase tracking-wider">Optional Details</span>
-                      <span className="text-xs text-blue-600 font-medium">
-                        {expandedOptionalFields ? "Hide" : "Show"}
-                      </span>
-                    </button>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setExpandedOptionalFields(!expandedOptionalFields)
+                        }
+                        className="w-full flex items-center justify-between transition-colors duration-150"
+                        style={{
+                          background: "transparent",
+                          border: "none",
+                          cursor: "pointer",
+                          fontFamily: "inherit",
+                        }}
+                      >
+                        <span
+                          className="text-[10px] font-bold uppercase tracking-widest"
+                          style={{ color: "#7A3F91" }}
+                        >
+                          Optional Details
+                        </span>
+                        <span
+                          className="text-xs font-semibold"
+                          style={{ color: "#C59DD9" }}
+                        >
+                          {expandedOptionalFields ? "Hide" : "Add"}
+                        </span>
+                      </button>
 
-                    {expandedOptionalFields && (
-                      <div className="space-y-3 mt-2">
-                        <div className="space-y-1.5">
-                          <Label htmlFor="organization" className="text-xs font-semibold text-slate-600 uppercase tracking-wider">
-                            Organization
-                          </Label>
-                          <div className="relative">
-                            <Building2 className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+                      {expandedOptionalFields && (
+                        <div className="space-y-3 mt-3 slide-in expand-in">
+                          <FieldWrap
+                            htmlFor="organization"
+                            label="Organization"
+                            icon={Building2}
+                          >
                             <Input
                               id="organization"
                               type="text"
-                              placeholder="Government Agency, NGO, Developer..."
+                              placeholder="Government Agency, NGO, Developer…"
                               value={organization}
                               onChange={(e) => setOrganization(e.target.value)}
-                              className="pl-10 h-11 rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500/20 transition-all"
+                              className={withIcon}
                             />
+                          </FieldWrap>
+
+                          <div className="grid grid-cols-2 gap-3">
+                            <FieldWrap
+                              htmlFor="phone"
+                              label="Phone"
+                              icon={Phone}
+                            >
+                              <Input
+                                id="phone"
+                                type="tel"
+                                placeholder="+254 700 000000"
+                                value={phone}
+                                onChange={(e) => setPhone(e.target.value)}
+                                className={withIcon}
+                              />
+                            </FieldWrap>
+                            <FieldWrap
+                              htmlFor="country"
+                              label="Country"
+                              icon={MapPin}
+                            >
+                              <Input
+                                id="country"
+                                type="text"
+                                placeholder="Kenya"
+                                value={country}
+                                onChange={(e) => setCountry(e.target.value)}
+                                className={withIcon}
+                              />
+                            </FieldWrap>
                           </div>
                         </div>
+                      )}
+                    </div>
 
-                        <div className="space-y-1.5">
-                          <Label htmlFor="phone" className="text-xs font-semibold text-slate-600 uppercase tracking-wider">
-                            Phone
-                          </Label>
-                          <div className="relative">
-                            <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
-                            <Input
-                              id="phone"
-                              type="tel"
-                              placeholder="+1234567890"
-                              value={phone}
-                              onChange={(e) => setPhone(e.target.value)}
-                              className="pl-10 h-11 rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500/20 transition-all"
-                            />
-                          </div>
-                        </div>
+                    <Button
+                      type="submit"
+                      className="w-full h-11 rounded-xl font-bold text-sm text-white transition-all duration-150 hover:scale-[1.01] active:scale-[0.99]"
+                      style={{
+                        background:
+                          "linear-gradient(135deg,#7A3F91 0%,#5d2e70 100%)",
+                        border: "none",
+                        boxShadow: "0 4px 20px rgba(122,63,145,0.28)",
+                      }}
+                    >
+                      Create Account &amp; Get Started{" "}
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </form>
+                </TabsContent>
+              </Tabs>
+            </div>
 
-                        <div className="space-y-1.5">
-                          <Label htmlFor="country" className="text-xs font-semibold text-slate-600 uppercase tracking-wider">
-                            Country
-                          </Label>
-                          <div className="relative">
-                            <MapPin className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
-                            <Input
-                              id="country"
-                              type="text"
-                              placeholder="United States"
-                              value={country}
-                              onChange={(e) => setCountry(e.target.value)}
-                              className="pl-10 h-11 rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500/20 transition-all"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-
-                  <Button
-                    type="submit"
-                    className="w-full h-11 rounded-xl bg-[#2B0D3E] hover:bg-[#2B0D3E]/90 text-white font-semibold shadow-lg shadow-[#2B0D3E]/10 transition-all"
-                  >
-                    Create Account & Get Started
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                </form>
-              </TabsContent>
-            </Tabs>
-
-            {/* Footer */}
-            <div className="mt-6 pt-5 border-t border-slate-100 flex items-center justify-center gap-1.5 text-[11px] text-slate-400">
-              <Shield className="h-3 w-3" />
-              <span>Secured & encrypted · No credit card required</span>
+            {/* Card footer */}
+            <div
+              className="mx-8 mb-7 mt-5 pt-5 flex items-center justify-center gap-2"
+              style={{ borderTop: "1px solid #E9DEEF" }}
+            >
+              <Shield
+                className="h-3.5 w-3.5 shrink-0"
+                style={{ color: "#C59DD9" }}
+              />
+              <span
+                className="text-[11px] font-medium"
+                style={{ color: "#C59DD9" }}
+              >
+                Secured &amp; encrypted · No credit card required
+              </span>
             </div>
           </div>
+
+          {/* Below-card trust text */}
+          <p
+            className="mt-5 text-center text-[11px] font-medium anim-trust"
+            style={{ color: "#C59DD9" }}
+          >
+            Trusted by housing agencies across East Africa &amp; beyond
+          </p>
         </div>
       </div>
     </div>

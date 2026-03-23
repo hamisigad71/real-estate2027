@@ -80,6 +80,7 @@ export function ScenarioSimulator({ scenario: initialScenario, project, onUpdate
   const [results, setResults] = useState<ScenarioResults | null>(null)
   const [showPreview, setShowPreview] = useState(false)
   const [showDesigner, setShowDesigner] = useState(false)
+  const [forceTemplatePicker, setForceTemplatePicker] = useState(false)
 
   useEffect(() => {
     setScenario(initialScenario)
@@ -128,57 +129,9 @@ export function ScenarioSimulator({ scenario: initialScenario, project, onUpdate
     setShowDesigner(false)
   }
 
-  // Auto-generate: pick the dominant bedroom type from unit mix and pre-apply layout
+  // Auto-generate opens the professional template chooser (studio, 1BR, 2BR, 3BR)
   const handleAutoGenerate = () => {
-    const mix = scenario.unitMix
-    const isSF = scenario.projectType === "single-family"
-
-    // Determine dominant layout type
-    let layoutType: "studio" | "1br" | "2br" | "3br" = "2br"
-    if (isSF) {
-      layoutType = "3br"
-    } else if (mix) {
-      const max = Math.max(mix.oneBedroom, mix.twoBedroom, mix.threeBedroom)
-      if (max === mix.oneBedroom) layoutType = "1br"
-      else if (max === mix.twoBedroom) layoutType = "2br"
-      else layoutType = "3br"
-    }
-
-    // Auto-apply the layout data directly to scenario architecture, then open designer
-    const layoutMap: Record<string, any[]> = {
-      studio: [
-        { id: "a1", type: "living",   name: "Open Studio",  x: 50,  y: 30,  width: 120, height: 110, color: "bg-slate-400" },
-        { id: "a2", type: "kitchen",  name: "Kitchen",      x: 170, y: 30,  width: 60,  height: 55,  color: "bg-amber-400" },
-        { id: "a3", type: "bathroom", name: "Bathroom",     x: 170, y: 85,  width: 60,  height: 55,  color: "bg-cyan-400"  },
-        { id: "a4", type: "hallway",  name: "Entry",        x: 50,  y: 140, width: 180, height: 26,  color: "bg-slate-300" },
-      ],
-      "1br": [
-        { id: "b1", type: "master",   name: "Bedroom",      x: 50,  y: 30,  width: 90,  height: 80,  color: "bg-[#7A3F91]"  },
-        { id: "b2", type: "living",   name: "Living Room",  x: 140, y: 30,  width: 110, height: 80,  color: "bg-slate-400" },
-        { id: "b3", type: "bathroom", name: "Bathroom",     x: 50,  y: 110, width: 55,  height: 65,  color: "bg-cyan-400"  },
-        { id: "b4", type: "hallway",  name: "Hallway",      x: 105, y: 110, width: 35,  height: 65,  color: "bg-slate-300" },
-        { id: "b5", type: "kitchen",  name: "Kitchen",      x: 140, y: 110, width: 110, height: 65,  color: "bg-amber-400" },
-      ],
-      "2br": [
-        { id: "c1", type: "master",   name: "Master Bedroom", x: 50,  y: 30,  width: 100, height: 90,  color: "bg-[#7A3F91]"  },
-        { id: "c2", type: "living",   name: "Living Room",    x: 150, y: 30,  width: 120, height: 100, color: "bg-slate-400" },
-        { id: "c3", type: "hallway",  name: "Hallway",        x: 150, y: 130, width: 120, height: 20,  color: "bg-slate-300" },
-        { id: "c4", type: "bedroom",  name: "Bedroom 2",      x: 50,  y: 150, width: 100, height: 80,  color: "bg-[#C59DD9]"  },
-        { id: "c5", type: "kitchen",  name: "Kitchen",        x: 150, y: 150, width: 78,  height: 80,  color: "bg-amber-400" },
-        { id: "c6", type: "bathroom", name: "Bathroom",       x: 228, y: 150, width: 52,  height: 80,  color: "bg-cyan-400"  },
-      ],
-      "3br": [
-        { id: "d1", type: "master",   name: "Master Bedroom", x: 50,  y: 30,  width: 110, height: 90,  color: "bg-[#7A3F91]"  },
-        { id: "d2", type: "bedroom",  name: "Bedroom 2",      x: 50,  y: 140, width: 100, height: 80,  color: "bg-[#C59DD9]"  },
-        { id: "d3", type: "bedroom",  name: "Bedroom 3",      x: 50,  y: 240, width: 100, height: 80,  color: "#C59DD9"  },
-        { id: "d4", type: "living",   name: "Living Room",    x: 160, y: 30,  width: 130, height: 110, color: "bg-slate-400" },
-        { id: "d5", type: "hallway",  name: "Hallway",        x: 160, y: 140, width: 130, height: 20,  color: "bg-slate-300" },
-        { id: "d6", type: "kitchen",  name: "Kitchen",        x: 160, y: 160, width: 90,  height: 80,  color: "bg-amber-400" },
-        { id: "d7", type: "bathroom", name: "Bathroom",       x: 250, y: 160, width: 60,  height: 80,  color: "bg-cyan-400"  },
-      ],
-    }
-
-    handleScenarioChange({ architecture: { rooms: layoutMap[layoutType] } })
+    setForceTemplatePicker(true)
     setShowDesigner(true)
   }
 
@@ -202,7 +155,13 @@ export function ScenarioSimulator({ scenario: initialScenario, project, onUpdate
             </div>
             
             <div className="pt-4 flex flex-col sm:flex-row gap-4">
-              <Dialog open={showDesigner} onOpenChange={setShowDesigner}>
+              <Dialog
+                open={showDesigner}
+                onOpenChange={(open) => {
+                  setShowDesigner(open)
+                  if (!open) setForceTemplatePicker(false)
+                }}
+              >
                 <DialogTrigger asChild>
                   <Button className="flex-1 bg-gradient-to-r from-[#7A3F91] to-[#2B0D3E] hover:from-[#2B0D3E] hover:to-[#7A3F91] text-white h-12 rounded-xl shadow-lg shadow-[#7A3F91]/20 font-bold border-0">
                     <Sparkles className="w-4 h-4 mr-2" />
@@ -221,6 +180,7 @@ export function ScenarioSimulator({ scenario: initialScenario, project, onUpdate
                     scenario={scenario} 
                     project={project}
                     onSave={handleDesignerSave}
+                    forceTemplatePicker={forceTemplatePicker}
                   />
                 </DialogContent>
               </Dialog>

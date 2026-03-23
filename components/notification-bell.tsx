@@ -116,7 +116,7 @@ export function NotificationBell() {
               className="absolute right-0 sm:right-0 mt-2 w-[calc(100vw-2rem)] sm:w-96 max-h-[500px] bg-white rounded-2xl shadow-xl border border-slate-200 z-50 overflow-hidden flex flex-col origin-top-right translate-x-[calc(25%-1rem)] sm:translate-x-0"
             >
               {/* Header */}
-              <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-gradient-to-r from-slate-50 to-white">
+              <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-linear-to-r from-slate-50 to-white">
                 <div>
                   <h3 className="text-sm font-semibold text-slate-900">Notifications</h3>
                   <p className="text-xs text-slate-500">{unreadCount} unread</p>

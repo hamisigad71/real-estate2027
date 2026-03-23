@@ -243,6 +243,7 @@ const SIZE_BASE_AREAS: Record<string, number> = {
 
 const FEATURE_COSTS: Record<string, number> = {
   solarPanels: 8000,
+  waterStorage: 4500,
   smartHome: 5000,
   airConditioning: 6000,
   swimmingPool: 25000,
@@ -256,17 +257,27 @@ const FEATURE_COSTS: Record<string, number> = {
 export function calculateHomeSpecification(config: HomeBuilderConfig): HomeSpecification {
   const countryData = getCountryData(config.countryCode)
   const styleMultiplier = STYLE_MULTIPLIERS[config.style] || 1.0
+  const site = config.siteConditions
+  const household = config.household
+  const utility = config.utilitiesProfile
+  const compliance = config.compliance
   
   let baseCostPerSqm = countryData.constructionCosts.standard
-  if (config.style === "basic") {
+  if (config.finishLevel === "basic" || config.style === "basic") {
     baseCostPerSqm = countryData.constructionCosts.basic
-  } else if (config.style === "luxury") {
+  } else if (config.finishLevel === "improved" || config.style === "luxury") {
     baseCostPerSqm = countryData.constructionCosts.improved
   }
   
   const adjustedCostPerSqm = config.constructionCostPerSqm || (baseCostPerSqm * styleMultiplier)
   const baseArea = SIZE_BASE_AREAS[config.sizePreference] || 100
-  const totalBuildingArea = baseArea
+  const grossFromInput = config.grossArea && config.grossArea > 0 ? config.grossArea : null
+  const netFromInput = config.netArea && config.netArea > 0 ? config.netArea : null
+  const baseGrossArea = grossFromInput ?? (netFromInput ? Math.round(netFromInput / 0.82) : baseArea)
+  const bedroomDrivenArea = Math.max(0, (config.bedrooms - 2) * 12)
+  const remoteWorkArea = Math.max(0, (household?.remoteWorkers || 0) * 8)
+  const accessibilityArea = compliance?.accessibilityRequired ? 6 : 0
+  const totalBuildingArea = Math.round(baseGrossArea + bedroomDrivenArea + remoteWorkArea + accessibilityArea)
   
   const masterbedroom = totalBuildingArea * 0.15
   const bedroom2 = totalBuildingArea * 0.12
@@ -280,7 +291,13 @@ export function calculateHomeSpecification(config: HomeBuilderConfig): HomeSpeci
   if (config.sizePreference === "small") bedrooms = 1
   else if (config.sizePreference === "spacious") bedrooms = 3
   
-  const buildingCost = Math.round(totalBuildingArea * adjustedCostPerSqm)
+  const slopeMultiplier = site?.slope === "steep" ? 1.12 : site?.slope === "gentle" ? 1.05 : 1
+  const soilMultiplier = site?.soilType === "weak" ? 1.15 : site?.soilType === "mixed" ? 1.07 : 1
+  const seismicMultiplier = site?.seismicZone === "high" ? 1.1 : site?.seismicZone === "medium" ? 1.04 : 1
+  const floodMultiplier = site?.floodRisk === "high" ? 1.09 : site?.floodRisk === "medium" ? 1.03 : 1
+  const siteComplexityMultiplier = slopeMultiplier * soilMultiplier * seismicMultiplier * floodMultiplier
+
+  const buildingCost = Math.round(totalBuildingArea * adjustedCostPerSqm * siteComplexityMultiplier)
   const laborCostPercentage = countryData.laborCostPercentage / 100
   const laborCost = Math.round(buildingCost * laborCostPercentage)
   
@@ -293,6 +310,7 @@ export function calculateHomeSpecification(config: HomeBuilderConfig): HomeSpeci
   // Add feature-based infrastructure upgrades
   let featureInfrastructureCost = 0
   if (config.features.solarPanels) featureInfrastructureCost += 3000 // Electrical grid upgrades
+  if (config.features.waterStorage) featureInfrastructureCost += 2200 // tanks + pump + plumbing
   if (config.features.smartHome) featureInfrastructureCost += 2000  // Data/network infrastructure
   if (config.features.airConditioning) featureInfrastructureCost += 2500 // Electrical capacity
   if (config.features.swimmingPool) featureInfrastructureCost += 5000 // Water treatment, drainage
@@ -303,10 +321,16 @@ export function calculateHomeSpecification(config: HomeBuilderConfig): HomeSpeci
   const areaScaleFactor = totalBuildingArea / 100 // Base is 100m²
   const styleInfrastructureMultiplier = STYLE_MULTIPLIERS[config.style] || 1.0
   
-  const infrastructureCost = config.infrastructureCosts 
+  const reliabilityMultiplier =
+    (utility?.waterReliability === "low" ? 1.08 : utility?.waterReliability === "medium" ? 1.03 : 1) *
+    (utility?.gridReliability === "low" ? 1.1 : utility?.gridReliability === "medium" ? 1.04 : 1)
+  const parkingCost = (compliance?.parkingSpaces || 0) * 2500
+
+  const servicedLandBaseCost = config.landServiced === false ? 12000 : 0
+  const infrastructureCost = config.infrastructureCosts
     ? (config.infrastructureCosts.water + config.infrastructureCosts.sewer + config.infrastructureCosts.roads + config.infrastructureCosts.electricity)
     : Math.round(
-        (baseInfrastructureCost + featureInfrastructureCost) * areaScaleFactor * (styleInfrastructureMultiplier * 0.5 + 0.5)
+        ((baseInfrastructureCost + featureInfrastructureCost + parkingCost + servicedLandBaseCost) * areaScaleFactor * (styleInfrastructureMultiplier * 0.5 + 0.5) * reliabilityMultiplier)
       )
   
   const enabledFeatures = Object.entries(config.features)
@@ -318,10 +342,19 @@ export function calculateHomeSpecification(config: HomeBuilderConfig): HomeSpeci
     }))
   
   const featuresCost = enabledFeatures.reduce((sum, f) => sum + f.cost, 0)
-  const totalCost = buildingCost + laborCost + infrastructureCost + featuresCost
+  const financing = config.financing
+  const baseTotalCost = buildingCost + laborCost + infrastructureCost + featuresCost
+  let financingReserve = 0
+  if (financing && financing.mode !== "cash") {
+    const debtShare = Math.max(0, 1 - (financing.downPaymentPercent || 0) / 100)
+    financingReserve = Math.round(baseTotalCost * debtShare * ((financing.annualInterestRate || 0) / 100) * 0.35)
+  }
+  const totalCost = baseTotalCost + financingReserve
   const annualMaintenanceCost = Math.round(buildingCost * 0.025)
   
-  const estimatedPopulation = (config.bedrooms || 2) * 1.5 // Rough estimate for home population
+  const estimatedPopulation = household
+    ? household.adults + (household.children * 0.75)
+    : (config.bedrooms || 2) * 1.5 // fallback estimate
   const dailyWaterDemand = estimatedPopulation * countryData.utilities.waterLitersPerPerson
   const electricityDemand = estimatedPopulation * countryData.utilities.electricityKwhPerPerson
   const wasteGeneration = estimatedPopulation * countryData.utilities.wasteKgPerPerson
@@ -332,7 +365,10 @@ export function calculateHomeSpecification(config: HomeBuilderConfig): HomeSpeci
   
   const propertyTaxAnnual = Math.round(totalCost * 0.007)
   const insuranceAnnual = Math.round(totalCost * 0.004)
-  const estimatedTimelineMonths = Math.ceil(totalBuildingArea / 20)
+  const complexityTimelineMonths = Math.ceil((totalBuildingArea / 20) * (siteComplexityMultiplier * 0.9 + 0.1))
+  const estimatedTimelineMonths = config.timelineMonths && config.timelineMonths > 0
+    ? Math.max(config.timelineMonths, complexityTimelineMonths)
+    : complexityTimelineMonths
   
   const remainingBudget = config.budget - totalCost
   const percentageUsed = (totalCost / config.budget) * 100
@@ -341,10 +377,18 @@ export function calculateHomeSpecification(config: HomeBuilderConfig): HomeSpeci
   if (percentageUsed > 100) budgetStatus = "over"
   else if (percentageUsed < 90) budgetStatus = "under"
   
+  const infraPressureScore =
+    (dailyWaterDemand > 900 ? 2 : dailyWaterDemand > 650 ? 1 : 0) +
+    (electricityDemand > 25 ? 2 : electricityDemand > 16 ? 1 : 0) +
+    ((utility?.waterReliability === "low" || utility?.gridReliability === "low") ? 1 : 0)
+
+  const infrastructureStatus: "ok" | "warning" | "exceeds" =
+    infraPressureScore >= 4 ? "exceeds" : infraPressureScore >= 2 ? "warning" : "ok"
+
   return {
     totalBuildingArea,
-    bedrooms,
-    bathrooms: 2,
+    bedrooms: Math.max(1, config.bedrooms || bedrooms),
+    bathrooms: Math.max(1, config.bathrooms || Math.ceil((config.bedrooms || bedrooms) / 2)),
     livingArea,
     kitchenArea,
     buildingCost,
@@ -374,13 +418,14 @@ export function calculateHomeSpecification(config: HomeBuilderConfig): HomeSpeci
     dailyWaterDemand,
     electricityDemand,
     wasteGeneration,
-    infrastructureStatus: "ok", // Default for single home
+    infrastructureStatus,
   }
 }
 
 function getFeatureDescription(feature: string): string {
   const descriptions: Record<string, string> = {
     solarPanels: "Solar photovoltaic system for renewable energy",
+    waterStorage: "Water storage tanks with pressure system and backup reserve",
     smartHome: "IoT smart home automation system",
     airConditioning: "Central air conditioning system",
     swimmingPool: "Residential swimming pool with finishing",

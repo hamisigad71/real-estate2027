@@ -60,8 +60,12 @@ export function ProjectCard({ project, onDelete }: ProjectCardProps) {
   };
 
   const formattedBudget = () => {
-    const max = project.budgetRange.max;
-    const currency = project.budgetRange.currency || "USD";
+    // Runtime guard: projects loaded from storage may contain `null`/invalid values.
+    const currency = project.budgetRange?.currency || "USD";
+    const rawMax = project.budgetRange?.max as unknown;
+    const max = typeof rawMax === "number" ? rawMax : Number(rawMax);
+
+    if (!Number.isFinite(max)) return `${currency} —`;
     if (max >= 1_000_000) return `${currency} ${(max / 1_000_000).toFixed(1)}M`;
     if (max >= 1_000) return `${currency} ${(max / 1_000).toFixed(0)}K`;
     return `${currency} ${max.toLocaleString()}`;
